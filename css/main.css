@@ -3366,7 +3366,7 @@ a.category-list-link:before {
   top: 10px;
   width: 18px;
   height: 18px;
-  content: "📚";
+  content: "\e629";
   margin-right: 5px;
   font: normal normal normal 14px/1 FontAwesome;
   font-size: 15px;
