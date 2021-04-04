@@ -36,21 +36,6 @@
       </tags>
   </entry>
   <entry>
-    <title>The world this week Politics</title>
-    <url>/archives/4eb6fb1.html</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>The Economist</category>
-        <category>The world this week</category>
-      </categories>
-      <tags>
-        <tag>The Economist</tag>
-        <tag>经济学人</tag>
-        <tag>China</tag>
-        <tag>Politics</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo Tag Plugins 的使用</title>
     <url>/archives/c9ea8104.html</url>
     <content><![CDATA[<p>Tag Plugin 是一种使 Hexo 支持特殊样式内容的方法。例如，我们无法在标准 Markdown 中显示具有自定义尺寸的图像。然后我们可以使用标签插件来解决它。 Hexo 有很多可以帮助用户的标签。 Hexo 还具有主题接口，使主题能够创建自己的标签。</p>
@@ -226,6 +211,21 @@ Optional parameter.</li>
       <tags>
         <tag>Hexo</tag>
         <tag>Tag Plugins</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>The world this week Politics</title>
+    <url>/archives/4eb6fb1.html</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>The Economist</category>
+        <category>The world this week</category>
+      </categories>
+      <tags>
+        <tag>The Economist</tag>
+        <tag>经济学人</tag>
+        <tag>China</tag>
+        <tag>Politics</tag>
       </tags>
   </entry>
   <entry>
