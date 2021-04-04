@@ -27,6 +27,7 @@
 ]]></content>
       <categories>
         <category>The Economist</category>
+        <category>China</category>
       </categories>
       <tags>
         <tag>The Economist</tag>
@@ -40,12 +41,191 @@
     <content><![CDATA[]]></content>
       <categories>
         <category>The Economist</category>
+        <category>The world this week</category>
       </categories>
       <tags>
         <tag>The Economist</tag>
         <tag>经济学人</tag>
         <tag>China</tag>
         <tag>Politics</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo Tag Plugins 的使用</title>
+    <url>/archives/c9ea8104.html</url>
+    <content><![CDATA[<p>Tag Plugin 是一种使 Hexo 支持特殊样式内容的方法。例如，我们无法在标准 Markdown 中显示具有自定义尺寸的图像。然后我们可以使用标签插件来解决它。 Hexo 有很多可以帮助用户的标签。 Hexo 还具有主题接口，使主题能够创建自己的标签。</p>
+<span id="more"></span>
+<h4 id="quote"><a class="markdownIt-Anchor" href="#quote"></a> Quote</h4>
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% blockquote [author[, source]] [link] [source_link_title] %&#125;</span><br><span class="line">content</span><br><span class="line">&#123;% endblockquote %&#125;</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<p>没有参数的普通 <code>blockquote</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% blockquote %&#125;</span><br><span class="line">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</span><br><span class="line">&#123;% endblockquote %&#125;</span><br></pre></td></tr></table></figure>
+<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
+</blockquote>
+<p>引用书上的句子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% blockquote David Levithan, Wide Awake %&#125;</span><br><span class="line">Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.</span><br><span class="line">&#123;% endblockquote %&#125;</span><br></pre></td></tr></table></figure>
+<blockquote><p>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.</p>
+<footer><strong>David Levithan</strong><cite>Wide Awake</cite></footer></blockquote>
+<p>引用网络上的文章：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% blockquote Seth Godin http:&#x2F;&#x2F;sethgodin.typepad.com&#x2F;seths_blog&#x2F;2009&#x2F;07&#x2F;welcome-to-island-marketing.html Welcome to Island Marketing %&#125;</span><br><span class="line">Every interaction is both precious and an opportunity to delight.</span><br><span class="line">&#123;% endblockquote %&#125;</span><br></pre></td></tr></table></figure>
+<blockquote><p>Every interaction is both precious and an opportunity to delight.</p>
+<footer><strong>Seth Godin</strong><cite><a href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html">Welcome to Island Marketing</a></cite></footer></blockquote>
+<p>还有一种特殊的 <code>quote</code> — <code>centered quote</code>，简写成 <code>cq</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% cq %&#125; 梅花香自苦寒来 &#123;% endcq %&#125;</span><br></pre></td></tr></table></figure>
+<blockquote class="blockquote-center">
+<p>梅花香自苦寒来</p>
+
+</blockquote>
+<h4 id="note"><a class="markdownIt-Anchor" href="#note"></a> Note</h4>
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% note [class] [no-icon] [summary] %&#125;</span><br><span class="line">Any content (support inline tags too).</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>[class]</code> : <em>Optional parameter.</em> Supported values: default | primary | success | info | warning | danger.</li>
+<li><code>[no-icon]</code> : <em>Optional parameter.</em> Disable icon in note.</li>
+<li><code>[summary]</code> : <em>Optional parameter.</em> Optional summary of the note.</li>
+</ul>
+<p>所有参数都是可选的。</p>
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% note %&#125;</span><br><span class="line">#### No class style</span><br><span class="line">(without define class style)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+<div class="note "><h5 id="no-class-style"><a class="markdownIt-Anchor" href="#no-class-style"></a> No class style</h5>
+<p>(without define class style)</p>
+</div>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% note default %&#125;</span><br><span class="line">#### Default</span><br><span class="line">Welcome to [Hexo!](https:&#x2F;&#x2F;hexo.io)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+<div class="note default"><h5 id="default"><a class="markdownIt-Anchor" href="#default"></a> Default</h5>
+<p>Welcome to <a href="https://hexo.io">Hexo!</a></p>
+</div>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% note primary %&#125;</span><br><span class="line">#### Primary</span><br><span class="line">**Welcome** to [Hexo!](https:&#x2F;&#x2F;hexo.io)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+<div class="note primary"><h5 id="primary"><a class="markdownIt-Anchor" href="#primary"></a> Primary</h5>
+<p><strong>Welcome</strong> to <a href="https://hexo.io">Hexo!</a></p>
+</div>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% note success %&#125;</span><br><span class="line">#### Success</span><br><span class="line">**Welcome** to [Hexo!](https:&#x2F;&#x2F;hexo.io)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+<div class="note success"><h5 id="success"><a class="markdownIt-Anchor" href="#success"></a> Success</h5>
+<p><strong>Welcome</strong> to <a href="https://hexo.io">Hexo!</a></p>
+</div>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% note info %&#125;</span><br><span class="line">#### Info</span><br><span class="line">**Welcome** to [Hexo!](https:&#x2F;&#x2F;hexo.io)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info"><h5 id="info"><a class="markdownIt-Anchor" href="#info"></a> Info</h5>
+<p><strong>Welcome</strong> to <a href="https://hexo.io">Hexo!</a></p>
+</div>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% note danger %&#125;</span><br><span class="line">#### Dange</span><br><span class="line">**Welcome** to [Hexo!](https:&#x2F;&#x2F;hexo.io)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+<div class="note danger"><h5 id="danger"><a class="markdownIt-Anchor" href="#danger"></a> Danger</h5>
+<p><strong>Welcome</strong> to <a href="https://hexo.io">Hexo!</a></p>
+</div>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% note info no-icon %&#125;</span><br><span class="line">#### No icon note</span><br><span class="line">Note **without** icon: &#96;note info no-icon&#96;</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info no-icon"><h5 id="no-icon-note"><a class="markdownIt-Anchor" href="#no-icon-note"></a> No icon note</h5>
+<p>Note <strong>without</strong> icon: <code>note info no-icon</code></p>
+</div>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% note primary This is a summary %&#125;</span><br><span class="line">#### Details and summary</span><br><span class="line">Note with summary: &#96;note primary This is a summary&#96;</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+<details class="note primary"><summary><p>This is a summary</p>
+</summary>
+<h5 id="details-and-summary"><a class="markdownIt-Anchor" href="#details-and-summary"></a> Details and summary</h5>
+<p>Note with summary: <code>note primary This is a summary</code></p>
+
+</details>
+<h4 id="label"><a class="markdownIt-Anchor" href="#label"></a> Label</h4>
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% label [class]@text %&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>[class]</code> : <em>Optional parameter.</em> Supported values: <code>default</code> | <code>primary</code> | <code>success</code> | <code>info</code> | <code>warning</code> | <code>danger</code>.<br />
+If not specified, the default style of the browser will be used, which may be different in different browsers.</li>
+<li><code>text</code> : <code>@text</code> can be specified with or without space<br />
+E.g. <code>success @text</code> is the same as <code>success@text</code>.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% label default@default label %&#125;</span><br></pre></td></tr></table></figure>
+<mark class="label default">default label</mark>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% label primary@primary label %&#125;</span><br></pre></td></tr></table></figure>
+<mark class="label primary">primary label</mark>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% label success@success label %&#125;</span><br></pre></td></tr></table></figure>
+<mark class="label success">success label</mark>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% label info@info label %&#125;</span><br></pre></td></tr></table></figure>
+<mark class="label info">info label</mark>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% label warning@warning label %&#125;</span><br></pre></td></tr></table></figure>
+<mark class="label warning">warning label</mark>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% label danger@danger label %&#125;</span><br></pre></td></tr></table></figure>
+<mark class="label danger">danger label</mark>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;mark&gt;标志&lt;&#x2F;mark&gt;</span><br></pre></td></tr></table></figure>
+<p><mark>标志</mark></p>
+<h4 id="tabs"><a class="markdownIt-Anchor" href="#tabs"></a> Tabs</h4>
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% tabs Unique name, [index] %&#125;</span><br><span class="line">&lt;!-- tab [Tab caption] [@icon] --&gt;</span><br><span class="line">Any content (support inline tags too).</span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&#123;% endtabs %&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Unique name</code> : Unique name of tabs block tag without comma.<br />
+Will be used in #id’s as prefix for each tab with their index numbers.<br />
+If there are whitespaces in name, for generate #id all whitespaces will replaced by dashes.<br />
+Only for current url of post/page must be unique!</li>
+<li><code>[index]</code> : Index number of active tab.<br />
+If not specified, first tab (1) will be selected.<br />
+If index is -1, no tab will be selected. It’s will be something like spoiler.<br />
+Optional parameter.</li>
+<li><code>[Tab caption]</code> : Caption of current tab.<br />
+If not caption specified, unique name with tab index suffix will be used as caption of tab.<br />
+If not caption specified, but specified icon, caption will empty.<br />
+Optional parameter.</li>
+<li><code>[@icon]</code> : Font Awesome icon name.<br />
+Can be specified with or without space; e.g. ‘Tab caption @icon’ is the same as ‘Tab caption@icon’.<br />
+Optional parameter.</li>
+</ul>
+<p>例子：</p>
+<div class="tabs" id="tab"><ul class="nav-tabs"><li class="tab active"><a href="#tab-1">tab 1</a></li><li class="tab"><a href="#tab-2">tab 2</a></li><li class="tab"><a href="#tab-3">A</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab-1"><pre><code>		**选项卡 1** 
+</code></pre></div><div class="tab-pane" id="tab-2"><pre><code>		**选项卡 2**
+</code></pre></div><div class="tab-pane" id="tab-3"><pre><code>		**选项卡 3**
+</code></pre></div></div></div>
+<h4 id="button"><a class="markdownIt-Anchor" href="#button"></a> Button</h4>
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% button url, text, icon [class], [title] %&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>url</code> : 绝对或相对 URL</li>
+<li><code>text</code> : 按钮文字，如果未指定图标则为必须</li>
+<li><code>icon</code> : FontAwesome 图标名称（开头没有’fa-‘）。如果未指定文本，则为必需</li>
+<li><code>[class]</code> : FontAwesome 类：<code>fa-fw | fa-lg | fa-2x | fa-3x | fa-4x | fa-5X</code> ，可选参数。</li>
+<li><code>[title]</code> : 鼠标悬停时的工具提示，可选参数。</li>
+</ul>
+<p>注意：最好添加 `` 标签，测试时没加 div，下面显示不完全，而且加上更加美观。</p>
+<div>
+  <a class="btn" href="https://time_wait.gitee.io/" title="博客首页"><i class="fa fa-home fa-fw"></i>首页</a>
+</div>
+<p>其他一些例子：</p>
+<h5 id="只有-text"><a class="markdownIt-Anchor" href="#只有-text"></a> 只有 <code>text</code></h5>
+<a class="btn" href="#">Text</a>
+<h5 id="只有-icon"><a class="markdownIt-Anchor" href="#只有-icon"></a> 只有 <code>icon</code></h5>
+<div><a class="btn" href="#"><i class="fa fa-home fa-5x"></i></a></div>
+<div><a class="btn" href="#"><i class="fa fa-home fa-4x"></i></a></div>
+<div><a class="btn" href="#"><i class="fa fa-home fa-3x"></i></a></div>
+<div><a class="btn" href="#"><i class="fa fa-home fa-2x"></i></a></div>
+<div><a class="btn" href="#"><i class="fa fa-home fa-lg"></i></a></div>
+<div><a class="btn" href="#"><i class="fa fa-home"></i></a></div>
+<h5 id="有-text-和-title"><a class="markdownIt-Anchor" href="#有-text-和-title"></a> 有 <code>text</code> 和 <code>title</code></h5>
+<a class="btn" href="#" title="Title">Text & Title</a>
+<h5 id="有-text-和-icon"><a class="markdownIt-Anchor" href="#有-text-和-icon"></a> 有 <code>text</code> 和 <code>icon</code></h5>
+<p>
+  <a class="btn" href="#"><i class="fa fa-home"></i>Text & Icon</a>
+</p>
+<p>最后，按钮 tag 还可以嵌套在其他 tag 中使用。</p>
+<h4 id="link-grid"><a class="markdownIt-Anchor" href="#link-grid"></a> Link Grid</h4>
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% linkgrid [image] [delimiter] [comment] %&#125;&#123;% endlinkgrid %&#125;</span><br><span class="line">&lt;!-- Tag Alias --&gt;</span><br><span class="line">&#123;% lg [image] [delimiter] [comment] %&#125;&#123;% endlg %&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>[image]</code> : <em>Optional parameter.</em> Default image URL.</li>
+<li><code>[delimiter]</code> : <em>Optional parameter.</em> If the optional delimiter parameter is given, it is interpreted as the delimiter of items in each line.</li>
+<li><code>[comment]</code> : <em>Optional parameter.</em> If the optional comment parameter is given, it is interpreted as the symbol to comment out a line.</li>
+</ul>
+<div class="link-grid"><div class="link-grid-container">
+<div class="link-grid-image" style="background-image: url(/images/apple-touch-icon-next.png);"></div>
+<p>Theme NexT</p><p>Stay Simple. Stay NexT.</p>
+<a href="https://theme-next.js.org/"></a>
+</div></div>
+<div class="link-grid"><div class="link-grid-container">
+<div class="link-grid-image" style="background-image: url(/images/apple-touch-icon-next.png);"></div>
+<p>Theme NexT</p><p>Stay Simple. Stay NexT.</p>
+<a href="https://theme-next.js.org/"></a>
+</div></div>]]></content>
+      <categories>
+        <category>Hexo</category>
+        <category>Tag Plugins</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>Tag Plugins</tag>
       </tags>
   </entry>
   <entry>
