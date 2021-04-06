@@ -1,74 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo+Next搭建博客：基础搭建</title>
-    <url>/archives/92090b6.html</url>
-    <content><![CDATA[<h3 id="环境"><a class="markdownIt-Anchor" href="#环境"></a> 环境</h3>
-<p>通过 <code>Hexo</code> 搭建博客前，需要在本地安装一些必要的环境。</p>
-<h4 id="nodejs"><a class="markdownIt-Anchor" href="#nodejs"></a> node.js</h4>
-<p>命令行安装</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ brew install nodejs</span><br></pre></td></tr></table></figure>
-<h4 id="npm"><a class="markdownIt-Anchor" href="#npm"></a> npm</h4>
-<p>命令行安装</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ brew install npm</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<h3 id="hexo"><a class="markdownIt-Anchor" href="#hexo"></a> Hexo</h3>
-<p><code>Hexo</code> 是一个快速、简洁且高效的博客框架。</p>
-<h4 id="安装-hexo"><a class="markdownIt-Anchor" href="#安装-hexo"></a> 安装 Hexo</h4>
-<p>命令行安装</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<h4 id="创建本地博客"><a class="markdownIt-Anchor" href="#创建本地博客"></a> 创建本地博客</h4>
-<p>创建一个目录，如：<code>Blog</code>，在此目录下执行初始化</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mkdir Blog</span><br><span class="line">$ <span class="built_in">cd</span> Blog</span><br><span class="line">$ hexo init</span><br><span class="line">$ hexo generate     <span class="comment"># 生成静态文件</span></span><br><span class="line">$ hexo server       <span class="comment"># 在本地服务器运行</span></span><br></pre></td></tr></table></figure>
-<p>在浏览器访问 <a href="http://localhost:4000/">http://localhost:4000</a>。</p>
-<p>之后就可以通过 <code>hexo new page pageName</code> 和 <code>hexo new postName</code> 创建新的页面 <code>page</code> 和 文章 <code>post</code> 了。</p>
-<h3 id="next"><a class="markdownIt-Anchor" href="#next"></a> NexT</h3>
-<p><code>Hexo</code> 自带的主题不是很美观（个人感觉），可以安装其他主题来美化博客。</p>
-<p><code>Hexo</code> 提供众多主题供用户选择，这里选择使用人数最多的 <code>Next</code> 主题。</p>
-<h4 id="安装主题"><a class="markdownIt-Anchor" href="#安装主题"></a> 安装主题</h4>
-<p>主题的安装有以下两种方式：</p>
-<div class="tabs" id="next-安装"><ul class="nav-tabs"><li class="tab active"><a href="#next-安装-1">git 安装</a></li><li class="tab"><a href="#next-安装-2">npm 安装</a></li></ul><div class="tab-content"><div class="tab-pane active" id="next-安装-1"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/next-theme/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="next-安装-2"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-theme-next@latest</span><br></pre></td></tr></table></figure></div></div></div>
-<p>以上两种方式安装的都是 <code>NexT</code> 的最新版本。</p>
-<h4 id="启用主题"><a class="markdownIt-Anchor" href="#启用主题"></a> 启用主题</h4>
-<p>修改站点（博客）配置文件 <code>_config.xml</code>：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
-<p>然后执行以下命令测试一下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
-<h3 id="将博客部署到-gitee-pages"><a class="markdownIt-Anchor" href="#将博客部署到-gitee-pages"></a> 将博客部署到 Gitee Pages</h3>
-<p><code>Gitee Pages</code> 是一个免费的静态网页托管服务，可以使用 <code>Gitee Pages</code> 托管博客、项目官网等静态网页。目前 <code>Gitee Pages</code> 支持 <code>Jekyll</code>、<code>Hugo</code>、<code>Hexo</code>编译静态资源。</p>
-<h4 id="注册-gtiee-账号"><a class="markdownIt-Anchor" href="#注册-gtiee-账号"></a> 注册 Gtiee 账号</h4>
-<h4 id="创建仓库"><a class="markdownIt-Anchor" href="#创建仓库"></a> 创建仓库</h4>
-<p><strong>注意<mark>路径</mark>一定要填写 <code>username.gitee.io</code> 这样后面才能使用 <code>Gitee Pages</code> 功能。</strong></p>
-<p>每个帐号只能有一个仓库来存放个人主页，而且仓库的名字必须是 <code>username/username.gitee.io</code>，这是特殊的命名约定，之后就可以通过 <a href="http://username.gitee.io/">http://username.gitee.io</a>  来访问个人主页。</p>
-<h4 id="配置-ssh"><a class="markdownIt-Anchor" href="#配置-ssh"></a> 配置 SSH</h4>
-<p>上传文件需要配置 <code>ssh key</code>，不然无法上传。</p>
-<p>首先先检查一下本地是否已经存在 <code>ssh key</code>：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls -al ~/.ssh</span><br></pre></td></tr></table></figure>
-<p>如果不存在，执行以下命令生成：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;XXXXX@qq.com&quot;</span></span><br></pre></td></tr></table></figure>
-<p>邮箱是注册 <code>Gitee</code> 时候的邮箱。</p>
-<p>执行完后会在 <code>~/.ssh/</code>下生成 <code>id_rsa</code> 和 <code>id_rsa.pub</code> 两个文件。</p>
-<p>点击 <code>Gitee -&gt; 右上角设置 -&gt; SSH 公钥</code>，将 <code>id_rsa.pub</code> 文件内容复制进去即可。</p>
-<p>执行以下命令，测试是否配置成功：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh git@gitee.com</span><br></pre></td></tr></table></figure>
-<h4 id="将本地博客部署到-gitee"><a class="markdownIt-Anchor" href="#将本地博客部署到-gitee"></a> 将本地博客部署到 Gitee</h4>
-<p>安装 <code>git</code> 部署需要的包：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git —save</span><br></pre></td></tr></table></figure>
-<p>编辑站点（博客）配置文件 <code>_config.yml</code>：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@gitee.com:username/username.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
-<p>部署：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-<p>打开之前创建的仓库 <code>gitee/username/username</code> ，点击<code>服务 -&gt; Gitee Pages -&gt;更新</code>，就可以通过 <a href="https://gitee.username.io">https://gitee.username.io</a> 访问个人博客了。不过有一点不好的是，每当在本文创建了新的 <code>post</code> 或 <code>page</code> 并重新部署后，都需要手动在 <code>Gitee Pages</code> 更新一下才能看到最新提交的内容。</p>
-]]></content>
-      <categories>
-        <category>Hexo&amp;NexT</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>NexT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo+Next搭建博客：主题初步美化</title>
     <url>/archives/54ce2e51.html</url>
     <content><![CDATA[<p>安装并启用 <code>Next</code> 主题后，有必要对其进行进一步的美化。通过阅读 <a href="https://theme-next.js.org/">NexT 官方文档</a> 以及网上搜罗的一些其他大神的文章，本文总结了一些对 <code>NexT</code> 的初步美化操作步骤。</p>
@@ -160,38 +92,146 @@
       </tags>
   </entry>
   <entry>
-    <title>Red tourism in Xi’s China</title>
-    <url>/archives/62818838.html</url>
-    <content><![CDATA[<p>In its <strong>heyday</strong><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> in the 1960s and 1970s, the village of Dazhai was called a place of miracles. Millions of revolutionary <strong>pilgrims</strong><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> came to hear how local <strong>peasants</strong><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> had carved terraced grainfields and reservoirs from its rocky hillsides, armed with little more than hand tools and love of Chairman Mao Zedong. Dazhai’s barely literate Communist Party secretary, Chen Yonggui, was summoned to Beijing and elevated to the Politburo with the rank of vice prime minister. Back then Liang Jiwen was a schoolboy, the son of a Dazhai official. He recalls dignitaries arriving each day in his corner of Shanxi province, in the dustdry Taihang mountains. He and classmates would wave flowers and sing red hymns at the roadside. “We did not get much studying done,” he recalls.</p>
+    <title>Hexo+Next搭建博客：基础搭建</title>
+    <url>/archives/92090b6.html</url>
+    <content><![CDATA[<h3 id="环境"><a class="markdownIt-Anchor" href="#环境"></a> 环境</h3>
+<p>通过 <code>Hexo</code> 搭建博客前，需要在本地安装一些必要的环境。</p>
+<h4 id="nodejs"><a class="markdownIt-Anchor" href="#nodejs"></a> node.js</h4>
+<p>命令行安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ brew install nodejs</span><br></pre></td></tr></table></figure>
+<h4 id="npm"><a class="markdownIt-Anchor" href="#npm"></a> npm</h4>
+<p>命令行安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ brew install npm</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
-<p>Then came the fall. In 1980, as part of a broader purge of ultraleftists that followed Mao’s death in 1976, official Communist Party newspapers called Dazhai a fraud. Investigators charged that its miraculous grain harvests were invented. They described massive cash subsidies channelled to the supposedly self-reliant village, and thousands of soldiers sent to build its engineering marvels.</p>
-<p>Now Dazhai is trying for a third act. Local officials have drawn up plans to include their village in a Chinawide official campaign to promote “red tourism” and teach party history to the masses. They are pinning particular hopes on their former “people’s commune”, a well-preserved complex of cave dwellings built in 1966. An evocative place, its entrance gate still decorated with Maoist slogans, it was admitted to a national register of protected sites in 2013. It is still closed to the public, but plans are afoot to buy out current residents. Among them is Jia Cunlian, a widow who has lived in a cavehome there for 30 years. She remembers Chen, the Maoera boss, as “the best of people”, who shared exotic gifts that he had received with villagers, such as melons or raisins. Still, she prefers the present day, saying: “Life was hard back then.”</p>
-<p>Since the 1990s, most visitors to Dazhai for tourism have been elderly. The village has tried to woo them with nostalgia: familyowned restaurants serving rural dishes, including treebark noodles once eaten during times of famine. But local leaders have grander ambitions now, involving what would amount to Dazhai’s political rehabilitation. To achieve that, officials are willing to offer doses of candour. Shi Yonghong, who heads the cultural relics bureau of the surrounding county, Xiyang, admits that Mao’s call to “Learn from Dazhai” led to excesses by the mid-1970s, such as when communes in other parts of China dug terraced fields out of flat plains in their anxiety to obey the chairman. Mr Shi blames officials in these places for misinterpreting the policy , adding that Dazhai never asked to be a national model. But even that grudging admission of long-ago problems is offset by his claims that Dazhai not only fed itself during the hungriest years of the 1960s, but “sold surplus harvests to the state”. He offers no further details to back up that long debunked assertion. Instead, he talks vaguely but grandly about the “Dazhai spirit”, which he defines as hard work and not asking for government handouts.</p>
-<p>In an office thick with cigarette smoke, overlooking a snow-covered village square, Dazhai’s deputy party secretary, Li Huailian, chimes in. She describes the village’s story of hardships as a way to understand what President Xi Jinping means when he tells gatherings that the good times of today did not fall from the sk y. Dazhai is prosperous because its people have always been diligent and followed party orders, she declares. “Where the party tells us to go, we go.” At first hearing, that is a rather insipid summary of her village’s tumultuous past. But these local officials know what they are doing. They want Dazhai to be a celebrated redtourism site, promoted alongside revolutionary bases on the route of the Long March. To achieve that, they need to grasp the role that history plays in the Xi era. To Mr Xi and his team, the past exists to provide reasons to admire the party, not to furnish evidence for judgments about its rule.</p>
-<p><strong>Not just popes who like to claim infallibility</strong></p>
-<p>Real history is dangerous stuff. Past adulation of Dazhai and of its boss, Chen—a zealot who ordered 141 political executions and said that revolutionaries could grow gr ain on sandy beaches—is a reminder that to Mao , party rule w as a faithbased project. It often put ideology above expertise and common sense, with horrific results. Dazhai’s denunciation in 1980 reflected moves by China’s thenparamount leader, Deng Xiaoping, to create a rational, technocratic state. Deng’s gamble was that the party did not need personality cults to maintain support. Instead, he sought a mandate based on making China strong and prosperous. To make a case for marketbased reforms that he believed vital to that project, he was pragmatically willing to allow Maoist mistakes to be named.</p>
-<p>Mr Xi favours a synthesis of these two approaches. As the party approaches its 100th anniversary in July, its leaders urge the public to contrast China’s economic rise and social stability with economic decline and political chaos in the West. That is a Dengstyle appeal to performance legitimacy. Yet that coexists with boosterish talk of “the brilliant achievements and valuable experience accumulated by our party ”. Maoist disasters are not mentioned. In the Xi era, when Chinese scholars dwell on past mistakes they are guilty of “historical nihilism”, a career-ending offence. When foreigners remember old horrors, the charge is that they seek to overthrow Communist rule. Last month Mr Xi gathered senior leaders to stress the importanc e of studying party history correctly, to pass “red genes and revolutionary fire” to later generations.</p>
-<p>Mr Xi seeks a mandate that is both pragmatic and faithbased. The common thread is absolute loyalty. By the logic of the Xi era, the Chinese are able to benefit from wise party rule today because they always trusted the party, even when it erred. Objectively, Dazhai does not deserve to be a place of pilgrimage again. Still it may happen. In China, the past is what the party needs it to be.</p>
+<h3 id="hexo"><a class="markdownIt-Anchor" href="#hexo"></a> Hexo</h3>
+<p><code>Hexo</code> 是一个快速、简洁且高效的博客框架。</p>
+<h4 id="安装-hexo"><a class="markdownIt-Anchor" href="#安装-hexo"></a> 安装 Hexo</h4>
+<p>命令行安装</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<h4 id="创建本地博客"><a class="markdownIt-Anchor" href="#创建本地博客"></a> 创建本地博客</h4>
+<p>创建一个目录，如：<code>Blog</code>，在此目录下执行初始化</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mkdir Blog</span><br><span class="line">$ <span class="built_in">cd</span> Blog</span><br><span class="line">$ hexo init</span><br><span class="line">$ hexo generate     <span class="comment"># 生成静态文件</span></span><br><span class="line">$ hexo server       <span class="comment"># 在本地服务器运行</span></span><br></pre></td></tr></table></figure>
+<p>在浏览器访问 <a href="http://localhost:4000/">http://localhost:4000</a>。</p>
+<p>之后就可以通过 <code>hexo new page pageName</code> 和 <code>hexo new postName</code> 创建新的页面 <code>page</code> 和 文章 <code>post</code> 了。</p>
+<h3 id="next"><a class="markdownIt-Anchor" href="#next"></a> NexT</h3>
+<p><code>Hexo</code> 自带的主题不是很美观（个人感觉），可以安装其他主题来美化博客。</p>
+<p><code>Hexo</code> 提供众多主题供用户选择，这里选择使用人数最多的 <code>Next</code> 主题。</p>
+<h4 id="安装主题"><a class="markdownIt-Anchor" href="#安装主题"></a> 安装主题</h4>
+<p>主题的安装有以下两种方式：</p>
+<div class="tabs" id="next-安装"><ul class="nav-tabs"><li class="tab active"><a href="#next-安装-1">git 安装</a></li><li class="tab"><a href="#next-安装-2">npm 安装</a></li></ul><div class="tab-content"><div class="tab-pane active" id="next-安装-1"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/next-theme/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="next-安装-2"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-theme-next@latest</span><br></pre></td></tr></table></figure></div></div></div>
+<p>以上两种方式安装的都是 <code>NexT</code> 的最新版本。</p>
+<h4 id="启用主题"><a class="markdownIt-Anchor" href="#启用主题"></a> 启用主题</h4>
+<p>修改站点（博客）配置文件 <code>_config.xml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
+<p>然后执行以下命令测试一下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
+<h3 id="将博客部署到-gitee-pages"><a class="markdownIt-Anchor" href="#将博客部署到-gitee-pages"></a> 将博客部署到 Gitee Pages</h3>
+<p><code>Gitee Pages</code> 是一个免费的静态网页托管服务，可以使用 <code>Gitee Pages</code> 托管博客、项目官网等静态网页。目前 <code>Gitee Pages</code> 支持 <code>Jekyll</code>、<code>Hugo</code>、<code>Hexo</code>编译静态资源。</p>
+<h4 id="注册-gtiee-账号"><a class="markdownIt-Anchor" href="#注册-gtiee-账号"></a> 注册 Gtiee 账号</h4>
+<h4 id="创建仓库"><a class="markdownIt-Anchor" href="#创建仓库"></a> 创建仓库</h4>
+<p><strong>注意<mark>路径</mark>一定要填写 <code>username.gitee.io</code> 这样后面才能使用 <code>Gitee Pages</code> 功能。</strong></p>
+<p>每个帐号只能有一个仓库来存放个人主页，而且仓库的名字必须是 <code>username/username.gitee.io</code>，这是特殊的命名约定，之后就可以通过 <a href="http://username.gitee.io/">http://username.gitee.io</a>  来访问个人主页。</p>
+<h4 id="配置-ssh"><a class="markdownIt-Anchor" href="#配置-ssh"></a> 配置 SSH</h4>
+<p>上传文件需要配置 <code>ssh key</code>，不然无法上传。</p>
+<p>首先先检查一下本地是否已经存在 <code>ssh key</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls -al ~/.ssh</span><br></pre></td></tr></table></figure>
+<p>如果不存在，执行以下命令生成：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;XXXXX@qq.com&quot;</span></span><br></pre></td></tr></table></figure>
+<p>邮箱是注册 <code>Gitee</code> 时候的邮箱。</p>
+<p>执行完后会在 <code>~/.ssh/</code>下生成 <code>id_rsa</code> 和 <code>id_rsa.pub</code> 两个文件。</p>
+<p>点击 <code>Gitee -&gt; 右上角设置 -&gt; SSH 公钥</code>，将 <code>id_rsa.pub</code> 文件内容复制进去即可。</p>
+<p>执行以下命令，测试是否配置成功：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh git@gitee.com</span><br></pre></td></tr></table></figure>
+<h4 id="将本地博客部署到-gitee"><a class="markdownIt-Anchor" href="#将本地博客部署到-gitee"></a> 将本地博客部署到 Gitee</h4>
+<p>安装 <code>git</code> 部署需要的包：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git —save</span><br></pre></td></tr></table></figure>
+<p>编辑站点（博客）配置文件 <code>_config.yml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@gitee.com:username/username.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<p>部署：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<p>打开之前创建的仓库 <code>gitee/username/username</code> ，点击<code>服务 -&gt; Gitee Pages -&gt;更新</code>，就可以通过 <a href="https://gitee.username.io">https://gitee.username.io</a> 访问个人博客了。不过有一点不好的是，每当在本文创建了新的 <code>post</code> 或 <code>page</code> 并重新部署后，都需要手动在 <code>Gitee Pages</code> 更新一下才能看到最新提交的内容。</p>
+]]></content>
+      <categories>
+        <category>Hexo&amp;NexT</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>NexT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>The world this week Business</title>
+    <url>/archives/2b46cafc.html</url>
+    <content><![CDATA[<p>The American Senate began debate on Joe Biden’s $1.9trn stimulus bill, after it passed the House of Representatives. Mr Biden will need the support of all 50 Democratic senators if it is to succeed. In one setback, the Senate’s parliamentarian said that a measure to raise the minimum wage to $15 an hour could not be included in the legislation under the procedure by which the Democrats have introduced the bill.</p>
+<span id="more"></span>
+<p><strong>Spend now, pay later</strong></p>
+<p>In Britain the government’s budget provided yet more spending on workers and businesses to <mark class="label primary">cushion</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> the blow of the pandemic. The <mark class="label primary">furlough</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> scheme, which pays staff wages and has been in place for a year, was extended to September. Fiscal support for the pandemic now totals £407bn ($570bn). To pay for all this the government set out tax increases, including a rise in corporation tax from 19% to 25% in 2023. Before that there will be a two-year tax break for companies intended to <mark class="label primary">spur</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> investment.</p>
+<p>Bond markets were quieter, following a <mark class="label primary">rout</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> in prices sparked by fears of rising inflation in America. The yield on the ten-year US Treasury bond fell back to 1.46%, having risen above 1.6%. It started the year well below 1%.</p>
+<p>India’s economy pulled out of recession in the last three months of 2020, but only just. GDP expanded by 0.4% in the quarter, year on year. A huge stimulus package helped Brazil limit the pandemic’s damage to its GDP, which shrank by 4.1% last year, a better performance than economies of similar size.</p>
+<div class="note info"><p><strong>Brazil</strong>：巴西</p>
+</div>
+<p>February was a record month for the value of SPACS, shell companies that list on a stock exchange with the intent of merging with an existing company, and so avoid the rigours of an IPO. SPACS struck 50 merger deals last month, totalling almost $109bn.</p>
+<p>Rio Tinto’s chairman decided to step down within a year because of the mining company’s <mark class="label primary">demolition</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> of a sacred <mark class="label primary">Aboriginal</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> cave in Australia in May 2020. Australian pension funds had pressed Rio’s board to hold senior executives to account for the destruction.</p>
+<div class="note info"><p><strong>step down</strong>：辞职，下台</p>
+</div>
+<p>Another week and another carmaker announced an ambitious electrification strategy, as Volvo said it would phase out all petrol-powered cars, including hybrids, by 2030, and sell only fully electric ones. It also plans to disrupt the established way of selling cars by <mark class="label primary">ditching</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> dealerships and making its new cars available only online.</p>
+<div class="note info"><p><strong>phase out</strong>：逐步淘汰，逐步取消，逐步停止</p>
+</div>
+<p>Las Vegas Sands, founded by the late Sheldon Adelson, reached an agreement to sell the Venetian hotel in Las Vegas to private-equity and property investors for more than $6bn. The investors are<br />
+taking a <mark class="label primary">punt</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> that Sin City will <mark class="label primary">rebound</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> when covid-19 restrictions are eased. The deal <mark class="label primary">underpins</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>Las Vegas Sands’ focus on its <mark class="label primary">casinos</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> in Macau and Singapore, the backbone of its business.</p>
+<p>Both Lufthansa and International Airlines Group, the owner of British Airways, reported big annual losses. Looking for ways to save cash, BA has reached an agreement to defer £450m ($628m) in pension deficit contributions.</p>
+<p>Covid-related restrictions brought about a 6% drop in energy-related carbon-dioxide emissions last year, according to the International Energy Agency. But as demand picked up, so did emissions, which were 2% higher in December 2020 than in December 2019. With its economy rebounding, China’s emissions rose over the year, by 0.8%; in America they fell by 10%. Globally, the decline in road activity accounted for 50% of the fall in demand for oil, and the <mark class="label primary">slump</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> in aviation for 35%.</p>
+<p>There may be a new president in the White House, but Amazon still finds itself caught in political crosshairs. Joe Biden warned the retail giant this week not to interfere with a vote by workers at a warehouse in Alabama on whether to unionise, a first for all the employees at an Amazon facility. Meanwhile, Amazon was forced to change the recent redesign of its app logo, because the Twitterati thought it resembled Hitler.</p>
+<div class="note info"><p><strong>Twitterati</strong>：网络达人</p>
+</div>
+<p>Birkenstock was sold to a private-equity firm backed by lvmh in a deal worth €4bn ($4.8bn). Associated with hippies in the 1970s until they became de rigueur for hipsters in the 1990s, Birkenstock sandals<sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> trace their history back to Germany in 1774; the current design dates from the 1960s. The Birkenstock family will no longer be sole owners, but they will retain a minority <mark class="label primary">stake</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>.</p>
+<p><strong>A one-way ticket?</strong></p>
+<p>Maezawa Yusaku, a Japanese <mark class="label primary">tycoon</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup>, invited applications for eight places on his planned trip around the Moon, pencilled in for 2023. Meanwhile SpaceX, the firm that will fly Mr Maezawa and his companions, was testing a prototype version of the rocket he hopes to use. The machine managed to return to its landing pad after flying 10km into the air, but blew up a few minutes later.</p>
 <hr class="footnotes-sep" />
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>全盛时期 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+<li id="fn1" class="footnote-item"><p>美 ['kʊʃ(ə)n] 1. 坐垫，靠垫；2. 缓和，缓冲（打击） <a href="#fnref1" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn2" class="footnote-item"><p>朝圣 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+<li id="fn2" class="footnote-item"><p>美 [‘fɜrloʊ] （尤指在国外服役士兵的）休假（许可) <a href="#fnref2" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn3" class="footnote-item"><p>农民 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+<li id="fn3" class="footnote-item"><p>美 [spɜr] 刺激，激励，促进 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>美 [raʊt] 溃败 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>美 [.demə’lɪʃ(ə)n] 1. 破坏，拆除；2. 废墟 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>美 [ˌæbəˈrɪdʒən(ə)l] 1. 土著，原住民；2. 土著的，原始的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>美 [dɪtʃ] 摆脱，抛弃 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>美 [pʌnt] 赌博，打赌 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>美 [rɪ’baʊnd] 1. 篮板球；2. 复兴，复苏 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>美 [.ʌndər’pɪn] 巩固，支撑，加强 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>美 [kə’sinoʊ] 赌场 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>美 [slʌmp] 暴跌，锐减 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p>美 ['sænd(ə)l] 凉鞋 <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn14" class="footnote-item"><p>美 [steɪk] 股份 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn15" class="footnote-item"><p>美 [taɪˈkuːn] 大亨，企业巨头 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
 </li>
 </ol>
 </section>
 ]]></content>
       <categories>
         <category>The Economist</category>
-        <category>China</category>
+        <category>The world this week</category>
       </categories>
       <tags>
         <tag>The Economist</tag>
         <tag>经济学人</tag>
         <tag>China</tag>
+        <tag>Business</tag>
       </tags>
   </entry>
   <entry>
@@ -290,78 +330,128 @@
       </tags>
   </entry>
   <entry>
-    <title>The world this week Business</title>
-    <url>/archives/2b46cafc.html</url>
-    <content><![CDATA[<p>The American Senate began debate on Joe Biden’s $1.9trn stimulus bill, after it passed the House of Representatives. Mr Biden will need the support of all 50 Democratic senators if it is to succeed. In one setback, the Senate’s parliamentarian said that a measure to raise the minimum wage to $15 an hour could not be included in the legislation under the procedure by which the Democrats have introduced the bill.</p>
+    <title>Red tourism in Xi’s China</title>
+    <url>/archives/62818838.html</url>
+    <content><![CDATA[<p>In its <strong>heyday</strong><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> in the 1960s and 1970s, the village of Dazhai was called a place of miracles. Millions of revolutionary <strong>pilgrims</strong><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> came to hear how local <strong>peasants</strong><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> had carved terraced grainfields and reservoirs from its rocky hillsides, armed with little more than hand tools and love of Chairman Mao Zedong. Dazhai’s barely literate Communist Party secretary, Chen Yonggui, was summoned to Beijing and elevated to the Politburo with the rank of vice prime minister. Back then Liang Jiwen was a schoolboy, the son of a Dazhai official. He recalls dignitaries arriving each day in his corner of Shanxi province, in the dustdry Taihang mountains. He and classmates would wave flowers and sing red hymns at the roadside. “We did not get much studying done,” he recalls.</p>
 <span id="more"></span>
-<p><strong>Spend now, pay later</strong></p>
-<p>In Britain the government’s budget provided yet more spending on workers and businesses to <mark class="label primary">cushion</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> the blow of the pandemic. The <mark class="label primary">furlough</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> scheme, which pays staff wages and has been in place for a year, was extended to September. Fiscal support for the pandemic now totals £407bn ($570bn). To pay for all this the government set out tax increases, including a rise in corporation tax from 19% to 25% in 2023. Before that there will be a two-year tax break for companies intended to <mark class="label primary">spur</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> investment.</p>
-<p>Bond markets were quieter, following a <mark class="label primary">rout</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> in prices sparked by fears of rising inflation in America. The yield on the ten-year US Treasury bond fell back to 1.46%, having risen above 1.6%. It started the year well below 1%.</p>
-<p>India’s economy pulled out of recession in the last three months of 2020, but only just. GDP expanded by 0.4% in the quarter, year on year. A huge stimulus package helped Brazil limit the pandemic’s damage to its GDP, which shrank by 4.1% last year, a better performance than economies of similar size.</p>
-<div class="note info"><p><strong>Brazil</strong>：巴西</p>
-</div>
-<p>February was a record month for the value of SPACS, shell companies that list on a stock exchange with the intent of merging with an existing company, and so avoid the rigours of an IPO. SPACS struck 50 merger deals last month, totalling almost $109bn.</p>
-<p>Rio Tinto’s chairman decided to step down within a year because of the mining company’s <mark class="label primary">demolition</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> of a sacred <mark class="label primary">Aboriginal</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> cave in Australia in May 2020. Australian pension funds had pressed Rio’s board to hold senior executives to account for the destruction.</p>
-<div class="note info"><p><strong>step down</strong>：辞职，下台</p>
-</div>
-<p>Another week and another carmaker announced an ambitious electrification strategy, as Volvo said it would phase out all petrol-powered cars, including hybrids, by 2030, and sell only fully electric ones. It also plans to disrupt the established way of selling cars by <mark class="label primary">ditching</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> dealerships and making its new cars available only online.</p>
-<div class="note info"><p><strong>phase out</strong>：逐步淘汰，逐步取消，逐步停止</p>
-</div>
-<p>Las Vegas Sands, founded by the late Sheldon Adelson, reached an agreement to sell the Venetian hotel in Las Vegas to private-equity and property investors for more than $6bn. The investors are<br />
-taking a <mark class="label primary">punt</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> that Sin City will <mark class="label primary">rebound</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> when covid-19 restrictions are eased. The deal <mark class="label primary">underpins</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>Las Vegas Sands’ focus on its <mark class="label primary">casinos</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> in Macau and Singapore, the backbone of its business.</p>
-<p>Both Lufthansa and International Airlines Group, the owner of British Airways, reported big annual losses. Looking for ways to save cash, BA has reached an agreement to defer £450m ($628m) in pension deficit contributions.</p>
-<p>Covid-related restrictions brought about a 6% drop in energy-related carbon-dioxide emissions last year, according to the International Energy Agency. But as demand picked up, so did emissions, which were 2% higher in December 2020 than in December 2019. With its economy rebounding, China’s emissions rose over the year, by 0.8%; in America they fell by 10%. Globally, the decline in road activity accounted for 50% of the fall in demand for oil, and the <mark class="label primary">slump</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> in aviation for 35%.</p>
-<p>There may be a new president in the White House, but Amazon still finds itself caught in political crosshairs. Joe Biden warned the retail giant this week not to interfere with a vote by workers at a warehouse in Alabama on whether to unionise, a first for all the employees at an Amazon facility. Meanwhile, Amazon was forced to change the recent redesign of its app logo, because the Twitterati thought it resembled Hitler.</p>
-<div class="note info"><p><strong>Twitterati</strong>：网络达人</p>
-</div>
-<p>Birkenstock was sold to a private-equity firm backed by lvmh in a deal worth €4bn ($4.8bn). Associated with hippies in the 1970s until they became de rigueur for hipsters in the 1990s, Birkenstock sandals<sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> trace their history back to Germany in 1774; the current design dates from the 1960s. The Birkenstock family will no longer be sole owners, but they will retain a minority <mark class="label primary">stake</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>.</p>
-<p><strong>A one-way ticket?</strong></p>
-<p>Maezawa Yusaku, a Japanese <mark class="label primary">tycoon</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup>, invited applications for eight places on his planned trip around the Moon, pencilled in for 2023. Meanwhile SpaceX, the firm that will fly Mr Maezawa and his companions, was testing a prototype version of the rocket he hopes to use. The machine managed to return to its landing pad after flying 10km into the air, but blew up a few minutes later.</p>
+<p>Then came the fall. In 1980, as part of a broader purge of ultraleftists that followed Mao’s death in 1976, official Communist Party newspapers called Dazhai a fraud. Investigators charged that its miraculous grain harvests were invented. They described massive cash subsidies channelled to the supposedly self-reliant village, and thousands of soldiers sent to build its engineering marvels.</p>
+<p>Now Dazhai is trying for a third act. Local officials have drawn up plans to include their village in a Chinawide official campaign to promote “red tourism” and teach party history to the masses. They are pinning particular hopes on their former “people’s commune”, a well-preserved complex of cave dwellings built in 1966. An evocative place, its entrance gate still decorated with Maoist slogans, it was admitted to a national register of protected sites in 2013. It is still closed to the public, but plans are afoot to buy out current residents. Among them is Jia Cunlian, a widow who has lived in a cavehome there for 30 years. She remembers Chen, the Maoera boss, as “the best of people”, who shared exotic gifts that he had received with villagers, such as melons or raisins. Still, she prefers the present day, saying: “Life was hard back then.”</p>
+<p>Since the 1990s, most visitors to Dazhai for tourism have been elderly. The village has tried to woo them with nostalgia: familyowned restaurants serving rural dishes, including treebark noodles once eaten during times of famine. But local leaders have grander ambitions now, involving what would amount to Dazhai’s political rehabilitation. To achieve that, officials are willing to offer doses of candour. Shi Yonghong, who heads the cultural relics bureau of the surrounding county, Xiyang, admits that Mao’s call to “Learn from Dazhai” led to excesses by the mid-1970s, such as when communes in other parts of China dug terraced fields out of flat plains in their anxiety to obey the chairman. Mr Shi blames officials in these places for misinterpreting the policy , adding that Dazhai never asked to be a national model. But even that grudging admission of long-ago problems is offset by his claims that Dazhai not only fed itself during the hungriest years of the 1960s, but “sold surplus harvests to the state”. He offers no further details to back up that long debunked assertion. Instead, he talks vaguely but grandly about the “Dazhai spirit”, which he defines as hard work and not asking for government handouts.</p>
+<p>In an office thick with cigarette smoke, overlooking a snow-covered village square, Dazhai’s deputy party secretary, Li Huailian, chimes in. She describes the village’s story of hardships as a way to understand what President Xi Jinping means when he tells gatherings that the good times of today did not fall from the sk y. Dazhai is prosperous because its people have always been diligent and followed party orders, she declares. “Where the party tells us to go, we go.” At first hearing, that is a rather insipid summary of her village’s tumultuous past. But these local officials know what they are doing. They want Dazhai to be a celebrated redtourism site, promoted alongside revolutionary bases on the route of the Long March. To achieve that, they need to grasp the role that history plays in the Xi era. To Mr Xi and his team, the past exists to provide reasons to admire the party, not to furnish evidence for judgments about its rule.</p>
+<p><strong>Not just popes who like to claim infallibility</strong></p>
+<p>Real history is dangerous stuff. Past adulation of Dazhai and of its boss, Chen—a zealot who ordered 141 political executions and said that revolutionaries could grow gr ain on sandy beaches—is a reminder that to Mao , party rule w as a faithbased project. It often put ideology above expertise and common sense, with horrific results. Dazhai’s denunciation in 1980 reflected moves by China’s thenparamount leader, Deng Xiaoping, to create a rational, technocratic state. Deng’s gamble was that the party did not need personality cults to maintain support. Instead, he sought a mandate based on making China strong and prosperous. To make a case for marketbased reforms that he believed vital to that project, he was pragmatically willing to allow Maoist mistakes to be named.</p>
+<p>Mr Xi favours a synthesis of these two approaches. As the party approaches its 100th anniversary in July, its leaders urge the public to contrast China’s economic rise and social stability with economic decline and political chaos in the West. That is a Dengstyle appeal to performance legitimacy. Yet that coexists with boosterish talk of “the brilliant achievements and valuable experience accumulated by our party ”. Maoist disasters are not mentioned. In the Xi era, when Chinese scholars dwell on past mistakes they are guilty of “historical nihilism”, a career-ending offence. When foreigners remember old horrors, the charge is that they seek to overthrow Communist rule. Last month Mr Xi gathered senior leaders to stress the importanc e of studying party history correctly, to pass “red genes and revolutionary fire” to later generations.</p>
+<p>Mr Xi seeks a mandate that is both pragmatic and faithbased. The common thread is absolute loyalty. By the logic of the Xi era, the Chinese are able to benefit from wise party rule today because they always trusted the party, even when it erred. Objectively, Dazhai does not deserve to be a place of pilgrimage again. Still it may happen. In China, the past is what the party needs it to be.</p>
 <hr class="footnotes-sep" />
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>美 ['kʊʃ(ə)n] 1. 坐垫，靠垫；2. 缓和，缓冲（打击） <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+<li id="fn1" class="footnote-item"><p>全盛时期 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn2" class="footnote-item"><p>美 [‘fɜrloʊ] （尤指在国外服役士兵的）休假（许可) <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+<li id="fn2" class="footnote-item"><p>朝圣 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn3" class="footnote-item"><p>美 [spɜr] 刺激，激励，促进 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn4" class="footnote-item"><p>美 [raʊt] 溃败 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn5" class="footnote-item"><p>美 [.demə’lɪʃ(ə)n] 1. 破坏，拆除；2. 废墟 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn6" class="footnote-item"><p>美 [ˌæbəˈrɪdʒən(ə)l] 1. 土著，原住民；2. 土著的，原始的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn7" class="footnote-item"><p>美 [dɪtʃ] 摆脱，抛弃 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn8" class="footnote-item"><p>美 [pʌnt] 赌博，打赌 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn9" class="footnote-item"><p>美 [rɪ’baʊnd] 1. 篮板球；2. 复兴，复苏 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn10" class="footnote-item"><p>美 [.ʌndər’pɪn] 巩固，支撑，加强 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn11" class="footnote-item"><p>美 [kə’sinoʊ] 赌场 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn12" class="footnote-item"><p>美 [slʌmp] 暴跌，锐减 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn13" class="footnote-item"><p>美 ['sænd(ə)l] 凉鞋 <a href="#fnref13" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn14" class="footnote-item"><p>美 [steɪk] 股份 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn15" class="footnote-item"><p>美 [taɪˈkuːn] 大亨，企业巨头 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
+<li id="fn3" class="footnote-item"><p>农民 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
 </li>
 </ol>
 </section>
 ]]></content>
       <categories>
         <category>The Economist</category>
-        <category>The world this week</category>
+        <category>China</category>
       </categories>
       <tags>
         <tag>The Economist</tag>
         <tag>经济学人</tag>
         <tag>China</tag>
-        <tag>Business</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Bouncing back</title>
+    <url>/archives/214164ed.html</url>
+    <content><![CDATA[<center><b>How to make a social safety net for the post-covid world</b></center>
+<p>After the Depression and the second world war, voters and governments in rich countries recast the relationship between the state and its citizens. Now the pandemic has seen the old rules on social spending <mark class="label primary">ripped</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> up. More than three-quarters of Americans support President Joe Biden’s $1.9trn stimulus bill, which is due in the Senate and includes $1,400 cheques for most adults. And in the budget on March 3rd Britain extended a scheme to pay the wages of furloughed workers until September, even as public debt hit its highest level since 1945 (see leader). Such <mark class="label primary">boldness</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> brings dangers: governments could stretch the public finances to breaking-point, <mark class="label primary">distort</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> incentives and create <mark class="label primary">sclerotic</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> societies. But they also have a chance to create new social-welfare policies that are affordable and which help workers thrive in an economy facing technological <mark class="label primary">disruption</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>. They must seize it.</p>
+<span id="more"></span>
+<p>The past year has seen a wild experiment in social spending. The world launched at least 1,600 new social-protection programmes in 2020 (see Briefing). Rich countries have provided 5.8% of GDP on average to help record numbers of workers. Government debts are piling up , but so far low interest rates mean that they are cheap to service. The public’s mood had already been shifting. Britons used to grumble that <mark class="label primary">layabouts</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> <mark class="label primary">sponged</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> off the welfare state; now they are more likely to say help is too <mark class="label primary">stingy</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>. Last year over two-thirds of Europeans said they supported a universal basic income (UBI), an unconditional recurring payment to all adults. Affluent professionals have had their gaze drawn to the working conditions of those who deliver food and look after the sick. The struggles of women who have dropped out of the workforce to care for children and the elderly have become impossible to ignore.</p>
+<div class="note info"><p><strong>sponge off</strong>：依赖…生活</p>
+</div>
+<p>The social safety net in many rich countries was <mark class="label primary">creaking</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> before covid-19 struck. Modelled on the ideas of Ottovon Bismarck and William Beveridge, it had often failed to cushion workers from globalisation and technological and social change. In 1999-2019 the number of Americans aged 25-54 outside the labour force grew by 25%, or 4.7m, over six times more than the number who received help from the main assistance programme for <mark class="label primary">displaced</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup> workers. As health-care and pension costs soared in recent years, governments cut back support for working-age people. Between 2014 and 2018 Britain’s state-pension bill grew in real terms by £4bn ($5.8bn), even as the rest of its welfare budget shrank by £ 16.5bn. A <mark class="label primary">dwindling</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> share of middle-income jobs and the growth of the gig economy fuelled fears that labour markets were changing faster than flat-footed governments could.</p>
+<div class="note info"><p><strong>labour force</strong>：劳动力</p>
+<p><strong>gig economy</strong>：零工经济</p>
+<p><strong>flat-footed</strong>：措手不及的</p>
+</div>
+<p>With the public and some economists cheering on, it is <mark class="label primary">tempting</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> for politicians to <mark class="label primary">stoke</mark><sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> the economy with more ad hoc spending, or put in place vast schemes such as UBI. Instead they need to take a measured, longterm view. The safety net must be affordable. Tight budgets, not milk and honey, will define the 2020s. The annual deficit of big advanced economies was 4% of their combined GDP even before the pandemic—and much ageing is still to come. Already bond yields are rising again (see Finance section). Social spending must flow quickly and automatically to those who need it—not, as in America, only during crises when a panicked government passes emergency legislation. And governments need to find mechanisms that cushion people more effectively against income shocks and joblessness without discouraging work or crushing economic dynamism.</p>
+<p>The first step towards satisfying these goals is to use technology to make ancient bureaucracies more efficient. Postal cheques, 1980s mainframe computers and <mark class="label priamry">shoddy</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup> data need to be relegated to the past. In the pandemic many governments temporarily short-circuited their existing systems because they were too slow. In Estonia and Singapore digital-identification systems and a <mark class="label primary">disdain</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup> for form-filling became an asset in the crisis. More countries need to copy them and also to ensure universal access to the internet and bank accounts. The call for efficient administration may sound like tinkering but one in five poor Americans eligible for wage topups fails to claim them. <mark class="label primary">Nimble</mark><sup class="footnote-ref"><a href="#fn16" id="fnref16">[16]</a></sup> digital-payment systems will reduce the need for costly universalism as a fail-safe, and allow better targeting and quicker response times. Digital systems also permit the emergency option of making temporary cash payments to all households.</p>
+<div class="note info"><p><strong>wage topup</strong>：工资补贴</p>
+<p><strong>fail-safe</strong>：失效保护；事故保险</p>
+</div>
+<p>That is the easy part. Balancing generosity and dynamism is harder. Part of the solution is to top up the wages of low-paid workers. AngloSax on countries have done this well since reforms in the 1990s and 2000s. But wage topups are of little use to the jobless and are often <mark class="label primary">scant</mark><sup class="footnote-ref"><a href="#fn17" id="fnref17">[17]</a></sup> compensation for people who lose good jobs to forces beyond their control. <mark class="label primary">Paltry</mark><sup class="footnote-ref"><a href="#fn18" id="fnref18">[18]</a></sup> support for the unemployed in Britain and America preserves incentives to work but at high human cost. The sparsity of social insu ance has <mark class="label primary">undermined</mark><sup class="footnote-ref"><a href="#fn19" id="fnref19">[19]</a></sup> political support for creative destruction, the <mark class="label primary">catalyst</mark><sup class="footnote-ref"><a href="#fn20" id="fnref20">[20]</a></sup> for rising living standards. Continental Europe tends to <mark class="label primary">underwrite</mark><sup class="footnote-ref"><a href="#fn21" id="fnref21">[21]</a></sup> traditional workers’ incomes more generously. But the distortion of incentives leads to higher unemployment and divisions between <mark class="label primary">coddled</mark><sup class="footnote-ref"><a href="#fn22" id="fnref22">[22]</a></sup> insiders and a <mark class="label primary">precariat</mark><sup class="footnote-ref"><a href="#fn23" id="fnref23">[23]</a></sup>. Both sides of the Atlantic lack a permanent safety net that insures gig workers and the self-employed.</p>
+<p>There is one country that combines labour-market flexibility with generosity: Denmark, which spends large sums—1.9% of GDP in 2018—on retraining and on advising the jobless. These interventions stop the unemployed from falling into dependency. The inadequacies of policies elsewhere are often glaring . Britain’s efforts have <mark class="label primary">flopped</mark><sup class="footnote-ref"><a href="#fn24" id="fnref24">[24]</a></sup>. America’s comparable spending is less than a 20th as large as Denmark’s, even though the few lucky beneficiaries of its “trade-adjustment assistance” earn $50,000 more in wages, on average, over a decade.</p>
+<p><strong>Bungee economics</strong></p>
+<p>For years social spending has favoured the elderly and an outdated safety net. It should be rebuilt around active labour-market policies that use technology to help everyone from shop-workers who are victims of disruption to mothers whose skills have <mark class="label primary">atrophied</mark><sup class="footnote-ref"><a href="#fn25" id="fnref25">[25]</a></sup> and those whose jobs are replaced by machines. Governments cannot eliminate risk, but they can help ensure that if calamity strikes, people bounce back.</p>
+<hr class="footnotes-sep" />
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>美 [rɪp] （突然或猛烈地）撕破，撕裂 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>美 [‘boʊldnɪs] 1. 魄力；2. 大胆，冒失 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>美 [dɪ’stɔrt] 扭曲，使变形 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>美 [sklə’rɑtɪk] 硬的，硬化的 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>美 [dɪs’rʌpʃən] 中断；破坏；紊乱，混乱；故障，失常 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>美 [‘leɪə.baʊt] 懒汉，游手好闲的人 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>美 [spʌndʒ] 1. 海绵；2. 用海绵擦拭 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>美 [‘stɪndʒi] 小气的，吝啬的 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>美 [krik] 吱吱作响，运转不灵 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>美 [dɪs’pleɪs] 取代，置换；流离失所 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>美 ['dwɪnd(ə)l] 缩小，逐渐减少 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>美 [‘temptɪŋ] 吸引人的，诱人的 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p>美 [stoʊk] 1. 给…添加（燃料）；2. 煽动，刺激 <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn14" class="footnote-item"><p>美 [‘ʃɑdi] 劣质的，做工粗糙的 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn15" class="footnote-item"><p>美 [dɪs’deɪn] 蔑视，鄙视，不屑 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn16" class="footnote-item"><p>美 [ˈnɪmb(ə)l] 敏捷的，灵活的 <a href="#fnref16" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn17" class="footnote-item"><p>美 [skænt] 一丁点的，微小的，不足的 <a href="#fnref17" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn18" class="footnote-item"><p>美 [‘pɔltri] 可忽略不计的，微不足道的 <a href="#fnref18" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn19" class="footnote-item"><p>美 [.ʌndər’maɪn] 逐渐削弱（信心、权威等）；使逐步减少效力；从根基处破坏；挖…的墙脚 <a href="#fnref19" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn20" class="footnote-item"><p>美 ['kæt(ə)lɪst] 催化剂，引发变化的因素 <a href="#fnref20" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn21" class="footnote-item"><p>美 [.ʌndər’raɪt] 承担经济责任（包括支付特别费用或损失）；承担保险责任；承保；包销 <a href="#fnref21" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn22" class="footnote-item"><p>美 ['kɑd(ə)l] 娇惯，溺爱 <a href="#fnref22" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn23" class="footnote-item"><p>不稳定无资产者，朝不保夕者 <a href="#fnref23" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn24" class="footnote-item"><p>美 [flɑp] 完全失败 <a href="#fnref24" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn25" class="footnote-item"><p>美 [‘ætrəfi] 萎缩，衰退，退化 <a href="#fnref25" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>The Economist</category>
+        <category>Leaders</category>
+      </categories>
+      <tags>
+        <tag>The Economist</tag>
+        <tag>经济学人</tag>
+        <tag>China</tag>
+        <tag>Leaders</tag>
       </tags>
   </entry>
   <entry>
