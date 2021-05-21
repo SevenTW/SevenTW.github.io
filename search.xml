@@ -275,6 +275,29 @@
       </tags>
   </entry>
   <entry>
+    <title>Spring</title>
+    <url>/archives/6c92115f.html</url>
+    <content><![CDATA[<h3 id="spring-简介"><a class="markdownIt-Anchor" href="#spring-简介"></a> Spring 简介</h3>
+<span id="more"></span>
+<h3 id="ioc"><a class="markdownIt-Anchor" href="#ioc"></a> <code>IoC</code></h3>
+<p><strong>IoC</strong> is also known as dependency injection (<strong>DI</strong>).</p>
+<p>It is a process whereby objects define their dependencies (that is, the other objects they work with) only through <strong>constructor arguments</strong>, <strong>arguments to a factory method</strong>, or <strong>properties that are set on the object instance</strong> after it is constructed or returned from a factory method.</p>
+<p><strong>The container then injects those dependencies when it creates the bean.</strong></p>
+<p>In Spring, the objects that form the backbone of your application and that are managed by the Spring IoC container are called beans. <strong>A bean is an object that is instantiated, assembled, and managed by a Spring IoC container</strong>. Beans, and the dependencies among them, are reflected in the configuration metadata used by a container.</p>
+<h3 id="aop"><a class="markdownIt-Anchor" href="#aop"></a> <code>AOP</code></h3>
+<h3 id="事物"><a class="markdownIt-Anchor" href="#事物"></a> 事物</h3>
+]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+        <tag>IoC</tag>
+        <tag>AOP</tag>
+        <tag>事物</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>The world this week Politics</title>
     <url>/archives/4eb6fb1.html</url>
     <content><![CDATA[<p>In Hong Kong, 47 activists were charged with violating the territory’s national-security law. As a court began hearing defendants’ <mark class="label primary">petitions</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> to be released on bail, hundreds of supporters gathered outside. The activists’ alleged crimes relate to an informal primary ballot held last year by pro-democracy politicians in order to produce strong candidates for the Legislative Council. The government saw this as a plot to gain control of the council and block its work.</p>
@@ -812,6 +835,65 @@ equivalents to join the importers. If Chinese reactors are designed in the knowl
       </tags>
   </entry>
   <entry>
+    <title>The law kicks in</title>
+    <url>/archives/40ddc300.html</url>
+    <content><![CDATA[<center><b>The territory will soon find out how its
+new security law works in court</b></center>
+<p>Since china imposed a <mark class="label primary">draconian</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> security law on Hong Kong last year, protests in the city—already <mark class="label primary">dampened</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> by pandemic-related controls—have been rare. But on March 1st hundreds of people gathered outside a court to demonstrate against the largest case so far related to the security bill. They held banners calling for the release of “political prisoners” and chanted slogans that were popular during the unrest that <mark class="label primary">engulfed</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> the territory in 2019. Students at a primary school nearby stood outside their classrooms, shouting in solidarity. It was a rare act of defiance in a city that, to many residents, feels crushed.</p>
+<span id="more"></span>
+<p>A day earlier, 47 people had been charged for alleged <mark class="label primary">misdeeds</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> as part of the case. They included some of Hong Kong’s best-known pro-democracy activists, such as Leung Kwokhung, a <mark class="label primary">veteran</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> campaigner commonly known as “Long Hair”; Lester Shum, a politician; Benny Tai, an academic, and Joshua Wong, whose then-teenage face became <mark class="label primary">emblematic</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> of the “Umbrella Movement” of 2014 (he is already in prison for a protest-related offence). They have been accused of crimes such as conspiracy to commit <mark class="label primary">subversion</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> by plotting to overthrow Hong Kong’s government.</p>
+<p>The case relates to an informal primary ballot that was held last year to select pro-democracy<br />
+candidates for elections to the Legislative Council. This sensible-sounding effort was seen by the government as an attempt to gain control of the council and paralyse its work. (The elections were<br />
+due to be held in September but were postponed for a year, <mark class="label primary">purportedly</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> because of the pandemic.) If convicted, the defendants face sentences of up to life in prison.</p>
+<p>The proceedings that began on March 1st relate to applications for bail—the trial itself may not begin for several more weeks. Under the security law, there is a presumption that bail will be denied, so even this stage has involved <mark class="label primary">protracted</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> debate in court and a <mark class="label primary">gruelling</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup> <mark class="label primary">ordeal</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> for the defendants. They have had to endure sessions lasting many hours that have eaten into normal times for meals and sleep. The physical toll has been evident—several of them have received hospital treatment. The prosecution argues that defendants could pose a threat to national security if given bail. Soon after The Economist went to press, the court was expected to <mark class="label primary">rule</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> on whether to <mark class="label primary">remand</mark><sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> them in <mark class="label primary">custody</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>.</p>
+<p>No national-security trial has yet been concluded. So this one will be watched for signs of how the new law—which has the <mark class="label primary">hallmarks</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup> of Chinese mainland-style legislation, with its vaguely defined political terms—works in a judicial system steeped in British legal tradition. Dominic Raab, Britain’s foreign minister, has described the case as “deeply disturbing”. America and the European Union have called for the release of the 47 activists. On March 2nd Hong Kong’s Department of Justice said that prosecutors’ decisions had been made “without political consider ations” and no one should interfere in them. But a few days before the 47 were charged, Xia Baolong, a central-government official who oversees Hong Kong affairs, had said that “anti-China elements” should be “severely punished under the law”. He had named two members of the group: Mr Wong and Mr Tai. The Communist Party may be an exception to Hong Kong’s rule.</p>
+<hr class="footnotes-sep" />
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>美 [drə’koʊniən] 严酷的，残忍的，苛刻的 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>美 [‘dæmpən] 抑制 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>美 [ɪn’ɡʌlf] 把…卷入旋涡；吞没 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>美 [mɪs’did] 罪行 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>美 ['vet(ə)rən] 老兵，退伍军人；富有经验的 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>美 [.emblə’mætɪk] 标志的，象征性的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>美 [səb’vɜrʒ(ə)n] 颠覆，破坏 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>据称 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>美 [prəˈtræktəd] 拖沓的，旷日持久的 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>美 ['ɡru(ə)lɪŋ] 使人筋疲力尽的；折磨人的 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>美 [ɔr’dil] 折磨，煎熬 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>美 [rul] 统治；控制；支配；裁定 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p>美 [rɪ’mænd] 还押(被告、嫌疑犯) <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn14" class="footnote-item"><p>美 [ˈkʌstədi] 拘留，监禁 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn15" class="footnote-item"><p>美 [‘hɔl.mɑrk] 特点，特征 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>The Economist</category>
+        <category>China</category>
+      </categories>
+      <tags>
+        <tag>The Economist</tag>
+        <tag>经济学人</tag>
+        <tag>China</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Scraping the bones</title>
     <url>/archives/6d0cb3b7.html</url>
     <content><![CDATA[<center><b>China’s law-enforcement agencies are undergoing their biggest purge in more
@@ -889,62 +971,145 @@ sweeping and brutal purge of the party’s ranks to consolidate his control. Suc
       </tags>
   </entry>
   <entry>
-    <title>The law kicks in</title>
-    <url>/archives/40ddc300.html</url>
-    <content><![CDATA[<center><b>The territory will soon find out how its
-new security law works in court</b></center>
-<p>Since china imposed a <mark class="label primary">draconian</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> security law on Hong Kong last year, protests in the city—already <mark class="label primary">dampened</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> by pandemic-related controls—have been rare. But on March 1st hundreds of people gathered outside a court to demonstrate against the largest case so far related to the security bill. They held banners calling for the release of “political prisoners” and chanted slogans that were popular during the unrest that <mark class="label primary">engulfed</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> the territory in 2019. Students at a primary school nearby stood outside their classrooms, shouting in solidarity. It was a rare act of defiance in a city that, to many residents, feels crushed.</p>
+    <title>Racing ahead</title>
+    <url>/archives/5ee67121.html</url>
+    <content><![CDATA[<center><b>One firm. One year. One billion shots or more. Can India’s Serum Institute do it?</b></center>
+<p>On march 5th 2020 Mumbai’s horse-racing season <mark class="label primary">culminated</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> with the Poonawalla Breeders’ Multimillion, a day-long <mark class="label primary">extravaganza</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> dominated by India’s first family of the sport, the Poonawallas. <mark class="label primary">Triumphs</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> at the track were accompanied by news reports on the Bollywood life-styles of Adar Poonawalla and his wife, Natasha, whom Elle magazine described as “India’s first lady of <mark class="label primary">fabulousness</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>”. Only <mark class="label primary">cursory</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> attention spilled over to the couple’s day job running Serum Institute of India, the press-shy vaccine-maker at the root of the family fortune.</p>
 <span id="more"></span>
-<p>A day earlier, 47 people had been charged for alleged <mark class="label primary">misdeeds</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> as part of the case. They included some of Hong Kong’s best-known pro-democracy activists, such as Leung Kwokhung, a <mark class="label primary">veteran</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> campaigner commonly known as “Long Hair”; Lester Shum, a politician; Benny Tai, an academic, and Joshua Wong, whose then-teenage face became <mark class="label primary">emblematic</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> of the “Umbrella Movement” of 2014 (he is already in prison for a protest-related offence). They have been accused of crimes such as conspiracy to commit <mark class="label primary">subversion</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> by plotting to overthrow Hong Kong’s government.</p>
-<p>The case relates to an informal primary ballot that was held last year to select pro-democracy<br />
-candidates for elections to the Legislative Council. This sensible-sounding effort was seen by the government as an attempt to gain control of the council and paralyse its work. (The elections were<br />
-due to be held in September but were postponed for a year, <mark class="label primary">purportedly</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> because of the pandemic.) If convicted, the defendants face sentences of up to life in prison.</p>
-<p>The proceedings that began on March 1st relate to applications for bail—the trial itself may not begin for several more weeks. Under the security law, there is a presumption that bail will be denied, so even this stage has involved <mark class="label primary">protracted</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> debate in court and a <mark class="label primary">gruelling</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup> <mark class="label primary">ordeal</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> for the defendants. They have had to endure sessions lasting many hours that have eaten into normal times for meals and sleep. The physical toll has been evident—several of them have received hospital treatment. The prosecution argues that defendants could pose a threat to national security if given bail. Soon after The Economist went to press, the court was expected to <mark class="label primary">rule</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> on whether to <mark class="label primary">remand</mark><sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> them in <mark class="label primary">custody</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>.</p>
-<p>No national-security trial has yet been concluded. So this one will be watched for signs of how the new law—which has the <mark class="label primary">hallmarks</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup> of Chinese mainland-style legislation, with its vaguely defined political terms—works in a judicial system steeped in British legal tradition. Dominic Raab, Britain’s foreign minister, has described the case as “deeply disturbing”. America and the European Union have called for the release of the 47 activists. On March 2nd Hong Kong’s Department of Justice said that prosecutors’ decisions had been made “without political consider ations” and no one should interfere in them. But a few days before the 47 were charged, Xia Baolong, a central-government official who oversees Hong Kong affairs, had said that “anti-China elements” should be “severely punished under the law”. He had named two members of the group: Mr Wong and Mr Tai. The Communist Party may be an exception to Hong Kong’s rule.</p>
+<div class="note info"><p><strong>Mumbai</strong>：孟买</p>
+</div>
+<p>A year on it is the company, not its <mark class="label primary">flamboyant</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> owners, that is making headlines. As the covid-19 vaccination drive encounters production <mark class="label primary">glitches</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> in Europe, hits distribution <mark class="label primary">snags</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> in America and faces a geopolitical <mark class="label primary">scramble</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> for supply everywhere, Serum Institute has emerged as the one firm apparently able to ramp up production fast and export the doses without <mark class="label primary">courting</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup> <mark class="label primary">controversy</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>. By the end of the year, Mr Poonawalla says, it will add 1.5bn covid-19 shots to 1.3bn-1.5bn doses against diseases from <mark class="label primary">measles</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> to <mark class="label primary">tuberculosis</mark><sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> that it already produces annually. On February 23rd it dispatched the first mass shipment, of 70m shots of the Oxford-AstraZeneca vaccine, to India and two dozen other poor countries in the COVAX vaccine-sharing programme. On March 1st Canada said it will procure 500,000 doses from the company. The relatively small family concern, which entered last year with annual revenues of $735m and a workforce of 6,000, is becoming mission-critical to the global fight against the coronavirus.</p>
+<div class="note info"><p><strong>ramp up</strong>：增加，提高</p>
+<p><strong>Oxford-AstraZeneca</strong>：牛津阿斯利康</p>
+</div>
+<p>Mr Poonawalla’s plans are ambitious, to put it <mark class="label primary">mildly</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>. He wants to raise monthly production of the Oxford vaccine from the current 60m-70m to 100m by April. That month the company will start churning out 40m-50m of a shot developed by Novavax, an American biotechnology firm, to build up a “large stock” as it undergoes accelerated review by a number of global regulators. By late summer Serum Institute expects to be making another vaccine, by SpyBiotech, a British startup. In early 2022 it hopes to be producing a one-dose <mark class="label primary">nasal</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup> vaccine being developed by Codagenix, another American biotech firm.</p>
+<div class="note info"><p><strong>churning out</strong>：大量生产</p>
+</div>
+<p>Mr Poonawalla estimates that until rivals’ new capacity comes online in the autumn, his company’s output will account for perhaps 40-50% of the world’s supply. Unlike Pfizer, an American drug giant<br />
+which recently upped its production goal from 1.3bn to 2bn doses this year, Serum Institute’s shots are cheap and do not need to be stored at ultra-low temperatures. They will <mark class="label primary">inoculate</mark><sup class="footnote-ref"><a href="#fn16" id="fnref16">[16]</a></sup> swathes of the poor world.</p>
+<div class="note info"><p><strong>Pfizer</strong>：辉瑞</p>
+</div>
+<p>Some of the factors behind the company’s rise to prominence, like the pandemic and scientists’ rapid response to it, have been beyond its control. But Serum Institute has also placed bold bets that run counter to the traditional process of making vaccines, in which investments in capacity and distribution follow years of research, then more years of clinical trials for safety and efficacy. A brief conversation last April, between Mr Poonawalla and his father Cyrus, Serum Institute’s founder, resulted in a decision to start producing the Oxford vaccine before any clinical trials had begun.</p>
+<p>It is the latest daring coup by the Poonawallas. In the 1960s Cyrus turned his horse-breeding business into one that used retired steeds as living vessels to create anti-body serum for treatment of snake bites, tetanus and other scourges. Forty years later his son, who has been chief executive since 2011, has added 165 countries as customers (often while courting Natasha on holidays). International sales now account for 70% of the firm’s total. In December Serum Institute released the first vaccine to be fully developed in India, against a variant of pneumonia which kills 68,000 Indian children a year.</p>
+<p>The company’s initial investment of $80m in capacity to produce the untested Oxford shot came from its billionaire owners’ own pocket—a tidy sum next to the previous year’s $46m in capital expenditure. Since then Serum Institute has received a further $800m: $270m from the Poonawallas, $300m from the Bill &amp; Melinda Gates Foundation, the world’ s biggest charity, and the rest from prepayments by governments, including those of Bangladesh and Morocco.</p>
+<p>The privately held firm will not say how much of that money has already been deployed. But Mr Poonawalla says it has doubled production capacity. It could do this quickly, he adds, thanks to a strategy of installing “excess capacity ahead of demand”. For decades it had been adding a new building each year; one that was ready to go shortly before the fateful chat between father and son was immediately repurposed for the covid-19 effort.</p>
+<p>A longstanding<br />
+collaboration with Oxford<br />
+and Novavax as part of an effort to create<br />
+a malaria vaccine allowed Serum Institute<br />
+to secure their recipes early. Deep relationships<br />
+with suppliers of everything<br />
+from glass vials to expensive “bioreactors”<br />
+for the production of biological substances<br />
+have helped smooth procurement. Serum<br />
+Institute has hired 1,000 new employees ,<br />
+increasing its workforce by a sixth. Another<br />
+500 construction workers are putting up<br />
+new buildings with higher production capacity<br />
+to add to the 30 or so that the company<br />
+has erected over the years.</p>
+<p>At the current pac e, Mr P oonawalla<br />
+thinks, it will take at least two years for the<br />
+global supply of covid19<br />
+jabs to meet demand.<br />
+It could take less if the world’s regulators<br />
+coordinated<br />
+more closely for the<br />
+duration of the crisis , he ventures . U ntil<br />
+then Serum Institute expects to be selling<br />
+the jabs more or less at cost, which me ans<br />
+about $35<br />
+a dose for the Oxford v accine.<br />
+After that, margins will eventually rise .<br />
+“This situation will last for a long time and<br />
+there will be future demand, ” Mr P oonawalla<br />
+predicts. Covid19<br />
+looks certain to become<br />
+endemic in many parts of the world,<br />
+with annual v accination drives akin to<br />
+those for influenza becoming the norm.<br />
+His firm’s output will peak at 600m700m<br />
+doses a year for each of the four vaccines it<br />
+is currently eyeing, he says.</p>
+<p>The pandemic will le ave vaccinemaking<br />
+more prominent than ever before , Mr<br />
+Poonawalla believes—and much more<br />
+crowded. This will inject competition into<br />
+what most drugmak ers consider a thankless<br />
+volume business with consider able<br />
+capital outlays . A fire e arlier this ye ar at<br />
+one new building sent a shudder down the<br />
+spines of the world’s covidresponders<br />
+until<br />
+the company assured them that the accident,<br />
+which affected a production line for a<br />
+tuberculosis jab, will not hurt the pandemic<br />
+effort. Although the bet on the Oxford<br />
+vaccine has paid off, and the one on Novavax<br />
+looks likely to, Codagenix and SpyBiotech<br />
+are not yet shooins.<br />
+And vaccine nationalism<br />
+could stymie exports from India<br />
+or imports of ingredients and kit.</p>
+<p>Mr Poonawalla nevertheless remains<br />
+confident that his firm will maintain its<br />
+leading position. In contrast to big pharma,<br />
+which spends billions on marketing<br />
+costly medicines, it sells its vaccines chiefly<br />
+to national health authorities, which<br />
+prize low prices and reliable supply above<br />
+all. Those have always been Serum Institute’s<br />
+strong suits. And the Indian company’s<br />
+remarkable response to covid19<br />
+has<br />
+bought it more global goodwill than any<br />
+advertising campaign could hope to.</p>
 <hr class="footnotes-sep" />
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>美 [drə’koʊniən] 严酷的，残忍的，苛刻的 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+<li id="fn1" class="footnote-item"><p>美 [ˈkʌlmɪˌneɪtid] 到达顶点，高潮 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn2" class="footnote-item"><p>美 [‘dæmpən] 抑制 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+<li id="fn2" class="footnote-item"><p>美 [ɪk.strævə’ɡænzə] 铺张华丽的娱乐表演 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn3" class="footnote-item"><p>美 [ɪn’ɡʌlf] 把…卷入旋涡；吞没 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+<li id="fn3" class="footnote-item"><p>美 [‘traɪəmf] 1. 战胜，打败；2. 巨大成功，重大成就，伟大胜利 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn4" class="footnote-item"><p>美 [mɪs’did] 罪行 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+<li id="fn4" class="footnote-item"><p>美 [‘fæbjələs] 难以置信的，神话般的 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn5" class="footnote-item"><p>美 ['vet(ə)rən] 老兵，退伍军人；富有经验的 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+<li id="fn5" class="footnote-item"><p>美 [‘kɜrsəri] 粗略的；仓促的，草率的 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn6" class="footnote-item"><p>美 [.emblə’mætɪk] 标志的，象征性的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+<li id="fn6" class="footnote-item"><p>美 [flæm’bɔɪənt] 炫耀的，卖弄的；华丽的，艳丽的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn7" class="footnote-item"><p>美 [səb’vɜrʒ(ə)n] 颠覆，破坏 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+<li id="fn7" class="footnote-item"><p>美 [ɡlɪtʃ] 小故障，小毛病 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn8" class="footnote-item"><p>据称 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+<li id="fn8" class="footnote-item"><p>美 [snæɡ] 障碍 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn9" class="footnote-item"><p>美 [prəˈtræktəd] 拖沓的，旷日持久的 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+<li id="fn9" class="footnote-item"><p>美 ['skræmb(ə)l] 争夺，抢占；（迅速而吃力地）爬 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn10" class="footnote-item"><p>美 ['ɡru(ə)lɪŋ] 使人筋疲力尽的；折磨人的 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+<li id="fn10" class="footnote-item"><p>追求，招惹（祸事） <a href="#fnref10" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn11" class="footnote-item"><p>美 [ɔr’dil] 折磨，煎熬 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+<li id="fn11" class="footnote-item"><p>美 [‘kɑntrə.vɜrsi] 争论 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn12" class="footnote-item"><p>美 [rul] 统治；控制；支配；裁定 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+<li id="fn12" class="footnote-item"><p>美 ['miz(ə)lz] 麻疹 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn13" class="footnote-item"><p>美 [rɪ’mænd] 还押(被告、嫌疑犯) <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+<li id="fn13" class="footnote-item"><p>美 [tʊ.bɜrkjə’loʊsɪs] 结核病 <a href="#fnref13" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn14" class="footnote-item"><p>美 [ˈkʌstədi] 拘留，监禁 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
+<li id="fn14" class="footnote-item"><p>美 [‘maɪldli] 轻微地，稍微地；温和地，和善地 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn15" class="footnote-item"><p>美 [‘hɔl.mɑrk] 特点，特征 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
+<li id="fn15" class="footnote-item"><p>美 ['neɪz(ə)l] 鼻子的 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn16" class="footnote-item"><p>美 [ɪ’nɑkjə.leɪt] （为…）接种疫苗 <a href="#fnref16" class="footnote-backref">↩︎</a></p>
 </li>
 </ol>
 </section>
 ]]></content>
       <categories>
         <category>The Economist</category>
-        <category>China</category>
+        <category>Business</category>
       </categories>
       <tags>
         <tag>The Economist</tag>
         <tag>经济学人</tag>
-        <tag>China</tag>
+        <tag>Business</tag>
       </tags>
   </entry>
   <entry>
@@ -1182,5 +1347,116 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 </ol>
 </section>
 ]]></content>
+  </entry>
+  <entry>
+    <title>基本排序算法</title>
+    <url>/archives/981a96f7.html</url>
+    <content><![CDATA[<h3 id="比较排序"><a class="markdownIt-Anchor" href="#比较排序"></a> 比较排序</h3>
+<h4 id="冒泡排序"><a class="markdownIt-Anchor" href="#冒泡排序"></a> 冒泡排序</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] BubbleSort(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = arr.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &gt; arr[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                <span class="keyword">int</span> tmp = arr[j];</span><br><span class="line">                arr[j] = arr[j + <span class="number">1</span>];</span><br><span class="line">                arr[j + <span class="number">1</span>] = tmp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h4 id="选择排序"><a class="markdownIt-Anchor" href="#选择排序"></a> 选择排序</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] SelectionSort(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> index = i;</span><br><span class="line">        <span class="keyword">int</span> j = i + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (j &lt; arr.length) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &lt; minVal) &#123;</span><br><span class="line">                index = j;</span><br><span class="line">            &#125;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">      	<span class="keyword">if</span> (index != i) &#123;</span><br><span class="line">          	<span class="keyword">int</span> tmp = arr[i];</span><br><span class="line">          	arr[i] = arr[index];</span><br><span class="line">        		arr[index] = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="插入排序"><a class="markdownIt-Anchor" href="#插入排序"></a> 插入排序</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] InsertSort(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> val = arr[i];</span><br><span class="line">        <span class="keyword">int</span> j = i - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (j &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &lt; val) <span class="keyword">break</span>;</span><br><span class="line">            arr[j + <span class="number">1</span>] = arr[j];</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">        arr[j + <span class="number">1</span>] = val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="希尔排序"><a class="markdownIt-Anchor" href="#希尔排序"></a> 希尔排序</h4>
+<p>希尔排序是一种改进的插入排序，也叫增量减小排序。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] ShellSort(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> step = arr.length / <span class="number">2</span>; step &gt; <span class="number">0</span>; step /= <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="comment">// 插入排序思想</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = step; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> val = arr[i];</span><br><span class="line">            <span class="keyword">int</span> j = i - step;</span><br><span class="line">            <span class="keyword">while</span> (j &gt;= step) &#123;</span><br><span class="line">                <span class="keyword">if</span> (arr[j] &lt; val) <span class="keyword">break</span>;</span><br><span class="line">                arr[j + step] = arr[j];</span><br><span class="line">                j -= step;</span><br><span class="line">            &#125;</span><br><span class="line">            arr[j + step] = val;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="归并排序"><a class="markdownIt-Anchor" href="#归并排序"></a> 归并排序</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span>[] copy)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 找到待排序数组的中间位置，对左右两个子数组递归</span></span><br><span class="line">    <span class="keyword">int</span> mid = l + (r - l) / <span class="number">2</span>;</span><br><span class="line">    mergeSort(arr, l, mid, copy);</span><br><span class="line">    mergeSort(arr, mid + <span class="number">1</span>, r, copy);</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 递归返回后，左右两个子数组已经有序，接着合并两个有序子数组即可</span></span><br><span class="line">    <span class="keyword">int</span> i = l;</span><br><span class="line">    <span class="keyword">int</span> j = mid + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> k = l;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r) &#123;</span><br><span class="line">        copy[k++] = arr[i] &lt;= arr[j] ? arr[i++] : arr[j++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid) &#123;</span><br><span class="line">        copy[k++] = arr[i++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (j &lt;= r) &#123;</span><br><span class="line">        copy[k++] = arr[j++];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 合并完成后，将复制数组的数据拷贝回原数组</span></span><br><span class="line">    k = l;</span><br><span class="line">    <span class="keyword">while</span> (k &lt;= r) &#123;</span><br><span class="line">        arr[k] = copy[k++];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="堆排序"><a class="markdownIt-Anchor" href="#堆排序"></a> 堆排序</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 维持最大堆的特性</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] heapify(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> heapSize, <span class="keyword">int</span> i) &#123;</span><br><span class="line">    <span class="keyword">int</span> l = (i &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> r = l + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> largest = i;</span><br><span class="line">  	<span class="comment">// 找到当前节点及其左右子节点的最大值的下标</span></span><br><span class="line">    <span class="keyword">if</span> (l &lt;= heapSize &amp;&amp; arr[l] &gt; arr[largest]) largest = l;</span><br><span class="line">    <span class="keyword">if</span> (r &lt;= heapSize &amp;&amp; arr[r] &gt; arr[largest]) largest = r;</span><br><span class="line">  	<span class="comment">// 如果当前节点的值不是最大的，交换，并递归</span></span><br><span class="line">    <span class="keyword">if</span> (largest != i) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = arr[i];</span><br><span class="line">        arr[i] = arr[largest];</span><br><span class="line">        arr[largest] = tmp;</span><br><span class="line">        heapify(arr, heapSize, largest);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 建堆</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] buildHeap(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = arr.length &gt;&gt; <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        heapify(arr, arr.length - <span class="number">1</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] HeapSort(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line">  	<span class="comment">// 建堆</span></span><br><span class="line">    buildHeap(arr);</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 将堆顶的最大值换到数组最后的位置</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = arr.length - <span class="number">1</span>; i &gt;= <span class="number">1</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">int</span> val = arr[<span class="number">0</span>];</span><br><span class="line">        arr[<span class="number">0</span>] = arr[i];</span><br><span class="line">        arr[i] = val;</span><br><span class="line">				<span class="comment">// 维护堆的性质</span></span><br><span class="line">        heapify(arr, i - <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="快速排序"><a class="markdownIt-Anchor" href="#快速排序"></a> 快速排序</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] quickSort(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> l, <span class="keyword">int</span> r) &#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r) <span class="keyword">return</span> arr;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> pivot = arr[r]; 	<span class="comment">// 这一步可以优化，可以随机选取一个数作为 pivot</span></span><br><span class="line">    <span class="keyword">int</span> index = l - <span class="number">1</span>;		<span class="comment">// 最后一个小于 pivot 元素的下标</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = l; i &lt;= r; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i] &lt;= pivot) &#123;  <span class="comment">// 每找到一个小于 pivot 元素</span></span><br><span class="line">            index++;						<span class="comment">// index 加一，交换元素的位置</span></span><br><span class="line">            <span class="keyword">int</span> tmp = arr[index];</span><br><span class="line">            arr[index] = arr[i];</span><br><span class="line">            arr[i] = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 对左右两个子数组递归操作</span></span><br><span class="line">    quickSort(arr, l, index - <span class="number">1</span>);</span><br><span class="line">    quickSort(arr,index + <span class="number">1</span>, r);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="比较排序总结"><a class="markdownIt-Anchor" href="#比较排序总结"></a> 比较排序总结</h4>
+<table>
+<thead>
+<tr>
+<th>排序算法</th>
+<th style="text-align:center">最好时间复杂度</th>
+<th style="text-align:center">最坏时间复杂度</th>
+<th style="text-align:center">平均时间复杂度</th>
+<th style="text-align:center">空间复杂度</th>
+<th style="text-align:center">是否稳定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>冒泡排序</td>
+<td style="text-align:center"><code>O(1)</code></td>
+<td style="text-align:center"><code>O(n^2)</code></td>
+<td style="text-align:center"><code>O(n^2)</code></td>
+<td style="text-align:center"><code>O(1)</code></td>
+<td style="text-align:center">稳定</td>
+</tr>
+<tr>
+<td>选择排序</td>
+<td style="text-align:center"><code>O(n^2)</code></td>
+<td style="text-align:center"><code>O(n^2)</code></td>
+<td style="text-align:center"><code>O(n^2)</code></td>
+<td style="text-align:center"><code>O(1)</code></td>
+<td style="text-align:center">不稳定</td>
+</tr>
+<tr>
+<td>插入排序</td>
+<td style="text-align:center"><code>O(n)</code></td>
+<td style="text-align:center"><code>O(n^2)</code></td>
+<td style="text-align:center"><code>O(n^2)</code></td>
+<td style="text-align:center"><code>O(1)</code></td>
+<td style="text-align:center">稳定</td>
+</tr>
+<tr>
+<td>希尔排序</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"><code>O(1)</code></td>
+<td style="text-align:center">不稳定</td>
+</tr>
+<tr>
+<td>归并排序</td>
+<td style="text-align:center"><code>O(nlogn)</code></td>
+<td style="text-align:center"><code>O(nlogn)</code></td>
+<td style="text-align:center"><code>O(nlogn)</code></td>
+<td style="text-align:center"><code>O(n)</code></td>
+<td style="text-align:center">稳定</td>
+</tr>
+<tr>
+<td>堆排序</td>
+<td style="text-align:center"><code>O(nlogn)</code></td>
+<td style="text-align:center"><code>O(nlogn)</code></td>
+<td style="text-align:center"><code>O(nlogn)</code></td>
+<td style="text-align:center"><code>O(1)</code></td>
+<td style="text-align:center">不稳定</td>
+</tr>
+<tr>
+<td>快速排序</td>
+<td style="text-align:center"><code>O(nlogn)</code></td>
+<td style="text-align:center"><code>O(n^2)</code></td>
+<td style="text-align:center"><code>O(nlogn)</code></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">不稳定</td>
+</tr>
+</tbody>
+</table>
+<h3 id="非比较排序"><a class="markdownIt-Anchor" href="#非比较排序"></a> 非比较排序</h3>
+<h4 id="计数排序"><a class="markdownIt-Anchor" href="#计数排序"></a> 计数排序</h4>
+<h4 id="基数排序"><a class="markdownIt-Anchor" href="#基数排序"></a> 基数排序</h4>
+<h4 id="桶排序"><a class="markdownIt-Anchor" href="#桶排序"></a> 桶排序</h4>
+<h4 id="非比较排序总结"><a class="markdownIt-Anchor" href="#非比较排序总结"></a> 非比较排序总结</h4>
+]]></content>
+      <categories>
+        <category>数据结构&amp;算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>数据结构&amp;算法</tag>
+        <tag>排序</tag>
+        <tag>快速排序</tag>
+        <tag>归并排序</tag>
+        <tag>堆排序</tag>
+      </tags>
   </entry>
 </search>
