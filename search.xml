@@ -1,74 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo+Next搭建博客：基础搭建</title>
-    <url>/archives/92090b6.html</url>
-    <content><![CDATA[<h3 id="环境"><a class="markdownIt-Anchor" href="#环境"></a> 环境</h3>
-<p>通过 <code>Hexo</code> 搭建博客前，需要在本地安装一些必要的环境。</p>
-<h4 id="nodejs"><a class="markdownIt-Anchor" href="#nodejs"></a> node.js</h4>
-<p>命令行安装</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ brew install nodejs</span><br></pre></td></tr></table></figure>
-<h4 id="npm"><a class="markdownIt-Anchor" href="#npm"></a> npm</h4>
-<p>命令行安装</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ brew install npm</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<h3 id="hexo"><a class="markdownIt-Anchor" href="#hexo"></a> Hexo</h3>
-<p><code>Hexo</code> 是一个快速、简洁且高效的博客框架。</p>
-<h4 id="安装-hexo"><a class="markdownIt-Anchor" href="#安装-hexo"></a> 安装 Hexo</h4>
-<p>命令行安装</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<h4 id="创建本地博客"><a class="markdownIt-Anchor" href="#创建本地博客"></a> 创建本地博客</h4>
-<p>创建一个目录，如：<code>Blog</code>，在此目录下执行初始化</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mkdir Blog</span><br><span class="line">$ <span class="built_in">cd</span> Blog</span><br><span class="line">$ hexo init</span><br><span class="line">$ hexo generate     <span class="comment"># 生成静态文件</span></span><br><span class="line">$ hexo server       <span class="comment"># 在本地服务器运行</span></span><br></pre></td></tr></table></figure>
-<p>在浏览器访问 <a href="http://localhost:4000/">http://localhost:4000</a>。</p>
-<p>之后就可以通过 <code>hexo new page pageName</code> 和 <code>hexo new postName</code> 创建新的页面 <code>page</code> 和 文章 <code>post</code> 了。</p>
-<h3 id="next"><a class="markdownIt-Anchor" href="#next"></a> NexT</h3>
-<p><code>Hexo</code> 自带的主题不是很美观（个人感觉），可以安装其他主题来美化博客。</p>
-<p><code>Hexo</code> 提供众多主题供用户选择，这里选择使用人数最多的 <code>Next</code> 主题。</p>
-<h4 id="安装主题"><a class="markdownIt-Anchor" href="#安装主题"></a> 安装主题</h4>
-<p>主题的安装有以下两种方式：</p>
-<div class="tabs" id="next-安装"><ul class="nav-tabs"><li class="tab active"><a href="#next-安装-1">git 安装</a></li><li class="tab"><a href="#next-安装-2">npm 安装</a></li></ul><div class="tab-content"><div class="tab-pane active" id="next-安装-1"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/next-theme/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="next-安装-2"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-theme-next@latest</span><br></pre></td></tr></table></figure></div></div></div>
-<p>以上两种方式安装的都是 <code>NexT</code> 的最新版本。</p>
-<h4 id="启用主题"><a class="markdownIt-Anchor" href="#启用主题"></a> 启用主题</h4>
-<p>修改站点（博客）配置文件 <code>_config.xml</code>：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
-<p>然后执行以下命令测试一下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
-<h3 id="将博客部署到-gitee-pages"><a class="markdownIt-Anchor" href="#将博客部署到-gitee-pages"></a> 将博客部署到 Gitee Pages</h3>
-<p><code>Gitee Pages</code> 是一个免费的静态网页托管服务，可以使用 <code>Gitee Pages</code> 托管博客、项目官网等静态网页。目前 <code>Gitee Pages</code> 支持 <code>Jekyll</code>、<code>Hugo</code>、<code>Hexo</code>编译静态资源。</p>
-<h4 id="注册-gtiee-账号"><a class="markdownIt-Anchor" href="#注册-gtiee-账号"></a> 注册 Gtiee 账号</h4>
-<h4 id="创建仓库"><a class="markdownIt-Anchor" href="#创建仓库"></a> 创建仓库</h4>
-<p><strong>注意<mark>路径</mark>一定要填写 <code>username.gitee.io</code> 这样后面才能使用 <code>Gitee Pages</code> 功能。</strong></p>
-<p>每个帐号只能有一个仓库来存放个人主页，而且仓库的名字必须是 <code>username/username.gitee.io</code>，这是特殊的命名约定，之后就可以通过 <a href="http://username.gitee.io/">http://username.gitee.io</a>  来访问个人主页。</p>
-<h4 id="配置-ssh"><a class="markdownIt-Anchor" href="#配置-ssh"></a> 配置 SSH</h4>
-<p>上传文件需要配置 <code>ssh key</code>，不然无法上传。</p>
-<p>首先先检查一下本地是否已经存在 <code>ssh key</code>：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls -al ~/.ssh</span><br></pre></td></tr></table></figure>
-<p>如果不存在，执行以下命令生成：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;XXXXX@qq.com&quot;</span></span><br></pre></td></tr></table></figure>
-<p>邮箱是注册 <code>Gitee</code> 时候的邮箱。</p>
-<p>执行完后会在 <code>~/.ssh/</code>下生成 <code>id_rsa</code> 和 <code>id_rsa.pub</code> 两个文件。</p>
-<p>点击 <code>Gitee -&gt; 右上角设置 -&gt; SSH 公钥</code>，将 <code>id_rsa.pub</code> 文件内容复制进去即可。</p>
-<p>执行以下命令，测试是否配置成功：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh git@gitee.com</span><br></pre></td></tr></table></figure>
-<h4 id="将本地博客部署到-gitee"><a class="markdownIt-Anchor" href="#将本地博客部署到-gitee"></a> 将本地博客部署到 Gitee</h4>
-<p>安装 <code>git</code> 部署需要的包：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git —save</span><br></pre></td></tr></table></figure>
-<p>编辑站点（博客）配置文件 <code>_config.yml</code>：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@gitee.com:username/username.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
-<p>部署：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-<p>打开之前创建的仓库 <code>gitee/username/username</code> ，点击<code>服务 -&gt; Gitee Pages -&gt;更新</code>，就可以通过 <a href="https://gitee.username.io">https://gitee.username.io</a> 访问个人博客了。不过有一点不好的是，每当在本文创建了新的 <code>post</code> 或 <code>page</code> 并重新部署后，都需要手动在 <code>Gitee Pages</code> 更新一下才能看到最新提交的内容。</p>
-]]></content>
-      <categories>
-        <category>Hexo&amp;NexT</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>NexT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo+Next搭建博客：主题初步美化</title>
     <url>/archives/54ce2e51.html</url>
     <content><![CDATA[<p>安装并启用 <code>Next</code> 主题后，有必要对其进行进一步的美化。通过阅读 <a href="https://theme-next.js.org/">NexT 官方文档</a> 以及网上搜罗的一些其他大神的文章，本文总结了一些对 <code>NexT</code> 的初步美化操作步骤。</p>
@@ -157,6 +89,74 @@
         <tag>Hexo</tag>
         <tag>NexT</tag>
         <tag>初步美化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo+Next搭建博客：基础搭建</title>
+    <url>/archives/92090b6.html</url>
+    <content><![CDATA[<h3 id="环境"><a class="markdownIt-Anchor" href="#环境"></a> 环境</h3>
+<p>通过 <code>Hexo</code> 搭建博客前，需要在本地安装一些必要的环境。</p>
+<h4 id="nodejs"><a class="markdownIt-Anchor" href="#nodejs"></a> node.js</h4>
+<p>命令行安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ brew install nodejs</span><br></pre></td></tr></table></figure>
+<h4 id="npm"><a class="markdownIt-Anchor" href="#npm"></a> npm</h4>
+<p>命令行安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ brew install npm</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="hexo"><a class="markdownIt-Anchor" href="#hexo"></a> Hexo</h3>
+<p><code>Hexo</code> 是一个快速、简洁且高效的博客框架。</p>
+<h4 id="安装-hexo"><a class="markdownIt-Anchor" href="#安装-hexo"></a> 安装 Hexo</h4>
+<p>命令行安装</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<h4 id="创建本地博客"><a class="markdownIt-Anchor" href="#创建本地博客"></a> 创建本地博客</h4>
+<p>创建一个目录，如：<code>Blog</code>，在此目录下执行初始化</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mkdir Blog</span><br><span class="line">$ <span class="built_in">cd</span> Blog</span><br><span class="line">$ hexo init</span><br><span class="line">$ hexo generate     <span class="comment"># 生成静态文件</span></span><br><span class="line">$ hexo server       <span class="comment"># 在本地服务器运行</span></span><br></pre></td></tr></table></figure>
+<p>在浏览器访问 <a href="http://localhost:4000/">http://localhost:4000</a>。</p>
+<p>之后就可以通过 <code>hexo new page pageName</code> 和 <code>hexo new postName</code> 创建新的页面 <code>page</code> 和 文章 <code>post</code> 了。</p>
+<h3 id="next"><a class="markdownIt-Anchor" href="#next"></a> NexT</h3>
+<p><code>Hexo</code> 自带的主题不是很美观（个人感觉），可以安装其他主题来美化博客。</p>
+<p><code>Hexo</code> 提供众多主题供用户选择，这里选择使用人数最多的 <code>Next</code> 主题。</p>
+<h4 id="安装主题"><a class="markdownIt-Anchor" href="#安装主题"></a> 安装主题</h4>
+<p>主题的安装有以下两种方式：</p>
+<div class="tabs" id="next-安装"><ul class="nav-tabs"><li class="tab active"><a href="#next-安装-1">git 安装</a></li><li class="tab"><a href="#next-安装-2">npm 安装</a></li></ul><div class="tab-content"><div class="tab-pane active" id="next-安装-1"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/next-theme/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="next-安装-2"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-theme-next@latest</span><br></pre></td></tr></table></figure></div></div></div>
+<p>以上两种方式安装的都是 <code>NexT</code> 的最新版本。</p>
+<h4 id="启用主题"><a class="markdownIt-Anchor" href="#启用主题"></a> 启用主题</h4>
+<p>修改站点（博客）配置文件 <code>_config.xml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
+<p>然后执行以下命令测试一下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
+<h3 id="将博客部署到-gitee-pages"><a class="markdownIt-Anchor" href="#将博客部署到-gitee-pages"></a> 将博客部署到 Gitee Pages</h3>
+<p><code>Gitee Pages</code> 是一个免费的静态网页托管服务，可以使用 <code>Gitee Pages</code> 托管博客、项目官网等静态网页。目前 <code>Gitee Pages</code> 支持 <code>Jekyll</code>、<code>Hugo</code>、<code>Hexo</code>编译静态资源。</p>
+<h4 id="注册-gtiee-账号"><a class="markdownIt-Anchor" href="#注册-gtiee-账号"></a> 注册 Gtiee 账号</h4>
+<h4 id="创建仓库"><a class="markdownIt-Anchor" href="#创建仓库"></a> 创建仓库</h4>
+<p><strong>注意<mark>路径</mark>一定要填写 <code>username.gitee.io</code> 这样后面才能使用 <code>Gitee Pages</code> 功能。</strong></p>
+<p>每个帐号只能有一个仓库来存放个人主页，而且仓库的名字必须是 <code>username/username.gitee.io</code>，这是特殊的命名约定，之后就可以通过 <a href="http://username.gitee.io/">http://username.gitee.io</a>  来访问个人主页。</p>
+<h4 id="配置-ssh"><a class="markdownIt-Anchor" href="#配置-ssh"></a> 配置 SSH</h4>
+<p>上传文件需要配置 <code>ssh key</code>，不然无法上传。</p>
+<p>首先先检查一下本地是否已经存在 <code>ssh key</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls -al ~/.ssh</span><br></pre></td></tr></table></figure>
+<p>如果不存在，执行以下命令生成：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;XXXXX@qq.com&quot;</span></span><br></pre></td></tr></table></figure>
+<p>邮箱是注册 <code>Gitee</code> 时候的邮箱。</p>
+<p>执行完后会在 <code>~/.ssh/</code>下生成 <code>id_rsa</code> 和 <code>id_rsa.pub</code> 两个文件。</p>
+<p>点击 <code>Gitee -&gt; 右上角设置 -&gt; SSH 公钥</code>，将 <code>id_rsa.pub</code> 文件内容复制进去即可。</p>
+<p>执行以下命令，测试是否配置成功：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh git@gitee.com</span><br></pre></td></tr></table></figure>
+<h4 id="将本地博客部署到-gitee"><a class="markdownIt-Anchor" href="#将本地博客部署到-gitee"></a> 将本地博客部署到 Gitee</h4>
+<p>安装 <code>git</code> 部署需要的包：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git —save</span><br></pre></td></tr></table></figure>
+<p>编辑站点（博客）配置文件 <code>_config.yml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@gitee.com:username/username.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<p>部署：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<p>打开之前创建的仓库 <code>gitee/username/username</code> ，点击<code>服务 -&gt; Gitee Pages -&gt;更新</code>，就可以通过 <a href="https://gitee.username.io">https://gitee.username.io</a> 访问个人博客了。不过有一点不好的是，每当在本文创建了新的 <code>post</code> 或 <code>page</code> 并重新部署后，都需要手动在 <code>Gitee Pages</code> 更新一下才能看到最新提交的内容。</p>
+]]></content>
+      <categories>
+        <category>Hexo&amp;NexT</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>NexT</tag>
       </tags>
   </entry>
   <entry>
@@ -835,65 +835,6 @@ equivalents to join the importers. If Chinese reactors are designed in the knowl
       </tags>
   </entry>
   <entry>
-    <title>The law kicks in</title>
-    <url>/archives/40ddc300.html</url>
-    <content><![CDATA[<center><b>The territory will soon find out how its
-new security law works in court</b></center>
-<p>Since china imposed a <mark class="label primary">draconian</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> security law on Hong Kong last year, protests in the city—already <mark class="label primary">dampened</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> by pandemic-related controls—have been rare. But on March 1st hundreds of people gathered outside a court to demonstrate against the largest case so far related to the security bill. They held banners calling for the release of “political prisoners” and chanted slogans that were popular during the unrest that <mark class="label primary">engulfed</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> the territory in 2019. Students at a primary school nearby stood outside their classrooms, shouting in solidarity. It was a rare act of defiance in a city that, to many residents, feels crushed.</p>
-<span id="more"></span>
-<p>A day earlier, 47 people had been charged for alleged <mark class="label primary">misdeeds</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> as part of the case. They included some of Hong Kong’s best-known pro-democracy activists, such as Leung Kwokhung, a <mark class="label primary">veteran</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> campaigner commonly known as “Long Hair”; Lester Shum, a politician; Benny Tai, an academic, and Joshua Wong, whose then-teenage face became <mark class="label primary">emblematic</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> of the “Umbrella Movement” of 2014 (he is already in prison for a protest-related offence). They have been accused of crimes such as conspiracy to commit <mark class="label primary">subversion</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> by plotting to overthrow Hong Kong’s government.</p>
-<p>The case relates to an informal primary ballot that was held last year to select pro-democracy<br />
-candidates for elections to the Legislative Council. This sensible-sounding effort was seen by the government as an attempt to gain control of the council and paralyse its work. (The elections were<br />
-due to be held in September but were postponed for a year, <mark class="label primary">purportedly</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> because of the pandemic.) If convicted, the defendants face sentences of up to life in prison.</p>
-<p>The proceedings that began on March 1st relate to applications for bail—the trial itself may not begin for several more weeks. Under the security law, there is a presumption that bail will be denied, so even this stage has involved <mark class="label primary">protracted</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> debate in court and a <mark class="label primary">gruelling</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup> <mark class="label primary">ordeal</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> for the defendants. They have had to endure sessions lasting many hours that have eaten into normal times for meals and sleep. The physical toll has been evident—several of them have received hospital treatment. The prosecution argues that defendants could pose a threat to national security if given bail. Soon after The Economist went to press, the court was expected to <mark class="label primary">rule</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> on whether to <mark class="label primary">remand</mark><sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> them in <mark class="label primary">custody</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>.</p>
-<p>No national-security trial has yet been concluded. So this one will be watched for signs of how the new law—which has the <mark class="label primary">hallmarks</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup> of Chinese mainland-style legislation, with its vaguely defined political terms—works in a judicial system steeped in British legal tradition. Dominic Raab, Britain’s foreign minister, has described the case as “deeply disturbing”. America and the European Union have called for the release of the 47 activists. On March 2nd Hong Kong’s Department of Justice said that prosecutors’ decisions had been made “without political consider ations” and no one should interfere in them. But a few days before the 47 were charged, Xia Baolong, a central-government official who oversees Hong Kong affairs, had said that “anti-China elements” should be “severely punished under the law”. He had named two members of the group: Mr Wong and Mr Tai. The Communist Party may be an exception to Hong Kong’s rule.</p>
-<hr class="footnotes-sep" />
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>美 [drə’koʊniən] 严酷的，残忍的，苛刻的 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn2" class="footnote-item"><p>美 [‘dæmpən] 抑制 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn3" class="footnote-item"><p>美 [ɪn’ɡʌlf] 把…卷入旋涡；吞没 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn4" class="footnote-item"><p>美 [mɪs’did] 罪行 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn5" class="footnote-item"><p>美 ['vet(ə)rən] 老兵，退伍军人；富有经验的 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn6" class="footnote-item"><p>美 [.emblə’mætɪk] 标志的，象征性的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn7" class="footnote-item"><p>美 [səb’vɜrʒ(ə)n] 颠覆，破坏 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn8" class="footnote-item"><p>据称 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn9" class="footnote-item"><p>美 [prəˈtræktəd] 拖沓的，旷日持久的 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn10" class="footnote-item"><p>美 ['ɡru(ə)lɪŋ] 使人筋疲力尽的；折磨人的 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn11" class="footnote-item"><p>美 [ɔr’dil] 折磨，煎熬 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn12" class="footnote-item"><p>美 [rul] 统治；控制；支配；裁定 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn13" class="footnote-item"><p>美 [rɪ’mænd] 还押(被告、嫌疑犯) <a href="#fnref13" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn14" class="footnote-item"><p>美 [ˈkʌstədi] 拘留，监禁 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn15" class="footnote-item"><p>美 [‘hɔl.mɑrk] 特点，特征 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
-</li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>The Economist</category>
-        <category>China</category>
-      </categories>
-      <tags>
-        <tag>The Economist</tag>
-        <tag>经济学人</tag>
-        <tag>China</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Scraping the bones</title>
     <url>/archives/6d0cb3b7.html</url>
     <content><![CDATA[<center><b>China’s law-enforcement agencies are undergoing their biggest purge in more
@@ -956,6 +897,65 @@ sweeping and brutal purge of the party’s ranks to consolidate his control. Suc
 <li id="fn21" class="footnote-item"><p>美 [.pri’zaɪd] 主持（会议、仪式等）；担任（会议）主席 <a href="#fnref21" class="footnote-backref">↩︎</a></p>
 </li>
 <li id="fn22" class="footnote-item"><p>美 ['fʌmb(ə)l] 摸索，笨拙的 <a href="#fnref22" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>The Economist</category>
+        <category>China</category>
+      </categories>
+      <tags>
+        <tag>The Economist</tag>
+        <tag>经济学人</tag>
+        <tag>China</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>The law kicks in</title>
+    <url>/archives/40ddc300.html</url>
+    <content><![CDATA[<center><b>The territory will soon find out how its
+new security law works in court</b></center>
+<p>Since china imposed a <mark class="label primary">draconian</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> security law on Hong Kong last year, protests in the city—already <mark class="label primary">dampened</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> by pandemic-related controls—have been rare. But on March 1st hundreds of people gathered outside a court to demonstrate against the largest case so far related to the security bill. They held banners calling for the release of “political prisoners” and chanted slogans that were popular during the unrest that <mark class="label primary">engulfed</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> the territory in 2019. Students at a primary school nearby stood outside their classrooms, shouting in solidarity. It was a rare act of defiance in a city that, to many residents, feels crushed.</p>
+<span id="more"></span>
+<p>A day earlier, 47 people had been charged for alleged <mark class="label primary">misdeeds</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> as part of the case. They included some of Hong Kong’s best-known pro-democracy activists, such as Leung Kwokhung, a <mark class="label primary">veteran</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> campaigner commonly known as “Long Hair”; Lester Shum, a politician; Benny Tai, an academic, and Joshua Wong, whose then-teenage face became <mark class="label primary">emblematic</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> of the “Umbrella Movement” of 2014 (he is already in prison for a protest-related offence). They have been accused of crimes such as conspiracy to commit <mark class="label primary">subversion</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> by plotting to overthrow Hong Kong’s government.</p>
+<p>The case relates to an informal primary ballot that was held last year to select pro-democracy<br />
+candidates for elections to the Legislative Council. This sensible-sounding effort was seen by the government as an attempt to gain control of the council and paralyse its work. (The elections were<br />
+due to be held in September but were postponed for a year, <mark class="label primary">purportedly</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> because of the pandemic.) If convicted, the defendants face sentences of up to life in prison.</p>
+<p>The proceedings that began on March 1st relate to applications for bail—the trial itself may not begin for several more weeks. Under the security law, there is a presumption that bail will be denied, so even this stage has involved <mark class="label primary">protracted</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> debate in court and a <mark class="label primary">gruelling</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup> <mark class="label primary">ordeal</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> for the defendants. They have had to endure sessions lasting many hours that have eaten into normal times for meals and sleep. The physical toll has been evident—several of them have received hospital treatment. The prosecution argues that defendants could pose a threat to national security if given bail. Soon after The Economist went to press, the court was expected to <mark class="label primary">rule</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> on whether to <mark class="label primary">remand</mark><sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> them in <mark class="label primary">custody</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>.</p>
+<p>No national-security trial has yet been concluded. So this one will be watched for signs of how the new law—which has the <mark class="label primary">hallmarks</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup> of Chinese mainland-style legislation, with its vaguely defined political terms—works in a judicial system steeped in British legal tradition. Dominic Raab, Britain’s foreign minister, has described the case as “deeply disturbing”. America and the European Union have called for the release of the 47 activists. On March 2nd Hong Kong’s Department of Justice said that prosecutors’ decisions had been made “without political consider ations” and no one should interfere in them. But a few days before the 47 were charged, Xia Baolong, a central-government official who oversees Hong Kong affairs, had said that “anti-China elements” should be “severely punished under the law”. He had named two members of the group: Mr Wong and Mr Tai. The Communist Party may be an exception to Hong Kong’s rule.</p>
+<hr class="footnotes-sep" />
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>美 [drə’koʊniən] 严酷的，残忍的，苛刻的 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>美 [‘dæmpən] 抑制 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>美 [ɪn’ɡʌlf] 把…卷入旋涡；吞没 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>美 [mɪs’did] 罪行 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>美 ['vet(ə)rən] 老兵，退伍军人；富有经验的 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>美 [.emblə’mætɪk] 标志的，象征性的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>美 [səb’vɜrʒ(ə)n] 颠覆，破坏 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>据称 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>美 [prəˈtræktəd] 拖沓的，旷日持久的 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>美 ['ɡru(ə)lɪŋ] 使人筋疲力尽的；折磨人的 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>美 [ɔr’dil] 折磨，煎熬 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>美 [rul] 统治；控制；支配；裁定 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p>美 [rɪ’mænd] 还押(被告、嫌疑犯) <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn14" class="footnote-item"><p>美 [ˈkʌstədi] 拘留，监禁 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn15" class="footnote-item"><p>美 [‘hɔl.mɑrk] 特点，特征 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
 </li>
 </ol>
 </section>
@@ -1363,13 +1363,13 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 <p>希尔排序是一种改进的插入排序，也叫增量减小排序。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] ShellSort(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> step = arr.length / <span class="number">2</span>; step &gt; <span class="number">0</span>; step /= <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="comment">// 插入排序思想</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = step; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> val = arr[i];</span><br><span class="line">            <span class="keyword">int</span> j = i - step;</span><br><span class="line">            <span class="keyword">while</span> (j &gt;= step) &#123;</span><br><span class="line">                <span class="keyword">if</span> (arr[j] &lt; val) <span class="keyword">break</span>;</span><br><span class="line">                arr[j + step] = arr[j];</span><br><span class="line">                j -= step;</span><br><span class="line">            &#125;</span><br><span class="line">            arr[j + step] = val;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="归并排序"><a class="markdownIt-Anchor" href="#归并排序"></a> 归并排序</h4>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span>[] copy)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 找到待排序数组的中间位置，对左右两个子数组递归</span></span><br><span class="line">    <span class="keyword">int</span> mid = l + (r - l) / <span class="number">2</span>;</span><br><span class="line">    mergeSort(arr, l, mid, copy);</span><br><span class="line">    mergeSort(arr, mid + <span class="number">1</span>, r, copy);</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 递归返回后，左右两个子数组已经有序，接着合并两个有序子数组即可</span></span><br><span class="line">    <span class="keyword">int</span> i = l;</span><br><span class="line">    <span class="keyword">int</span> j = mid + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> k = l;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r) &#123;</span><br><span class="line">        copy[k++] = arr[i] &lt;= arr[j] ? arr[i++] : arr[j++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid) &#123;</span><br><span class="line">        copy[k++] = arr[i++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (j &lt;= r) &#123;</span><br><span class="line">        copy[k++] = arr[j++];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 合并完成后，将复制数组的数据拷贝回原数组</span></span><br><span class="line">    k = l;</span><br><span class="line">    <span class="keyword">while</span> (k &lt;= r) &#123;</span><br><span class="line">        arr[k] = copy[k++];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span>[] copy)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 找到待排序数组的中间位置，对左右两个子数组递归</span></span><br><span class="line">    <span class="keyword">int</span> mid = l + (r - l) / <span class="number">2</span>;</span><br><span class="line">    mergeSort(arr, l, mid, copy);</span><br><span class="line">    mergeSort(arr, mid + <span class="number">1</span>, r, copy);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 递归返回后，左右两个子数组已经有序，接着合并两个有序子数组即可</span></span><br><span class="line">    <span class="keyword">int</span> i = l;</span><br><span class="line">    <span class="keyword">int</span> j = mid + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> k = l;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r) &#123;</span><br><span class="line">        copy[k++] = arr[i] &lt;= arr[j] ? arr[i++] : arr[j++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid) &#123;</span><br><span class="line">        copy[k++] = arr[i++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (j &lt;= r) &#123;</span><br><span class="line">        copy[k++] = arr[j++];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 合并完成后，将复制数组的数据拷贝回原数组</span></span><br><span class="line">    k = l;</span><br><span class="line">    <span class="keyword">while</span> (k &lt;= r) &#123;</span><br><span class="line">        arr[k] = copy[k++];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="堆排序"><a class="markdownIt-Anchor" href="#堆排序"></a> 堆排序</h4>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 维持最大堆的特性</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] heapify(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> heapSize, <span class="keyword">int</span> i) &#123;</span><br><span class="line">    <span class="keyword">int</span> l = (i &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> r = l + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> largest = i;</span><br><span class="line">  	<span class="comment">// 找到当前节点及其左右子节点的最大值的下标</span></span><br><span class="line">    <span class="keyword">if</span> (l &lt;= heapSize &amp;&amp; arr[l] &gt; arr[largest]) largest = l;</span><br><span class="line">    <span class="keyword">if</span> (r &lt;= heapSize &amp;&amp; arr[r] &gt; arr[largest]) largest = r;</span><br><span class="line">  	<span class="comment">// 如果当前节点的值不是最大的，交换，并递归</span></span><br><span class="line">    <span class="keyword">if</span> (largest != i) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = arr[i];</span><br><span class="line">        arr[i] = arr[largest];</span><br><span class="line">        arr[largest] = tmp;</span><br><span class="line">        heapify(arr, heapSize, largest);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 维持最大堆的特性</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] heapify(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> heapSize, <span class="keyword">int</span> i) &#123;</span><br><span class="line">    <span class="keyword">int</span> l = (i &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> r = l + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> largest = i;</span><br><span class="line">    <span class="comment">// 找到当前节点及其左右子节点的最大值的下标</span></span><br><span class="line">    <span class="keyword">if</span> (l &lt;= heapSize &amp;&amp; arr[l] &gt; arr[largest]) largest = l;</span><br><span class="line">    <span class="keyword">if</span> (r &lt;= heapSize &amp;&amp; arr[r] &gt; arr[largest]) largest = r;</span><br><span class="line">    <span class="comment">// 如果当前节点的值不是最大的，交换，并递归</span></span><br><span class="line">    <span class="keyword">if</span> (largest != i) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = arr[i];</span><br><span class="line">        arr[i] = arr[largest];</span><br><span class="line">        arr[largest] = tmp;</span><br><span class="line">        heapify(arr, heapSize, largest);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 建堆</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] buildHeap(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = arr.length &gt;&gt; <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        heapify(arr, arr.length - <span class="number">1</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] HeapSort(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line">  	<span class="comment">// 建堆</span></span><br><span class="line">    buildHeap(arr);</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 将堆顶的最大值换到数组最后的位置</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = arr.length - <span class="number">1</span>; i &gt;= <span class="number">1</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">int</span> val = arr[<span class="number">0</span>];</span><br><span class="line">        arr[<span class="number">0</span>] = arr[i];</span><br><span class="line">        arr[i] = val;</span><br><span class="line">				<span class="comment">// 维护堆的性质</span></span><br><span class="line">        heapify(arr, i - <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] HeapSort(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line">    <span class="comment">// 建堆</span></span><br><span class="line">    buildHeap(arr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将堆顶的最大值换到数组最后的位置</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = arr.length - <span class="number">1</span>; i &gt;= <span class="number">1</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">int</span> val = arr[<span class="number">0</span>];</span><br><span class="line">        arr[<span class="number">0</span>] = arr[i];</span><br><span class="line">        arr[i] = val;</span><br><span class="line">        <span class="comment">// 维护堆的性质</span></span><br><span class="line">        heapify(arr, i - <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="快速排序"><a class="markdownIt-Anchor" href="#快速排序"></a> 快速排序</h4>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] quickSort(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> l, <span class="keyword">int</span> r) &#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r) <span class="keyword">return</span> arr;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> pivot = arr[r]; 	<span class="comment">// 这一步可以优化，可以随机选取一个数作为 pivot</span></span><br><span class="line">    <span class="keyword">int</span> index = l - <span class="number">1</span>;		<span class="comment">// 最后一个小于 pivot 元素的下标</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = l; i &lt;= r; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i] &lt;= pivot) &#123;  <span class="comment">// 每找到一个小于 pivot 元素</span></span><br><span class="line">            index++;						<span class="comment">// index 加一，交换元素的位置</span></span><br><span class="line">            <span class="keyword">int</span> tmp = arr[index];</span><br><span class="line">            arr[index] = arr[i];</span><br><span class="line">            arr[i] = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 对左右两个子数组递归操作</span></span><br><span class="line">    quickSort(arr, l, index - <span class="number">1</span>);</span><br><span class="line">    quickSort(arr,index + <span class="number">1</span>, r);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] quickSort(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> l, <span class="keyword">int</span> r) &#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r) <span class="keyword">return</span> arr;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> pivot = arr[r];  <span class="comment">// 这一步可以优化，可以随机选取一个数作为 pivot</span></span><br><span class="line">    <span class="keyword">int</span> index = l - <span class="number">1</span>;  <span class="comment">// 最后一个小于 pivot 元素的下标</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = l; i &lt;= r; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i] &lt;= pivot) &#123;  <span class="comment">// 每找到一个小于 pivot 元素</span></span><br><span class="line">            index++;  <span class="comment">// index 加一，交换元素的位置</span></span><br><span class="line">            <span class="keyword">int</span> tmp = arr[index];</span><br><span class="line">            arr[index] = arr[i];</span><br><span class="line">            arr[i] = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对左右两个子数组递归操作</span></span><br><span class="line">    quickSort(arr, l, index - <span class="number">1</span>);</span><br><span class="line">    quickSort(arr,index + <span class="number">1</span>, r);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="比较排序总结"><a class="markdownIt-Anchor" href="#比较排序总结"></a> 比较排序总结</h4>
 <table>
 <thead>
