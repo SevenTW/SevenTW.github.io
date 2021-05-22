@@ -160,6 +160,23 @@
       </tags>
   </entry>
   <entry>
+    <title>JVM</title>
+    <url>/archives/66c016fb.html</url>
+    <content><![CDATA[<h4 id="java内存模型"><a class="markdownIt-Anchor" href="#java内存模型"></a> <code>Java</code>内存模型</h4>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java内存模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL</title>
+    <url>/archives/c24675b4.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>Spring</title>
     <url>/archives/6c92115f.html</url>
     <content><![CDATA[<h3 id="spring-简介"><a class="markdownIt-Anchor" href="#spring-简介"></a> Spring 简介</h3>
@@ -392,6 +409,80 @@
       </tags>
   </entry>
   <entry>
+    <title>The world this week Business</title>
+    <url>/archives/2b46cafc.html</url>
+    <content><![CDATA[<p>The American Senate began debate on Joe Biden’s $1.9trn stimulus bill, after it passed the House of Representatives. Mr Biden will need the support of all 50 Democratic senators if it is to succeed. In one setback, the Senate’s parliamentarian said that a measure to raise the minimum wage to $15 an hour could not be included in the legislation under the procedure by which the Democrats have introduced the bill.</p>
+<span id="more"></span>
+<p><strong>Spend now, pay later</strong></p>
+<p>In Britain the government’s budget provided yet more spending on workers and businesses to <mark class="label primary">cushion</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> the blow of the pandemic. The <mark class="label primary">furlough</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> scheme, which pays staff wages and has been in place for a year, was extended to September. Fiscal support for the pandemic now totals £407bn ($570bn). To pay for all this the government set out tax increases, including a rise in corporation tax from 19% to 25% in 2023. Before that there will be a two-year tax break for companies intended to <mark class="label primary">spur</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> investment.</p>
+<p>Bond markets were quieter, following a <mark class="label primary">rout</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> in prices sparked by fears of rising inflation in America. The yield on the ten-year US Treasury bond fell back to 1.46%, having risen above 1.6%. It started the year well below 1%.</p>
+<p>India’s economy pulled out of recession in the last three months of 2020, but only just. GDP expanded by 0.4% in the quarter, year on year. A huge stimulus package helped Brazil limit the pandemic’s damage to its GDP, which shrank by 4.1% last year, a better performance than economies of similar size.</p>
+<div class="note info"><p><strong>Brazil</strong>：巴西</p>
+</div>
+<p>February was a record month for the value of SPACS, shell companies that list on a stock exchange with the intent of merging with an existing company, and so avoid the rigours of an IPO. SPACS struck 50 merger deals last month, totalling almost $109bn.</p>
+<p>Rio Tinto’s chairman decided to step down within a year because of the mining company’s <mark class="label primary">demolition</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> of a sacred <mark class="label primary">Aboriginal</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> cave in Australia in May 2020. Australian pension funds had pressed Rio’s board to hold senior executives to account for the destruction.</p>
+<div class="note info"><p><strong>step down</strong>：辞职，下台</p>
+</div>
+<p>Another week and another carmaker announced an ambitious electrification strategy, as Volvo said it would phase out all petrol-powered cars, including hybrids, by 2030, and sell only fully electric ones. It also plans to disrupt the established way of selling cars by <mark class="label primary">ditching</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> dealerships and making its new cars available only online.</p>
+<div class="note info"><p><strong>phase out</strong>：逐步淘汰，逐步取消，逐步停止</p>
+</div>
+<p>Las Vegas Sands, founded by the late Sheldon Adelson, reached an agreement to sell the Venetian hotel in Las Vegas to private-equity and property investors for more than $6bn. The investors are<br>
+taking a <mark class="label primary">punt</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> that Sin City will <mark class="label primary">rebound</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> when covid-19 restrictions are eased. The deal <mark class="label primary">underpins</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>Las Vegas Sands’ focus on its <mark class="label primary">casinos</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> in Macau and Singapore, the backbone of its business.</p>
+<p>Both Lufthansa and International Airlines Group, the owner of British Airways, reported big annual losses. Looking for ways to save cash, BA has reached an agreement to defer £450m ($628m) in pension deficit contributions.</p>
+<p>Covid-related restrictions brought about a 6% drop in energy-related carbon-dioxide emissions last year, according to the International Energy Agency. But as demand picked up, so did emissions, which were 2% higher in December 2020 than in December 2019. With its economy rebounding, China’s emissions rose over the year, by 0.8%; in America they fell by 10%. Globally, the decline in road activity accounted for 50% of the fall in demand for oil, and the <mark class="label primary">slump</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> in aviation for 35%.</p>
+<p>There may be a new president in the White House, but Amazon still finds itself caught in political crosshairs. Joe Biden warned the retail giant this week not to interfere with a vote by workers at a warehouse in Alabama on whether to unionise, a first for all the employees at an Amazon facility. Meanwhile, Amazon was forced to change the recent redesign of its app logo, because the Twitterati thought it resembled Hitler.</p>
+<div class="note info"><p><strong>Twitterati</strong>：网络达人</p>
+</div>
+<p>Birkenstock was sold to a private-equity firm backed by lvmh in a deal worth €4bn ($4.8bn). Associated with hippies in the 1970s until they became de rigueur for hipsters in the 1990s, Birkenstock sandals<sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> trace their history back to Germany in 1774; the current design dates from the 1960s. The Birkenstock family will no longer be sole owners, but they will retain a minority <mark class="label primary">stake</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>.</p>
+<p><strong>A one-way ticket?</strong></p>
+<p>Maezawa Yusaku, a Japanese <mark class="label primary">tycoon</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup>, invited applications for eight places on his planned trip around the Moon, pencilled in for 2023. Meanwhile SpaceX, the firm that will fly Mr Maezawa and his companions, was testing a prototype version of the rocket he hopes to use. The machine managed to return to its landing pad after flying 10km into the air, but blew up a few minutes later.</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>美 ['kʊʃ(ə)n] 1. 坐垫，靠垫；2. 缓和，缓冲（打击） <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>美 [‘fɜrloʊ] （尤指在国外服役士兵的）休假（许可) <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>美 [spɜr] 刺激，激励，促进 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>美 [raʊt] 溃败 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>美 [.demə’lɪʃ(ə)n] 1. 破坏，拆除；2. 废墟 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>美 [ˌæbəˈrɪdʒən(ə)l] 1. 土著，原住民；2. 土著的，原始的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>美 [dɪtʃ] 摆脱，抛弃 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>美 [pʌnt] 赌博，打赌 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>美 [rɪ’baʊnd] 1. 篮板球；2. 复兴，复苏 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>美 [.ʌndər’pɪn] 巩固，支撑，加强 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>美 [kə’sinoʊ] 赌场 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>美 [slʌmp] 暴跌，锐减 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p>美 ['sænd(ə)l] 凉鞋 <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn14" class="footnote-item"><p>美 [steɪk] 股份 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn15" class="footnote-item"><p>美 [taɪˈkuːn] 大亨，企业巨头 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>The Economist</category>
+        <category>The world this week</category>
+      </categories>
+      <tags>
+        <tag>The Economist</tag>
+        <tag>经济学人</tag>
+        <tag>Business</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Bouncing back</title>
     <url>/archives/214164ed.html</url>
     <content><![CDATA[<center><b>How to make a social safety net for the post-covid world</b></center>
@@ -478,80 +569,6 @@
         <tag>The Economist</tag>
         <tag>经济学人</tag>
         <tag>Leaders</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>The world this week Business</title>
-    <url>/archives/2b46cafc.html</url>
-    <content><![CDATA[<p>The American Senate began debate on Joe Biden’s $1.9trn stimulus bill, after it passed the House of Representatives. Mr Biden will need the support of all 50 Democratic senators if it is to succeed. In one setback, the Senate’s parliamentarian said that a measure to raise the minimum wage to $15 an hour could not be included in the legislation under the procedure by which the Democrats have introduced the bill.</p>
-<span id="more"></span>
-<p><strong>Spend now, pay later</strong></p>
-<p>In Britain the government’s budget provided yet more spending on workers and businesses to <mark class="label primary">cushion</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> the blow of the pandemic. The <mark class="label primary">furlough</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> scheme, which pays staff wages and has been in place for a year, was extended to September. Fiscal support for the pandemic now totals £407bn ($570bn). To pay for all this the government set out tax increases, including a rise in corporation tax from 19% to 25% in 2023. Before that there will be a two-year tax break for companies intended to <mark class="label primary">spur</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> investment.</p>
-<p>Bond markets were quieter, following a <mark class="label primary">rout</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> in prices sparked by fears of rising inflation in America. The yield on the ten-year US Treasury bond fell back to 1.46%, having risen above 1.6%. It started the year well below 1%.</p>
-<p>India’s economy pulled out of recession in the last three months of 2020, but only just. GDP expanded by 0.4% in the quarter, year on year. A huge stimulus package helped Brazil limit the pandemic’s damage to its GDP, which shrank by 4.1% last year, a better performance than economies of similar size.</p>
-<div class="note info"><p><strong>Brazil</strong>：巴西</p>
-</div>
-<p>February was a record month for the value of SPACS, shell companies that list on a stock exchange with the intent of merging with an existing company, and so avoid the rigours of an IPO. SPACS struck 50 merger deals last month, totalling almost $109bn.</p>
-<p>Rio Tinto’s chairman decided to step down within a year because of the mining company’s <mark class="label primary">demolition</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> of a sacred <mark class="label primary">Aboriginal</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> cave in Australia in May 2020. Australian pension funds had pressed Rio’s board to hold senior executives to account for the destruction.</p>
-<div class="note info"><p><strong>step down</strong>：辞职，下台</p>
-</div>
-<p>Another week and another carmaker announced an ambitious electrification strategy, as Volvo said it would phase out all petrol-powered cars, including hybrids, by 2030, and sell only fully electric ones. It also plans to disrupt the established way of selling cars by <mark class="label primary">ditching</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> dealerships and making its new cars available only online.</p>
-<div class="note info"><p><strong>phase out</strong>：逐步淘汰，逐步取消，逐步停止</p>
-</div>
-<p>Las Vegas Sands, founded by the late Sheldon Adelson, reached an agreement to sell the Venetian hotel in Las Vegas to private-equity and property investors for more than $6bn. The investors are<br>
-taking a <mark class="label primary">punt</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> that Sin City will <mark class="label primary">rebound</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> when covid-19 restrictions are eased. The deal <mark class="label primary">underpins</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>Las Vegas Sands’ focus on its <mark class="label primary">casinos</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> in Macau and Singapore, the backbone of its business.</p>
-<p>Both Lufthansa and International Airlines Group, the owner of British Airways, reported big annual losses. Looking for ways to save cash, BA has reached an agreement to defer £450m ($628m) in pension deficit contributions.</p>
-<p>Covid-related restrictions brought about a 6% drop in energy-related carbon-dioxide emissions last year, according to the International Energy Agency. But as demand picked up, so did emissions, which were 2% higher in December 2020 than in December 2019. With its economy rebounding, China’s emissions rose over the year, by 0.8%; in America they fell by 10%. Globally, the decline in road activity accounted for 50% of the fall in demand for oil, and the <mark class="label primary">slump</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> in aviation for 35%.</p>
-<p>There may be a new president in the White House, but Amazon still finds itself caught in political crosshairs. Joe Biden warned the retail giant this week not to interfere with a vote by workers at a warehouse in Alabama on whether to unionise, a first for all the employees at an Amazon facility. Meanwhile, Amazon was forced to change the recent redesign of its app logo, because the Twitterati thought it resembled Hitler.</p>
-<div class="note info"><p><strong>Twitterati</strong>：网络达人</p>
-</div>
-<p>Birkenstock was sold to a private-equity firm backed by lvmh in a deal worth €4bn ($4.8bn). Associated with hippies in the 1970s until they became de rigueur for hipsters in the 1990s, Birkenstock sandals<sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> trace their history back to Germany in 1774; the current design dates from the 1960s. The Birkenstock family will no longer be sole owners, but they will retain a minority <mark class="label primary">stake</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>.</p>
-<p><strong>A one-way ticket?</strong></p>
-<p>Maezawa Yusaku, a Japanese <mark class="label primary">tycoon</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup>, invited applications for eight places on his planned trip around the Moon, pencilled in for 2023. Meanwhile SpaceX, the firm that will fly Mr Maezawa and his companions, was testing a prototype version of the rocket he hopes to use. The machine managed to return to its landing pad after flying 10km into the air, but blew up a few minutes later.</p>
-<hr class="footnotes-sep">
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>美 ['kʊʃ(ə)n] 1. 坐垫，靠垫；2. 缓和，缓冲（打击） <a href="#fnref1" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn2" class="footnote-item"><p>美 [‘fɜrloʊ] （尤指在国外服役士兵的）休假（许可) <a href="#fnref2" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn3" class="footnote-item"><p>美 [spɜr] 刺激，激励，促进 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn4" class="footnote-item"><p>美 [raʊt] 溃败 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn5" class="footnote-item"><p>美 [.demə’lɪʃ(ə)n] 1. 破坏，拆除；2. 废墟 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn6" class="footnote-item"><p>美 [ˌæbəˈrɪdʒən(ə)l] 1. 土著，原住民；2. 土著的，原始的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn7" class="footnote-item"><p>美 [dɪtʃ] 摆脱，抛弃 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn8" class="footnote-item"><p>美 [pʌnt] 赌博，打赌 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn9" class="footnote-item"><p>美 [rɪ’baʊnd] 1. 篮板球；2. 复兴，复苏 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn10" class="footnote-item"><p>美 [.ʌndər’pɪn] 巩固，支撑，加强 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn11" class="footnote-item"><p>美 [kə’sinoʊ] 赌场 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn12" class="footnote-item"><p>美 [slʌmp] 暴跌，锐减 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn13" class="footnote-item"><p>美 ['sænd(ə)l] 凉鞋 <a href="#fnref13" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn14" class="footnote-item"><p>美 [steɪk] 股份 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn15" class="footnote-item"><p>美 [taɪˈkuːn] 大亨，企业巨头 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
-</li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>The Economist</category>
-        <category>The world this week</category>
-      </categories>
-      <tags>
-        <tag>The Economist</tag>
-        <tag>经济学人</tag>
-        <tag>Business</tag>
       </tags>
   </entry>
   <entry>
@@ -2156,6 +2173,275 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
         <tag>Java容器</tag>
         <tag>ArrayList</tag>
         <tag>HashMap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>并发</title>
+    <url>/archives/46bf65ac.html</url>
+    <content><![CDATA[<h4 id="使用线程"><a class="markdownIt-Anchor" href="#使用线程"></a> 使用线程</h4>
+<h5 id="实现-runnable-接口"><a class="markdownIt-Anchor" href="#实现-runnable-接口"></a> 实现 <code>Runnable</code> 接口</h5>
+<p>需要实现 <code>run()</code> 方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Task</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;: &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        RunnableDemo task = <span class="keyword">new</span> RunnableDemo();</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(task, <span class="string">&quot;线程&quot;</span>);</span><br><span class="line">        t.start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;: &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 线程: i 和 main: i 会交替显示</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h5 id="实现-callable-接口"><a class="markdownIt-Anchor" href="#实现-callable-接口"></a> 实现 <code>Callable</code> 接口</h5>
+<p>需要实现 <code>call()</code> 方法，与 <code>Runnable</code> 相比，<code>Callable</code> 有返回值</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CallableDemo</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">String</span>&gt; </span>&#123;</span><br><span class="line">    String s;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CallableDemo</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.s = s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ExecutorService executorService = Executors.newSingleThreadExecutor();</span><br><span class="line"></span><br><span class="line">        Future&lt;String&gt; future = executorService.submit(<span class="keyword">new</span> CallableDemo(<span class="string">&quot;Callable&lt;String&gt;&quot;</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(future.get());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException | ExecutionException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            executorService.shutdown();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 线程: i 和 main: i 会交替显示</span></span><br></pre></td></tr></table></figure>
+<p>需要注意的是，实现 <code>Runnable</code> 或 <code>Callable</code> 接口的类本身并不具有线程行为，可以把这些类看作是执行某些任务的类，要使这些任务执行起来还是需要真正的线程来驱动。</p>
+<h5 id="继承-thread-类"><a class="markdownIt-Anchor" href="#继承-thread-类"></a> 继承 <code>Thread</code> 类</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateThread1</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadDemo</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.MILLISECONDS.sleep(<span class="number">1</span>); <span class="comment">// 让线程休眠，更好地看到线程交替执行效果</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;: &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Thread thread = <span class="keyword">new</span> ThreadDemo(<span class="string">&quot;线程&quot;</span>);</span><br><span class="line">        thread.start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.MILLISECONDS.sleep(<span class="number">1</span>); <span class="comment">// 让线程休眠，更好地看到线程交替执行效果</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;: &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>继承 <code>Thread</code> 类与实现 <code>Runnable</code> 接口的比较：</p>
+<ol>
+<li>
+<p>实现 <code>Runnable</code> 接口可以更好的解耦。</p>
+<blockquote>
+<p><code>Runnable</code> 只有一个 <code>run()</code> 方法，定义需要实现的任务;</p>
+<p><code>Thread</code> 则负责线程的属性设置和启动等内容。</p>
+</blockquote>
+</li>
+<li>
+<p>在某些情况下，实现 <code>Runnable</code> 接口可以提高性能。</p>
+<blockquote>
+<p>使用继承 <code>Thread</code> 类的方式，每执行一次任务，都需要重新创建一个线程，等任务执行完，线程需要被销毁，增加了额外的开销；</p>
+<p>使用实现 <code>Runnable</code> 接口的方式，在任务定义完之后，配合线程池，只需将任务传入线程池，使用线程池中固有的线程来执行任务，而不需要每次都创建销毁线程。</p>
+</blockquote>
+</li>
+<li>
+<p>Java 不支持多继承，如果继承了 <code>Thread</code> 类，之后就不能再继承其他类，限制了代码代码的可扩展性。</p>
+</li>
+</ol>
+<h4 id="线程基本机制"><a class="markdownIt-Anchor" href="#线程基本机制"></a> 线程基本机制</h4>
+<ul>
+<li><strong>休眠（<code>sleep</code>）</strong></li>
+</ul>
+<p>调用 <code>sleep()</code> 不会释放对象锁。</p>
+<p><code>sleep()</code> 可能会抛出 <code>InterruptedException</code>，因为异常不能跨线程传播，因此必须在本地进行处理。线程中抛出的其它异常也同样需要在本地进行处理。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>让步（<code>yield</code>）</strong></li>
+</ul>
+<p>给线程调度机制一个建议，当前线程的工作已经做得差不多了，可以把 <code>CPU</code> 让给其他线程，当前线程重新进入就绪状态。</p>
+<p><code>yield()</code> 只是给一个建议，不一定会被采纳。</p>
+<p>调用 <code>yield()</code> 不会释放对象锁。</p>
+<ul>
+<li>插<strong>队（<code>join</code>）</strong></li>
+</ul>
+<p>在 <code>A</code> 线程中调用 <code>B.join()</code>，<code>A</code> 线程将被挂起，直到 <code>B</code> 线程结束才恢复，<code>B</code> 线程是一个插队线程。</p>
+<p>对 <code>join()</code> 的调用可以被中断，做法是调用插队线程的 <code>interrupt()</code> 方法。</p>
+<ul>
+<li><strong>中断（<code>interrupt</code>）</strong></li>
+</ul>
+<p>对于 <code>Java</code> 来说，停止线程的正确方式是调用线程的 <code>interrupt()</code> 方法。</p>
+<p>调用线程的 <code>interrupt()</code> 方法，将设置线程的中断状态。如果一个线程已经被阻塞，或正试图执行一个阻塞操作，那么设置这个线程的中断状态将抛出 <code>java.lang.InterruptedException</code> 异常。</p>
+<p>为了调用 <code>interrupt()</code>，需要先持有 <code>Thread</code> 对象。新的 <code>concurrent</code> 类库中尽量在避免对 <code>Thread</code> 对象的直接操作，转而尽量通过 <code>Executor</code> 来执行所有操作。</p>
+<p>如果在 <code>Executor</code> 上调用 <code>shutdownNow()</code>，将会发送一个 <code>interrupt()</code> 调用给它启动的所有线程。</p>
+<p>如果希望只中断某个单一任务，可以通过 <code>submit()</code> 来启动任务，并持有任务的上下文。<code>submit()</code> 返回一个 <code>Future&lt;?&gt;</code>，可以在其上调用 <code>cancel()</code>，如果把 <code>true</code> 传给 <code>cancel()</code>，那么它就可以在该线程上调用 <code>interrupt()</code> 以停止这个线程。</p>
+<p><code>I/O</code> 和在 <code>synchronized</code> 块上的阻塞是不可中断的。</p>
+<p><code>interrupt()</code> 将会给线程设定一个中断标志，但中断一个阻塞的线程将抛出 <code>InterruptedException</code> 异常，该异常被捕获时将清除线程的中断标志，所以在 <code>catch</code> 子句中，在异常被捕获时这个标志总是为假。</p>
+<h4 id="线程状态"><a class="markdownIt-Anchor" href="#线程状态"></a> 线程状态</h4>
+<ul>
+<li><code>NEW</code></li>
+</ul>
+<p>创建后还未启动的线程处于这个状态。</p>
+<ul>
+<li><code>RUNNABLE</code></li>
+</ul>
+<p>可运行（就绪）状态。可能正在运行，也可能在等待 <code>CPU</code> 调度。</p>
+<ul>
+<li><code>BLOCKED</code></li>
+</ul>
+<p>阻塞（等待获取一个对象锁）状态。</p>
+<ul>
+<li><code>WAITING</code></li>
+</ul>
+<p>无限期等待其他线程唤醒。</p>
+<p>线程进入这种状态可能是调用了以下方法：</p>
+<blockquote>
+<ul>
+<li><code>Object.wait()</code></li>
+<li><code>Thread.join()</code></li>
+<li><code>LockSupport.park()</code></li>
+</ul>
+</blockquote>
+<ul>
+<li><code>TIMED_WAITING</code></li>
+</ul>
+<p>在有限时间内等待其他线程执行某些操作。</p>
+<p>线程进入这种状态可能是调用了以下方法：</p>
+<blockquote>
+<ul>
+<li><code>Thread.sleep(long timeout)</code></li>
+<li><code>Object.wait(long timeout)</code></li>
+<li><code>Thread.join(long timeout)</code></li>
+<li><code>LockSupport.parkNanos(long timeout)</code></li>
+<li><code>LockSupport.parkUntil(long timeout)</code></li>
+</ul>
+</blockquote>
+<ul>
+<li><code>TERMINATED</code></li>
+</ul>
+<p>线程终止。</p>
+<h4 id="线程同步"><a class="markdownIt-Anchor" href="#线程同步"></a> 线程同步</h4>
+<p><code>Java</code> 有两种锁机制来控制多个线程对共享资源的互斥访问，第一个是 <code>JVM</code> 实现的 <code>synchronized</code>，而另一个是 <code>JDK</code> 实现的 <code>ReentrantLock</code>。</p>
+<h5 id="synchronized"><a class="markdownIt-Anchor" href="#synchronized"></a> <code>synchronized</code></h5>
+<p><strong><code>synchronized</code> 基本使用</strong></p>
+<ul>
+<li>同步代码块</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (obj) &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>同步方法</li>
+</ul>
+<p>锁定调用这个方法的对象 （this）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">g</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果某个线程在一个对象上调用了 <code>f()</code>，对于该对象而言，只有等到 <code>f()</code> 调用结束释放了对象锁，其他线程才能调用 <code>f()</code> 和 <code>g()</code>。也即是说，对于一个特定对象来说，其所有的 <code>synchronized</code> 方法共享同一个锁。</p>
+<p><code>synchronized</code> 的实现原理</p>
+<p><code>Java</code> 中每个对象都有一个 <code>monitor</code> 与之关联，当一个对象的 <code>monitor</code> 被获取后，该对象将处于锁定状态。</p>
+<p>在 <code>Java</code> 虚拟机（<code>HotSpot</code>）中，<code>monitor</code> 是基于 <code>ObjectMonitor</code> 实现的：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ObjectMonitor() &#123;</span><br><span class="line">  _header       = NULL;</span><br><span class="line">  _count        = <span class="number">0</span>;</span><br><span class="line">  _waiters      = <span class="number">0</span>,</span><br><span class="line">  _recursions   = <span class="number">0</span>;  <span class="comment">// 锁的重入次数</span></span><br><span class="line">  _object       = NULL;</span><br><span class="line">  _owner        = NULL;  <span class="comment">// 持有对象 monitor 的线程</span></span><br><span class="line">  _WaitSet      = NULL;  <span class="comment">// 处于 wait 状态的线程队列</span></span><br><span class="line">  _WaitSetLock  = <span class="number">0</span> ;</span><br><span class="line">  _Responsible  = NULL ;</span><br><span class="line">  _succ         = NULL ;</span><br><span class="line">  _cxq          = NULL ;</span><br><span class="line">  FreeNext      = NULL ;</span><br><span class="line">  _EntryList    = NULL ;  <span class="comment">// 处于 blocked 状态的线程队列</span></span><br><span class="line">  _SpinFreq     = <span class="number">0</span> ;</span><br><span class="line">  _SpinClock    = <span class="number">0</span> ;</span><br><span class="line">  OwnerIsThread = <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>多个线程同时访问一段同步代码时，线程进入 <code>_EntryList</code> 队列中；</p>
+</li>
+<li>
+<p>某个线程获取到对象的 monitor 后，<code>_Owner</code> 指向当前线程，同时 <code>monitor</code> 中的计数器 <code>_count</code> 加1；</p>
+</li>
+<li>
+<p>若持有 <code>monitor</code> 的线程在对象上调用 <code>wait()</code> 方法，将释放该对象 <code>monitor</code>，<code>_owner</code> 变量恢复为 <code>null</code>，<code>_count</code>自减1，同时该线程进入 <code>_WaitSet</code> 集合中等待被唤醒。</p>
+</li>
+</ul>
+<h5 id="reentrantlock"><a class="markdownIt-Anchor" href="#reentrantlock"></a> <code>ReentrantLock</code></h5>
+<p><strong><code>ReentrantLock</code> 基本使用</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">X</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">   <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">m</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     lock.lock();  <span class="comment">// block until condition holds</span></span><br><span class="line">     <span class="keyword">try</span> &#123;</span><br><span class="line">       <span class="comment">// ... method body</span></span><br><span class="line">     &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">       lock.unlock()</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="synchronized-和-reentrantlock-的比较"><a class="markdownIt-Anchor" href="#synchronized-和-reentrantlock-的比较"></a> <code>synchronized</code> 和 <code>ReentrantLock</code> 的比较</h5>
+<ul>
+<li>
+<p><code>synchronized</code> 是 <code>JVM</code> 实现的，<code>ReentrantLock</code> 是 <code>JDK</code> 实现的；</p>
+</li>
+<li>
+<p><code>ReentrantLock</code> 阻塞可中断， <code>synchronized</code> 阻塞不可中断；</p>
+</li>
+<li>
+<p>公平锁是指多个线程在等待同一个锁时，必须按照申请锁的先后顺序来依次获得锁。</p>
+<p><code>synchronized</code> 锁是非公平的，<code>ReentrantLock</code> 默认也是非公平的，但是可以设置为公平的;</p>
+</li>
+<li>
+<p><code>ReentrantLock</code> 可以同时锁定多个 <code>Condition</code> 对象；</p>
+</li>
+<li>
+<p>除非需要使用 <code>ReentrantLock</code> 的高级功能，否则<strong>优先使用 <code>synchronized</code></strong>。</p>
+</li>
+</ul>
+<h4 id="线程协作"><a class="markdownIt-Anchor" href="#线程协作"></a> 线程协作</h4>
+<p><strong>信号丢失</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// T1</span></span><br><span class="line"><span class="keyword">synchronized</span> (sharedMonitor) &#123;</span><br><span class="line">  	&lt;setup condition <span class="keyword">for</span> T2&gt;</span><br><span class="line">    sharedMonitor.notify();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// T2</span></span><br><span class="line"><span class="keyword">while</span> (someCondition) &#123;</span><br><span class="line">  	<span class="comment">// point1</span></span><br><span class="line">    <span class="keyword">synchronized</span> (sharedMonitor) &#123;</span><br><span class="line">      	sharedMonitor.wait();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果 <code>T2</code> 先执行，并发现 <code>someCondition</code> 为 <code>true</code>，在 <code>point1</code>，<code>CPU</code> 切换到 <code>T1</code>。</p>
+<p><code>T1</code> 执行设置，然后调用 <code>notify()</code>。当 <code>T2</code> 被重新调度，获得 <code>shareMonitor</code> 后继续执行进入 <code>wait()</code>，并释放 <code>shareMonitor</code>。</p>
+<p>但是因为 <code>T1</code> 已经执行完毕，不会再调用 <code>notify()</code>，<code>T2</code> 将一直等待这个已经发送过的信号，从而产生死锁。</p>
+<p>产生这个问题的原因是在 <code>someCondition</code> 发生了<strong>竞争条件</strong>，<code>T1</code> 和 <code>T2</code> 能否正常协作，取决于 <code>someCondition</code> 的设置和判断顺序。</p>
+<p>解决方法是消除在 <code>someCondition</code> 上的竞争条件：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// T2</span></span><br><span class="line"><span class="keyword">synchronized</span> (sharedMonitor) &#123;</span><br><span class="line">  	<span class="keyword">while</span> (someCondition) &#123;</span><br><span class="line">      	sharedMonitor.wait();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际上，使用 <code>wait()</code> 的安全方式正是在上述这种方式，在同步代码块中，使用 <code>while</code> 等待某种条件生效。</p>
+<p><strong>虚假唤醒</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (obj) &#123;</span><br><span class="line">   <span class="keyword">if</span> (&lt;condition does not hold&gt;)</span><br><span class="line">       obj.wait(); <span class="comment">// point1</span></span><br><span class="line">   <span class="comment">// point2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面这段代码中，假设有 2 个线程 <code>T1</code> 和 <code>T2</code> 先后获取 <code>obj</code> 对象锁后，<code>if</code> 判断都为假，<code>T1</code> 、<code>T2</code> 进入阻塞状态；</p>
+<p>然后有另一个线程 <code>T3</code> 获取了 <code>obj</code> 对象后将 <code>condition</code> 设置为 <code>true</code> ，并调用 <code>notify()</code>，同时唤醒 <code>T1</code>、<code>T2</code>；</p>
+<p>假设 <code>T1</code> 竞争获得 <code>obj</code> 对象锁，不会重新判断 <code>condition</code>，而是接着执行 <code>point2</code> 处代码，然后结束允许并释放锁；</p>
+<p>最后，<code>T2</code> 终重新获得 <code>obj</code> 对象锁，同样不会重新判断 <code>condition</code>，并接着执行 <code>point2</code> 处代码。如果 <code>T1</code> 执行完后 <code>condition</code> 又为假，<code>T2</code> 因为没有重新判断条件，再执行后续代码就出错了。</p>
+<p>这就是虚假唤醒所导致的问题，正确的写法是将 <code>condtion</code> 放在 <code>while</code> 循环里，如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (obj) &#123;</span><br><span class="line">   <span class="keyword">while</span> (&lt;condition does not hold&gt;)</span><br><span class="line">       obj.wait(); <span class="comment">// point1</span></span><br><span class="line">   <span class="comment">// point2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就保证了，线程从 <code>wait()</code> 中返回（被唤醒）后，不会直接执行 <code>point2</code> 处代码，而是接着判断 <code>condition</code>，如果条件不满足，接着进入阻塞状态，保证并发的正确执行。</p>
+<h5 id="生产者消费者问题"><a class="markdownIt-Anchor" href="#生产者消费者问题"></a> 生产者消费者问题</h5>
+<ul>
+<li><strong>使用 <code>BlockingQueue</code> 实现</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlockingQueuePC</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      	<span class="comment">// 这个程序不会自动停止，添加一个 Timer，以便在 100 毫秒后停止</span></span><br><span class="line">        <span class="keyword">new</span> Timer().schedule(<span class="keyword">new</span> TimerTask() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.err.println(<span class="string">&quot;Aborting&quot;</span>);</span><br><span class="line">                System.exit(<span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="number">100</span>);</span><br><span class="line">        </span><br><span class="line">        BlockingQueue&lt;Object&gt; queue = <span class="keyword">new</span> ArrayBlockingQueue&lt;&gt;(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义生产任务</span></span><br><span class="line">        Runnable producer = () -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    queue.put(<span class="keyword">new</span> Object());</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; produce the &quot;</span> + queue.size() + <span class="string">&quot;th Object&quot;</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建两个生产者线程</span></span><br><span class="line">        <span class="keyword">new</span> Thread(producer, <span class="string">&quot;Producer1&quot;</span>).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(producer, <span class="string">&quot;Producer2&quot;</span>).start();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义消费任务</span></span><br><span class="line">        Runnable consumer = () -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; consume the &quot;</span> + queue.size() + <span class="string">&quot;th Object&quot;</span>);</span><br><span class="line">                    queue.take();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 创建两个消费者线程</span></span><br><span class="line">        <span class="keyword">new</span> Thread(consumer, <span class="string">&quot;Consumer1&quot;</span>).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(consumer, <span class="string">&quot;Consumer2&quot;</span>).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>使用 <code>wait + notify/notifyAll</code> 实现</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 自定义简单队列</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBlockingQueue</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> capacity = <span class="number">16</span>;</span><br><span class="line">    <span class="keyword">private</span> LinkedList&lt;Object&gt; storage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyBlockingQueue</span><span class="params">(<span class="keyword">int</span> capacity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.capacity = capacity;</span><br><span class="line">        storage = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">produce</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="comment">// 如果容器满了，就阻塞生产者</span></span><br><span class="line">        <span class="keyword">while</span> (storage.size() == capacity) &#123;</span><br><span class="line">            <span class="keyword">this</span>.wait();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        storage.add(<span class="keyword">new</span> Object());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 唤醒消费者</span></span><br><span class="line">        <span class="keyword">this</span>.notifyAll();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> Object <span class="title">consume</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="comment">// 如果容器为空，就阻塞消费者</span></span><br><span class="line">        <span class="keyword">while</span> (storage.size() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.wait();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Object o = storage.remove();</span><br><span class="line">        <span class="comment">// 唤醒生产者</span></span><br><span class="line">        <span class="keyword">this</span>.notifyAll();</span><br><span class="line">        <span class="keyword">return</span> o;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 生产者</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> MyBlockingQueue storage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Producer</span><span class="params">(MyBlockingQueue storage)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.storage = storage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                storage.produce();</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot; produce &quot;</span> + i);</span><br><span class="line">                TimeUnit.MILLISECONDS.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 消费者</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> MyBlockingQueue storage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Consumer</span><span class="params">(MyBlockingQueue storage)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.storage = storage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                storage.consume();</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot; consume &quot;</span> + i);</span><br><span class="line">                TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>使用 <code>await + signal/signalAll</code> 实现</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 定义一个简单队列</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBlockingQueue</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Queue queue;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> capacity = <span class="number">16</span>;</span><br><span class="line">    <span class="keyword">private</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="comment">// 定义两个 Condition</span></span><br><span class="line">    <span class="keyword">private</span> Condition notEmpty = lock.newCondition();</span><br><span class="line">    <span class="keyword">private</span> Condition notFull = lock.newCondition();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyBlockingQueue</span><span class="params">(<span class="keyword">int</span> capacity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.capacity = capacity;</span><br><span class="line">        queue = <span class="keyword">new</span> LinkedList();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(Object o)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 容器满了，阻塞生产者，等待唤醒</span></span><br><span class="line">            <span class="keyword">while</span> (queue.size() == capacity) &#123;</span><br><span class="line">                notFull.await();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            queue.add(o);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 唤醒消费者</span></span><br><span class="line">            notEmpty.signalAll();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">take</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (queue.size() == <span class="number">0</span>) &#123;</span><br><span class="line">                notEmpty.await();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            Object o = queue.remove();</span><br><span class="line">            notFull.signalAll();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> o;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>生产者、消费者代码类似。</p>
+<h4 id="线程安全"><a class="markdownIt-Anchor" href="#线程安全"></a> 线程安全</h4>
+<h5 id="死锁"><a class="markdownIt-Anchor" href="#死锁"></a> 死锁</h5>
+<p>发生死锁的四个条件：</p>
+<ul>
+<li>
+<p><strong>互斥</strong></p>
+<p>共享资源只能被一个线程独占使用。</p>
+</li>
+<li>
+<p><strong>持有和等待</strong></p>
+<p>持有某个（些）资源的线程可以请求其他资源。</p>
+</li>
+<li>
+<p><strong>不可抢占</strong></p>
+<p>资源只能被线程主动释放，不能抢占。</p>
+</li>
+<li>
+<p><strong>循环等待</strong></p>
+<p>多个线程和资源构成一个环，环中每个线程都在等待下一个线程占有的资源。</p>
+</li>
+</ul>
+<p>要发生死锁，上述四个条件必须同时满足；所以要防止死锁的话，只需破坏其中一个即可。通常最容易的方法是破坏第 4 个条件。</p>
+<h5 id="并发编程三要素"><a class="markdownIt-Anchor" href="#并发编程三要素"></a> 并发编程三要素</h5>
+<ul>
+<li>
+<p><strong>原子性</strong></p>
+<p>一个或多个操作要么全部执行成功要么全部执行失败。</p>
+<p><strong>线程切换</strong>可能会导致原子性被破坏。</p>
+</li>
+<li>
+<p><strong>可见性</strong></p>
+<p>一个线程对共享变量的修改，其他线程立刻可见。</p>
+<p><strong>线程缓存</strong>可能会导致可见性问题。</p>
+</li>
+<li>
+<p><strong>有序性</strong></p>
+<p>程序执行的顺序按照代码的先后顺序。</p>
+<p><strong>编译器优化</strong>可能会带来有序性问题。</p>
+</li>
+</ul>
+<h4 id="juc-中的构件"><a class="markdownIt-Anchor" href="#juc-中的构件"></a> <code>J.U.C</code> 中的构件</h4>
+<h5 id="countdownlatch"><a class="markdownIt-Anchor" href="#countdownlatch"></a> <code>CountDownLatch</code></h5>
+<p>用来同步多个任务。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Driver</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">     CountDownLatch startSignal = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);</span><br><span class="line">     CountDownLatch doneSignal = <span class="keyword">new</span> CountDownLatch(N);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</span><br><span class="line">       <span class="keyword">new</span> Thread(<span class="keyword">new</span> Worker(startSignal, doneSignal)).start();</span><br><span class="line"></span><br><span class="line">     <span class="comment">// do something</span></span><br><span class="line">     <span class="comment">// 主线程做完准备工作后，调用 startSignal 的 countDown()，通知在 startSignal 上等待的   </span></span><br><span class="line">     <span class="comment">// 线程可以开始工作了</span></span><br><span class="line">     startSignal.countDown();</span><br><span class="line">     </span><br><span class="line">     <span class="comment">// 主线程在做收尾工作前，在 doneSignal 上等待</span></span><br><span class="line">     doneSignal.await(); </span><br><span class="line">     <span class="comment">// do something</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Worker</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> CountDownLatch startSignal;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> CountDownLatch doneSignal;</span><br><span class="line">   Worker(CountDownLatch startSignal, CountDownLatch doneSignal) &#123;</span><br><span class="line">     <span class="keyword">this</span>.startSignal = startSignal;</span><br><span class="line">     <span class="keyword">this</span>.doneSignal = doneSignal;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     <span class="keyword">try</span> &#123;</span><br><span class="line">       startSignal.await(); <span class="comment">// 启动这个任务的线程会在 startSignal 上等待</span></span><br><span class="line">       <span class="comment">// do something</span></span><br><span class="line">       doneSignal.countDown(); <span class="comment">// 所有线程执行完后，在 doneSignal 上等待的线程才能执行</span></span><br><span class="line">     &#125; <span class="keyword">catch</span> (InterruptedException ex) &#123;&#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="cyclicbarrier"><a class="markdownIt-Anchor" href="#cyclicbarrier"></a> <code>CyclicBarrier</code></h5>
+<p><code>CyclicBarrier</code> 适用于这样的情况：你希望创建一组任务，它们并行地执行工作，然后在进行下一个步骤之前等待，直至所以任务都完成。<code>CyclicBarrier</code> 使得所有的并行任务都将在栅栏处列队，然后再一致地向前移动。</p>
+<p><code>CyclicBarrier</code> 作用类似于 <code>CountDownLatch</code>，只是 <code>CountDownLatch</code> 只能触发一次，而 <code>CyclicBarrier</code> 通过调用 <code>reset()</code> 可以重复使用。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CyclicBarrierDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> totalThread = <span class="number">10</span>;</span><br><span class="line">        CyclicBarrier cyclicBarrier = <span class="keyword">new</span> CyclicBarrier(totalThread);</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; totalThread; i++) &#123;</span><br><span class="line">            executorService.execute(() -&gt; &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">// 1</span></span><br><span class="line">                    cyclicBarrier.await(); <span class="comment">// 每个线程在执行完 1 处代码会等待，直到其他所有线程执行完 1 处代码才会再执行 2 处代码</span></span><br><span class="line">                    <span class="comment">// 2</span></span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException | BrokenBarrierException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        executorService.shutdown();</span><br><span class="line"></span><br><span class="line">        cyclicBarrier.reset();</span><br><span class="line"></span><br><span class="line">        System.out.println(cyclicBarrier.getParties()); <span class="comment">// 10</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="semaphore"><a class="markdownIt-Anchor" href="#semaphore"></a> <code>Semaphore</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SemaphoreExample</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> clientCount = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> totalRequestCount = <span class="number">10</span>;</span><br><span class="line">      	<span class="comment">// 信号量控制最多只有 clientCount 并发执行</span></span><br><span class="line">        Semaphore semaphore = <span class="keyword">new</span> Semaphore(clientCount);</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; totalRequestCount; i++) &#123;</span><br><span class="line">            executorService.execute(()-&gt;&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    semaphore.acquire();</span><br><span class="line">                    System.out.print(semaphore.availablePermits() + <span class="string">&quot; &quot;</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    semaphore.release();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        executorService.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="blockingqueue"><a class="markdownIt-Anchor" href="#blockingqueue"></a> <code>BlockingQueue</code></h5>
+<h5 id="forkjoin"><a class="markdownIt-Anchor" href="#forkjoin"></a> ForkJoin</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ForkJoinDemo</span> <span class="keyword">extends</span> <span class="title">RecursiveTask</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> threshold;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> first;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> last;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ForkJoinDemo</span><span class="params">(<span class="keyword">int</span> threshold, <span class="keyword">int</span> first, <span class="keyword">int</span> last)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.threshold = threshold;</span><br><span class="line">        <span class="keyword">this</span>.first = first;</span><br><span class="line">        <span class="keyword">this</span>.last = last;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Integer <span class="title">compute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (last - first &lt;= threshold) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = first; i &lt;= last; i++) &#123;</span><br><span class="line">                result += i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> middle = first + (last - first) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">            ForkJoinDemo leftTask = <span class="keyword">new</span> ForkJoinDemo(threshold, first, middle);</span><br><span class="line">            leftTask.fork();</span><br><span class="line"></span><br><span class="line">            ForkJoinDemo rightTask = <span class="keyword">new</span> ForkJoinDemo(threshold, middle + <span class="number">1</span>, last);</span><br><span class="line">            rightTask.fork();</span><br><span class="line"></span><br><span class="line">            result = leftTask.join() + rightTask.join();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">        ForkJoinDemo example = <span class="keyword">new</span> ForkJoinDemo(<span class="number">5</span>, <span class="number">1</span>, <span class="number">10000</span>);</span><br><span class="line">        <span class="comment">// ForkJoinPool 是一个特殊的线程池，线程数量取决于 CPU 核数</span></span><br><span class="line">        ForkJoinPool forkJoinPool = <span class="keyword">new</span> ForkJoinPool();</span><br><span class="line">        Future result = forkJoinPool.submit(example);</span><br><span class="line">        System.out.println(result.get());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="线程池"><a class="markdownIt-Anchor" href="#线程池"></a> 线程池</h4>
+<h4 id="java内存模型"><a class="markdownIt-Anchor" href="#java内存模型"></a> Java内存模型</h4>
+<h4 id="面试题"><a class="markdownIt-Anchor" href="#面试题"></a> 面试题</h4>
+<h5 id="start-和-run-的区别"><a class="markdownIt-Anchor" href="#start-和-run-的区别"></a> <code>start()</code> 和 <code>run()</code> 的区别</h5>
+<h5 id="sleep-和-wait-的区别"><a class="markdownIt-Anchor" href="#sleep-和-wait-的区别"></a> <code>sleep()</code> 和 <code>wait()</code> 的区别</h5>
+<ul>
+<li><code>wait</code> 是 <code>Object</code> 类中的方法，<code>sleep</code> 是 <code>Thread</code>类中的方法；</li>
+<li><code>wai</code>t 会释放锁，<code>sleep</code> 不会释放锁；</li>
+<li><code>wait</code> 只能在同步代码块中使用，<code>sleep</code> 则没有这个要求。</li>
+</ul>
+<h5 id="虚假唤醒"><a class="markdownIt-Anchor" href="#虚假唤醒"></a> 虚假唤醒</h5>
+<h5 id="提交任务时任务队列满了会发生什么"><a class="markdownIt-Anchor" href="#提交任务时任务队列满了会发生什么"></a> 提交任务时，任务队列满了，会发生什么</h5>
+]]></content>
+      <categories>
+        <category>并发</category>
+      </categories>
+      <tags>
+        <tag>并发</tag>
+        <tag>线程状态</tag>
+        <tag>线程同步</tag>
+        <tag>线程协作</tag>
+        <tag>线程池</tag>
+        <tag>J.U.C 构件</tag>
       </tags>
   </entry>
 </search>
