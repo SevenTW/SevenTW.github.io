@@ -35,7 +35,7 @@
 <meta property="og:description" content="事务 满足 ACID 特性的一组操作。  ACID  原子性（Atomicity）- 事务的一组操作要么全部成功，要不全部失败回滚。回滚可以根据 Undo log 来实现。 一致性（Consistency）- 数据库在事务执行前后都保持一致性状态。 隔离性（Isolation）- 一个事务所做的修改在最终提交以前，对其它事务是不可见的。 持久性（Durability）- 一旦事务提交，所做的修改">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-23T14:53:15.000Z">
-<meta property="article:modified_time" content="2021-05-23T17:01:18.117Z">
+<meta property="article:modified_time" content="2021-05-24T08:04:32.313Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="数据库系统原理">
 <meta property="article:tag" content="事务">
@@ -211,20 +211,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -599,7 +599,7 @@ if(canvas.getContext){
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-24 01:01:18" itemprop="dateModified" datetime="2021-05-24T01:01:18+08:00">2021-05-24</time>
+        <time title="Modified: 2021-05-24 16:04:32" itemprop="dateModified" datetime="2021-05-24T16:04:32+08:00">2021-05-24</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -651,6 +651,7 @@ if(canvas.getContext){
 <li>持久性（Durability）- 一旦事务提交，所做的修改将会永远保存到数据库中。如果系统崩溃，可以根据 <code>Redo log</code> 来恢复数据。</li>
 </ul>
 <p><code>Undo log</code> 记录的是逻辑修改，<code>Redo log</code> 记录的是物理修改。</p>
+<span id="more"></span>
 <h4 id="并发一致性"><a class="markdownIt-Anchor" href="#并发一致性"></a> 并发一致性</h4>
 <p>在并发环境下，事务的隔离性很难保证，因此会出现很多并发一致性问题。</p>
 <h5 id="丢失修改"><a class="markdownIt-Anchor" href="#丢失修改"></a> 丢失修改</h5>
@@ -811,8 +812,8 @@ if(canvas.getContext){
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/archives/e272e39a.html" rel="prev" title="SQL语法">
-                  <i class="fa fa-chevron-left"></i> SQL语法
+                <a href="/archives/e8eb0481.html" rel="prev" title="二分查找">
+                  <i class="fa fa-chevron-left"></i> 二分查找
                 </a>
             </div>
             <div class="post-nav-item">
@@ -872,7 +873,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:21</span>
+    <span title="Reading time total">2:26</span>
   </span>
 </div>
 <div class="busuanzi-count">
