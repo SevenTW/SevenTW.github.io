@@ -3,7 +3,7 @@
   <entry>
     <title>DFS、BFS、回溯</title>
     <url>/archives/a81d4ad4.html</url>
-    <content><![CDATA[<h4 id="矩阵中的路径"><a class="markdownIt-Anchor" href="#矩阵中的路径"></a> 矩阵中的路径</h4>
+    <content><![CDATA[<h4 id="矩阵中寻找字符串"><a class="markdownIt-Anchor" href="#矩阵中寻找字符串"></a> 矩阵中寻找字符串</h4>
 <div class="note "><p>设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。</p>
 <p>路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。</p>
 </div>
@@ -51,6 +51,8 @@
 <p>C 中的每个数字在一个组合中只能使用一次。</p>
 </div>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">ArrayList&lt;Integer&gt; combination = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; combinationSum2(<span class="keyword">int</span>[] num, <span class="keyword">int</span> target) &#123;</span><br><span class="line">    Arrays.sort(num);</span><br><span class="line">    backtrack(num, target, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">backtrack</span><span class="params">(<span class="keyword">int</span>[] num, <span class="keyword">int</span> target, <span class="keyword">int</span> sum, <span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (sum == target) &#123;</span><br><span class="line">        res.add(<span class="keyword">new</span> ArrayList&lt;&gt;(combination));</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = index; i &lt; num.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (sum + num[i] &gt; target) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (i &gt; index &amp;&amp; num[i] == num[i - <span class="number">1</span>]) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        combination.add(num[i]);</span><br><span class="line">        backtrack(num, target, sum + num[i], i + <span class="number">1</span>);</span><br><span class="line">        combination.remove(combination.size() - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="数组"><a class="markdownIt-Anchor" href="#数组"></a> 数组</h4>
+<h4 id="n-皇后"><a class="markdownIt-Anchor" href="#n-皇后"></a> N 皇后</h4>
 ]]></content>
       <categories>
         <category>数据结构&amp;算法</category>
