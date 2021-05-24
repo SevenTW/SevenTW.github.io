@@ -173,7 +173,87 @@
   <entry>
     <title>MySQL</title>
     <url>/archives/c24675b4.html</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h4 id="索引"><a class="markdownIt-Anchor" href="#索引"></a> 索引</h4>
+<p>索引的作用是提高查询效率。</p>
+<p>实现索引可以有多种方式，常见的有<strong>哈希表</strong>、<strong>有序数组</strong>和<strong>搜索树</strong>。</p>
+<ul>
+<li>
+<p>哈希表</p>
+<div class="note "><p>哈希表是一种存储键值对的数据结构，根据 <code>key</code> 可以在 <code>O(1)</code> 时间内找到对应的 <code>value</code>。</p>
+<p>哈希表在<strong>等值（单个）查询</strong>场景表现很好，但是因为哈希表不是有序的，因此在做<strong>区间查询</strong>时性能就很差。</p>
+</div>
+</li>
+<li>
+<p>有序数组</p>
+<div class="note "><p>有序数组在等值查询和区间查询场景中的性能都很优秀，但是如果有数据插入和删除就比较耗时了，因为可能需要移动很多数据。</p>
+</div>
+</li>
+<li>
+<p>搜索树</p>
+</li>
+</ul>
+<p>在 <code>MySQL</code> 中，索引是在存储引擎层实现的，因此不同的存储引擎可能有不一样的索引实现。</p>
+<h5 id="覆盖索引"><a class="markdownIt-Anchor" href="#覆盖索引"></a> 覆盖索引</h5>
+<p>假如有这样一条查询语句：<code>select * from T where k between 3 and 5;</code> 并且为 <code>k</code> 建立了索引。</p>
+<p>因为要查全字段，所以在 <code>k</code> 索引树上查完，得到主键值后，要根据主键值回到主键索引树上去查全字段数据，这个过程称为回表。</p>
+<p>而如果查询语句是：<code>select ID from T where k between 3 and 5;</code> <code>ID</code> 是主键。</p>
+<p>此时 <code>k</code> 索引树可以直接提供查询结果，就不需要回表了。在这个查询中，索引 <code>k</code> 已经覆盖了查询请求，称为覆盖索引。</p>
+<p>虽然维护索引需要额外开销，但是基于覆盖索引的特性，有时我们需要为查询频率较高的字段建立联合索引，以期让这个联合索引覆盖查询请求，减少回表的次数，提高查询效率。</p>
+<h5 id="最左前缀原则"><a class="markdownIt-Anchor" href="#最左前缀原则"></a> 最左前缀原则</h5>
+<p>假如有一个组合索引（<code>a, b</code>），索引项会先根据 <code>a</code> 排序，再根据 <code>b</code> 排序。</p>
+<p>这时如果只根据 <code>a</code> 来查询数据，可以用上这个索引；</p>
+<p>如果 <code>a</code> 是个字符串，比如 <code>name</code>，那类似 <code>select name like ‘张%’</code> 这样的查询也可以用上 （<code>name, b</code>）这个索引。</p>
+<p>也就是说，只要满足索引的最左前缀原则就可以用上一个组合索引。这个最左前缀可以是组合索引的前 <code>N</code> 个字段，也可以是字符串索引的前 <code>N</code> 个字符。</p>
+<p><strong>组合索引如何安排字段顺序</strong></p>
+<ul>
+<li>
+<p><strong>复用能力</strong> - 因为有最左前缀原则，有了组合索引（<code>a, b</code>），就不用为 <code>a</code> 单独建立索引了。也就说，应该优先考虑可以减少一个索引的字段顺序。</p>
+</li>
+<li>
+<p><strong>空间</strong> - 如果既有联合查询，又有基于 <code>a</code> 和 <code>b</code> 各自的查询，基于 <code>b</code> 的查询是无法使用联合索引 （<code>a, b</code>）的，不得不为 <code>b</code> 另建一个索引。这时就需要考虑空间因素，如果字段 <code>a</code> 比 <code>b</code> 大，就应该考虑建立索引</p>
+<p>（<code>a, b</code>）和 <code>b</code>，否则，就建立索引（<code>b, a</code>）和 <code>a</code>。</p>
+</li>
+</ul>
+<h5 id="索引下推"><a class="markdownIt-Anchor" href="#索引下推"></a> 索引下推</h5>
+<p>有一张 <code>user</code> 表，建表语句如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">create table user (</span><br><span class="line">ID int primary key,</span><br><span class="line">name char(20) not null,</span><br><span class="line">age int not null,</span><br><span class="line">ismale char(1) not null default 1,</span><br><span class="line">index k(name, age)</span><br><span class="line">) engine&#x3D;InnoDB;</span><br></pre></td></tr></table></figure>
+<p>除了主键索引，还有一个组合索引（<code>name, age</code>）。</p>
+<p>现有查询语句：<code>select * from user where name like ‘张%’ and age=10 and ismale=1;</code></p>
+<p>在 <code>MySQL 5.6</code> 之前，根据最左前缀原则，在找到以“张”开头的数据后，需要逐个回表，到主键索引树上找到对应的数据行，再比较后面字段值。</p>
+<p>而 <code>MySQL 5.6</code> 开始，引入了<strong>索引下推</strong>，找到以“张”开头的数据后，并不是直接回表，而是会再根据组合索引中包含的字段再判断，过滤掉不符合条件的记录，减少回表次数。</p>
+<h5 id="索引失效"><a class="markdownIt-Anchor" href="#索引失效"></a> 索引失效</h5>
+<ul>
+<li>在索引列上有计算、函数、类型转换，会使索引失效进而扫描全表</li>
+<li>组合索引中对某列进行范围查找，会使该列右边的列不能使用</li>
+<li>使用不等于（<code>!= or &lt;&gt;</code>）会使索引失效</li>
+<li>组合索引中对某列进行模糊匹配，会使该列右边的列不能使用</li>
+</ul>
+<h4 id="存储引擎"><a class="markdownIt-Anchor" href="#存储引擎"></a> 存储引擎</h4>
+<h5 id="innodb"><a class="markdownIt-Anchor" href="#innodb"></a> <code>InnoDB</code></h5>
+<p>在 <code>InnoDB</code> 中，表是根据主键顺序以索引的形式存放的，这种存储方式的表称为索引组织表。</p>
+<p>每一个索引在 <code>InnoDB</code> 里面对应一棵 B+ 树。</p>
+<p>索引类型包括主键索引和非主键索引：</p>
+<ul>
+<li><strong>主键索引 - 也称聚簇索引</strong>，叶子节点存储存储的是整行数据。</li>
+<li><strong>非主键索引 - 也称普通索引、二级索引</strong>，叶子节点存储的是主键的值。</li>
+</ul>
+<p>基于主键索引的查询通过查询主键索引树可以直接得到整行数据；</p>
+<p>而基于普通索引，得先查询普通索引树，得到主键的值，然后根据主键的值去查询主键索引树才能得到想要的数据，这个过称为<strong>回表</strong>。</p>
+<p>显然，基于普通索引的查询比基于主键索引的查询需要多扫描一颗索引树，因此建议尽量通过主键查询。</p>
+<h4 id="切分"><a class="markdownIt-Anchor" href="#切分"></a> 切分</h4>
+<h5 id="水平切分"><a class="markdownIt-Anchor" href="#水平切分"></a> 水平切分</h5>
+<h5 id="垂直切分"><a class="markdownIt-Anchor" href="#垂直切分"></a> 垂直切分</h5>
+<h4 id="复制"><a class="markdownIt-Anchor" href="#复制"></a> 复制</h4>
+<h4 id="查询性能优化"><a class="markdownIt-Anchor" href="#查询性能优化"></a> 查询性能优化</h4>
+<h4 id="数据类型"><a class="markdownIt-Anchor" href="#数据类型"></a> 数据类型</h4>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
   </entry>
   <entry>
     <title>SQL语法</title>
@@ -1723,6 +1803,153 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
         <tag>快速排序</tag>
         <tag>归并排序</tag>
         <tag>堆排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库系统原理</title>
+    <url>/archives/351e2939.html</url>
+    <content><![CDATA[<h4 id="事务"><a class="markdownIt-Anchor" href="#事务"></a> 事务</h4>
+<p>满足 <code>ACID</code> 特性的一组操作。</p>
+<h5 id="acid"><a class="markdownIt-Anchor" href="#acid"></a> <code>ACID</code></h5>
+<ul>
+<li>原子性（Atomicity）- 事务的一组操作要么全部成功，要不全部失败回滚。回滚可以根据 <code>Undo log</code> 来实现。</li>
+<li>一致性（Consistency）- 数据库在事务执行前后都保持一致性状态。</li>
+<li>隔离性（Isolation）- 一个事务所做的修改在最终提交以前，对其它事务是不可见的。</li>
+<li>持久性（Durability）- 一旦事务提交，所做的修改将会永远保存到数据库中。如果系统崩溃，可以根据 <code>Redo log</code> 来恢复数据。</li>
+</ul>
+<p><code>Undo log</code> 记录的是逻辑修改，<code>Redo log</code> 记录的是物理修改。</p>
+<h4 id="并发一致性"><a class="markdownIt-Anchor" href="#并发一致性"></a> 并发一致性</h4>
+<p>在并发环境下，事务的隔离性很难保证，因此会出现很多并发一致性问题。</p>
+<h5 id="丢失修改"><a class="markdownIt-Anchor" href="#丢失修改"></a> 丢失修改</h5>
+<div class="note "><p>丢失修改指一个事务的更新操作被另外一个事务的更新操作覆盖。</p>
+<p>例如：<code>T1</code> 和 <code>T2</code> 两个事务都对一个数据进行修改，<code>T1</code> 先修改并提交生效，<code>T2</code> 随后修改，<code>T2</code> 的修改覆盖了 <code>T1</code> 的修改。</p>
+</div>
+<h5 id="读脏数据"><a class="markdownIt-Anchor" href="#读脏数据"></a> 读脏数据</h5>
+<div class="note "><p>读脏数据指在不同的事务下，当前事务可以读到其他事务未提交的数据。</p>
+<p>例如：<code>T1</code> 修改一个数据但未提交，<code>T2</code> 随后读取这个数据。如果 <code>T1</code> 撤销了这次修改， <code>T2</code> 读取的数据是脏数据。</p>
+</div>
+<h5 id="不可重复读"><a class="markdownIt-Anchor" href="#不可重复读"></a> 不可重复读</h5>
+<div class="note "><p>不可重复读指在一个事务内多次读取同一数据得到不同结果。</p>
+</div>
+<h5 id="幻影读"><a class="markdownIt-Anchor" href="#幻影读"></a> 幻影读</h5>
+<div class="note "><p>幻读本质上就是不可重复读。<code>T1</code> 读取某个范围的数据，<code>T2</code> 在这个范围内插入新的数据，<code>T1</code> 再次读取这个范围的数据，此时读取的结果和和第一次读取的结果不同。</p>
+</div>
+<h4 id="封锁"><a class="markdownIt-Anchor" href="#封锁"></a> 封锁</h4>
+<h5 id="锁粒度"><a class="markdownIt-Anchor" href="#锁粒度"></a> 锁粒度</h5>
+<div class="note "><p><code>MySQL</code> 中提供了两种封锁粒度：<strong>行级锁</strong>以及<strong>表级锁</strong>。</p>
+<p>锁粒度越小，发生锁争用的可能就越小，系统的并发度就越高，但同时系统开销会越大。</p>
+<p>在选择封锁粒度时，需要在锁开销和并发度之间做一个权衡。</p>
+</div>
+<h5 id="锁类型"><a class="markdownIt-Anchor" href="#锁类型"></a> 锁类型</h5>
+<ul>
+<li>
+<p>读写锁</p>
+<ul>
+<li>互斥锁：又称写锁，简写为 X 锁。</li>
+<li>共享锁：又称读锁，简写为 S 锁。</li>
+</ul>
+<div class="note "><p>一个事务对数据 A 加了 X 锁，期间其他事务就不能对 A 加任何锁；</p>
+<p>一个事务对数据 A 加了 S 锁，期间其他事务可以对 A 加 S 锁，不能加 X 锁。</p>
+</div>
+</li>
+<li>
+<p>意向锁</p>
+<div class="note "><p><code>MySQL</code> 中存在行级锁和表级锁，因此一个事务如果想对一张表 A 加 X 锁，需要检测 A 中每一行数据是否加锁，这无疑非常耗时。</p>
+<p>为了解决这个问题，<code>MySQL</code> 又引入了<strong>意向锁</strong>概念。</p>
+<p>意向锁在原来的 X/S 锁之上引入了 IX/IS，IX/IS 都是表锁，用来表示一个事务想要在表中的某行数据上加 X 锁或 S 锁。具体规定如下：</p>
+<ul>
+<li>一个事务在获得某行数据的 S 锁之前，必须先获得表的 IS 锁或者更强的锁；</li>
+<li>一个事务在获得某行数据的 X 锁之前，必须先获得表的 IX 锁。</li>
+</ul>
+<p>通过引入意向锁，事务想要对表 A 加 X 锁，只需检测是否有其它事务对 A 加了 X/IX/S/IS 锁，如果加了就表示有其它事务正在使用这个表或者表中某一行的锁，因此事务加 X 锁失败。</p>
+</div>
+</li>
+</ul>
+<h5 id="锁协议"><a class="markdownIt-Anchor" href="#锁协议"></a> 锁协议</h5>
+<ul>
+<li>
+<p>三级封锁协议</p>
+<ul>
+<li>
+<p>一级封锁协议</p>
+<p>事务修改数据需先加 X 锁，可以<strong>解决修改丢失问题</strong>。</p>
+<p>因为在一个事务结束并释放 X 锁之前，不会有其他事务修改同一数据。</p>
+</li>
+<li>
+<p>二级封锁协议</p>
+<p>在一级的基础上，要求读取数据 A 时必须加 S 锁，<strong>读取完马上释放 S 锁</strong>。</p>
+<p>可以解决读脏数据问题，因为如果一个事务在对数据 A 进行修改，根据 1 级封锁协议，会加 X 锁，那么就不能再加 S 锁了，也就是不会读入数据。</p>
+</li>
+<li>
+<p>三级封锁协议</p>
+<p>在二级的基础上，要求读取数据 A 时必须加 S 锁，<strong>直到事务结束了才能释放 S 锁</strong>。</p>
+<p>可以解决不可重复读的问题，因为读 A 时，其它事务不能对 A 加 X 锁，从而避免了在读的期间数据发生改变。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>两段锁协议</p>
+<p>加锁和解锁分为两个阶段进行。</p>
+</li>
+</ul>
+<h4 id="隔离级别"><a class="markdownIt-Anchor" href="#隔离级别"></a> 隔离级别</h4>
+<h5 id="未提交读read-uncommitted"><a class="markdownIt-Anchor" href="#未提交读read-uncommitted"></a> 未提交读（Read Uncommitted）</h5>
+<p>一个事务可以读取其他事务还未提交的对数据的修改。</p>
+<h5 id="提交读read-committed"><a class="markdownIt-Anchor" href="#提交读read-committed"></a> 提交读（Read Committed）</h5>
+<p>一个事务只能读取已提交事务所做的修改。</p>
+<h5 id="可重复读repeatable-read"><a class="markdownIt-Anchor" href="#可重复读repeatable-read"></a> 可重复读（Repeatable Read）</h5>
+<p>一个事务多次读取同一数据得到的结果是一样的。</p>
+<h5 id="串行化serializable"><a class="markdownIt-Anchor" href="#串行化serializable"></a> 串行化（Serializable）</h5>
+<p>事务串行化执行。</p>
+<p>隔离级别能解决的并发一致性问题：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">脏读</th>
+<th style="text-align:center">不可重复读</th>
+<th style="text-align:center">幻读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>未提交读</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+</tr>
+<tr>
+<td>提交读</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+</tr>
+<tr>
+<td>可重复读</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✗</td>
+</tr>
+<tr>
+<td>串行化</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+</tr>
+</tbody>
+</table>
+<h4 id="多版本并发控制"><a class="markdownIt-Anchor" href="#多版本并发控制"></a> 多版本并发控制</h4>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>系统原理</category>
+      </categories>
+      <tags>
+        <tag>数据库系统原理</tag>
+        <tag>事务</tag>
+        <tag>并发一致性</tag>
+        <tag>隔离级别</tag>
+        <tag>多版本并发控制</tag>
       </tags>
   </entry>
   <entry>
