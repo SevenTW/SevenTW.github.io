@@ -224,14 +224,57 @@
       </tags>
   </entry>
   <entry>
-    <title>JVM</title>
-    <url>/archives/66c016fb.html</url>
-    <content><![CDATA[]]></content>
+    <title>Java运行时区域</title>
+    <url>/archives/cbc67548.html</url>
+    <content><![CDATA[<img data-src="/archives/cbc67548/Java%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F.png" alt="Java运行时数据区域" style="zoom:60%;">
+<span id="more"></span>
+<h4 id="线程私有"><a class="markdownIt-Anchor" href="#线程私有"></a> 线程私有</h4>
+<h5 id="程序计数器"><a class="markdownIt-Anchor" href="#程序计数器"></a> 程序计数器</h5>
+<p>当前线程执行的字节码的行号指示器。</p>
+<p>唯一一个在 <code>Java</code> 虚拟机规范中没有规定任何 <code>OutOfMemoryError</code> 情况的区域。</p>
+<h5 id="java-虚拟机栈"><a class="markdownIt-Anchor" href="#java-虚拟机栈"></a> <code>Java</code> 虚拟机栈</h5>
+<p>每个方法在执行时都会创建一个栈帧用于存储 <strong>局部变量表、操作数栈、动态链接、方法出口</strong> 等信息。</p>
+<p>异常：</p>
+<ul>
+<li>当线程请求的栈深度超过最大值，会抛出 <code>StackOverflowError</code> 异常；</li>
+<li>栈进行动态扩展时如果无法申请到足够内存，会抛出 <code>OutOfMemoryError</code> 异常。</li>
+</ul>
+<p>为特定线程设置虚拟机栈大小：<code>java -Xss2M 线程</code> 。</p>
+<h5 id="本地方法栈"><a class="markdownIt-Anchor" href="#本地方法栈"></a> 本地方法栈</h5>
+<p>和 <code>Java</code> 虚拟机栈类似，服务于本地方法。</p>
+<h4 id="线程共享"><a class="markdownIt-Anchor" href="#线程共享"></a> 线程共享</h4>
+<h5 id="堆"><a class="markdownIt-Anchor" href="#堆"></a> 堆</h5>
+<p>虚拟机启动时创建，用于存放对象实例，也是垃圾收集的主要区域。</p>
+<p>异常：</p>
+<ul>
+<li>动态扩展失败，会抛出 <code>OutOfMemoryError</code> 异常。</li>
+</ul>
+<p>为特定程序设置堆的大小：<code>java -Xms1M -Xmx2M 程序</code>。</p>
+<ul>
+<li><code>Xms1M</code> - 堆的初始值</li>
+<li><code>Xmx2M</code> - 堆能扩展到的最大值</li>
+</ul>
+<h5 id="方法区"><a class="markdownIt-Anchor" href="#方法区"></a> 方法区</h5>
+<p>用于存储已被虚拟机加载的 <strong>类信息</strong>、<strong>常量</strong>、<strong>静态变量</strong>、<strong>即时编译器编译后的代码</strong> 等数据。</p>
+<p>该区域的内存回收主要是针对 <strong>常量池的回收</strong> 和 <strong>类型的卸载</strong>。</p>
+<p>异常：</p>
+<ul>
+<li>动态扩展失败，会抛出 <code>OutOfMemoryError</code> 异常。</li>
+</ul>
+<h5 id="运行时常量池"><a class="markdownIt-Anchor" href="#运行时常量池"></a> 运行时常量池</h5>
+<p>运行时常量池是方法区的一部分。</p>
+<p><code>Class</code> 文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量池，用于存放编译期生成的各种 <strong>字面量</strong> 和 <strong>符号引用</strong>，这部分内容将在类加载后进入方法区的运行时常量池中存放。</p>
+<h4 id="直接内存"><a class="markdownIt-Anchor" href="#直接内存"></a> 直接内存</h4>
+<p>直接内存不是 <code>Java</code> 运行时数据区的一部分，也不是 <code>JVM</code> 定义的内存区域。</p>
+<p><code>JDK 1.4</code> 中新加入 <code>NIO</code> 类，引入了一种基于通道（<code>Channel</code>）与缓冲区（<code>Buffer</code>）的 <code>I/O</code> 方式，它可以使用 <code>Native</code> 函数库直接分配堆外内存，然后通过一个存储在 <code>Java</code> 堆中的 <code>DirectByteBuffer</code> 对象作为这块内存的引用进行操作。这样可以在一些场景中显著提高性能，因为避免了在 <code>Java</code> 堆和 <code>Native</code> 堆中来回复制数据。</p>
+]]></content>
       <categories>
         <category>JVM</category>
+        <category>Java运行时区域</category>
       </categories>
       <tags>
-        <tag>Java内存模型</tag>
+        <tag>JVM</tag>
+        <tag>Java运行时区域</tag>
       </tags>
   </entry>
   <entry>
@@ -318,7 +361,129 @@
       </categories>
       <tags>
         <tag>MySQL</tag>
+        <tag>索引</tag>
+        <tag>存储引擎</tag>
+        <tag>InnoDB</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>SQL更新语句的执行流程</title>
+    <url>/archives/cf5bf327.html</url>
+    <content><![CDATA[<p>与查询一样，执行更新要经过的步骤：</p>
+<ul>
+<li>连接数据库 - 获取权限</li>
+<li>分析 <code>SQL</code> 语句 - 分析 <code>SQL</code> 语句是否正确，以及 <code>SQL</code> 语句要执行什么操作</li>
+<li>优化 - 是否有索引可用，以及使用哪个索引</li>
+<li>执行更新</li>
+</ul>
+<p>与查询不一样的是，更新涉及两个重要的日志模块：</p>
+<ul>
+<li><code>redo log</code> - <code>InnoDB</code> 特有</li>
+<li><code>binlog</code> - <code>MySQL Server</code></li>
+</ul>
+<span id="more"></span>
+<h4 id="redo-log-和-binlog"><a class="markdownIt-Anchor" href="#redo-log-和-binlog"></a> <code>redo log</code> 和 <code>binlog</code></h4>
+<p>在磁盘中查找数据并更新的开销是很可观的，如果每一次更新都需要写进磁盘，那成本就太大了。</p>
+<p><code>MySQL</code> 的做法是：使用 **<code>WAL</code>（<code>Write-Ahead Logging</code>）**技术，先写更新日志，等不忙的时候再更新磁盘中对应的内容。</p>
+<p>具体来说，就是将更新写入 <code>redo log</code>，刷新内存，更新就算完成了，<code>InnoDB</code> 会在适当的时候将更新同步到磁盘。</p>
+<p>但是 <code>InnoDB</code> 中的 <code>redo log</code> 大小是固定的。如果 <code>redo log</code> 空间用完了，此时再有更新，就需要先将 <code>redo log</code> 中的更新记录同步到磁盘，再写此次的更新。</p>
+<p><strong><code>redo log</code> 和 <code>binlog</code> 的区别</strong></p>
+<ul>
+<li>
+<p><code>redo log</code> 是 <code>InnoDB</code> 特有的；</p>
+<p><code>binlog</code> 是 <code>MySQL Server</code> 层实现的，所有存储引擎都可以用。</p>
+</li>
+<li>
+<p><code>redo log</code> 是物理日志；</p>
+<p><code>binlog</code> 是逻辑日志；</p>
+</li>
+<li>
+<p><code>redo log</code> 可以循环写，但空间大小固定，满了之后需要写回磁盘；</p>
+<p><code>binlog</code> 是追加写的，写满一个文件后会新建一个文件接着写，不会覆盖之前的日志。</p>
+</li>
+</ul>
+<h4 id="更新语句的执行流程"><a class="markdownIt-Anchor" href="#更新语句的执行流程"></a> 更新语句的执行流程</h4>
+<p>有了对 <code>redo log</code> 和 <code>binlog</code> 的初步认识，现在来看看更新语句的执行流程。</p>
+<p>假设有一张表的建表语句如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">create table T (</span><br><span class="line">ID int primary key,</span><br><span class="line">c int</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>更新语句如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">update T set c&#x3D;c+1 where ID&#x3D;2;</span><br></pre></td></tr></table></figure>
+<p>执行流程如下：</p>
+<ol>
+<li>执行器调用 <code>InnoDB</code> 接口取 <code>ID=2</code> 这行数据。如果这行数据所在的页已经在内存中，直接返回给执行器；否则，从磁盘中读入内存再返回。</li>
+<li>执行器执行加 1 操作。</li>
+<li>执行器调用 <code>InnoDB</code> 接口更新内存中的数据，同时将更新操作写入 <code>redo log</code>，此时 <code>redo log</code> 处于 <code>prepare</code> 状态，随时可提交。</li>
+<li>执行器生成更新操作的 <code>binlog</code>，并把 <code>binlog</code> 写入磁盘。</li>
+<li>执行器调用 <code>InnoDB</code> 接口提交事务，并把 <code>redo log</code> 的状态改为 <code>commit</code>，更新完成。</li>
+</ol>
+<p>其中 <code>redo log</code> 的状态从 <code>prepare</code> 变为 <code>commit</code>，这就是著名的<strong>两阶段提交</strong>。</p>
+<h4 id="两阶段提交"><a class="markdownIt-Anchor" href="#两阶段提交"></a> 两阶段提交</h4>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>MySQL</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>SQL查询语句的执行流程</title>
+    <url>/archives/65991c90.html</url>
+    <content><![CDATA[<h4 id="mysql-逻辑架构图"><a class="markdownIt-Anchor" href="#mysql-逻辑架构图"></a> <code>MySQL</code> 逻辑架构图</h4>
+<img data-src="/archives/65991c90/MySQL%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84%E5%9B%BE.png" alt="MySQL逻辑架构图" style="zoom:60%;">
+<span id="more"></span>
+<p>大体上，<code>MySQL</code> 可以分为 <code>Server</code> 层和存储引擎层。</p>
+<p><code>Server</code> 层涵盖 <code>MySQL</code> 的大多数核心功能，所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等，以及所有的<strong>内置函数（如日期、时间、数学和加密函数等）</strong>。</p>
+<p><code>Server</code> 层核心模块包括：</p>
+<ul>
+<li><strong>连接器</strong></li>
+<li><strong>查询缓存</strong></li>
+<li><strong>分析器</strong></li>
+<li><strong>优化器</strong></li>
+<li><strong>执行器</strong></li>
+</ul>
+<p>存储引擎层则负责的存储和提取。<code>MySQL 5.5.5</code> 开始的默认引擎是 <code>InnoDB</code>。</p>
+<p>知道了 <code>MySQL</code> 的基本架构之后，我们通过一条最基本的查询语句 <code>select * from T where ID = 1;</code> 来看看查询语句在 <code>MySQL</code> 中的基本执行流程。</p>
+<h5 id="server-层"><a class="markdownIt-Anchor" href="#server-层"></a> <code>Server</code> 层</h5>
+<h6 id="连接器"><a class="markdownIt-Anchor" href="#连接器"></a> 连接器</h6>
+<p>第 1 步：连接数据库。</p>
+<p>连接器会负责<strong>建立连接</strong>、<strong>获取权限</strong>、<strong>维持和管理连接</strong>。</p>
+<p>连接分为长连接和短连接，建立连接的过程比较耗时，一般建议使用长连接。</p>
+<p><code>MySQL</code> 在执行过程中临时使用的内存由连接管理，并且直到连接断开才会释放这些内存。如果全部使用长连接，随着可能导致内存不够用，会被系统强行杀掉，也就是可能看到的 <code>MySQL</code> 异常重启。</p>
+<p>解决方案：</p>
+<ul>
+<li>定期断开长连接，或者执行完一个大查询后断开连接；</li>
+<li><code>MySQL 5.7</code> 以后的版本，可以用 <code>mysql_reset_connection</code> 重新初始化连接。</li>
+</ul>
+<h6 id="查询缓存"><a class="markdownIt-Anchor" href="#查询缓存"></a> 查询缓存</h6>
+<p>第 2 步：查询缓存。</p>
+<p><code>MySQL</code> 拿到查询请求之后，会先去缓存中查询。对于执行过的查询，缓存中可能会有 <code>key-value</code> 缓存结果（<code>key</code> 是查询语句，<code>value</code> 是查询结果）。如果这次查询，能在缓存中找到对应的 <code>key</code>，就可以直接返回 <code>value</code>，不用再走后面的操作。</p>
+<p>虽然在查询缓存命中时，查询结果能在很短时间内返回，但是一般还是不建议使用查询缓存。</p>
+<p>因为查询缓存非常容易失效：只要有一个对表的更新操作，这个表的查询缓存就会全部清空。</p>
+<p><code>MySQL 8.0</code> 甚至直接将查询缓存功能删除了。</p>
+<h6 id="分析器"><a class="markdownIt-Anchor" href="#分析器"></a> 分析器</h6>
+<p>第 3 步：分析 <code>SQL</code> 语句。</p>
+<ul>
+<li>词法分析 - 分析 <code>SQL</code> 语句中每个字符串代表的意义；</li>
+<li>语法分析 - 分析 <code>SQL</code> 语句是否符合 <code>MySQL</code> 的语法规则。</li>
+</ul>
+<p>在这一步可以分析出 <code>SQL</code> 语句中的<strong>表、列是否存在，别名是否有歧义</strong>等。</p>
+<h6 id="优化器"><a class="markdownIt-Anchor" href="#优化器"></a> 优化器</h6>
+<p>第 4 步：优化查询。</p>
+<p>经过分析之后，<code>MySQL</code> 知道了查询语句具体要做什么，但在真正开始查询之前，需要做一些优化。</p>
+<p>优化器做的优化：</p>
+<ul>
+<li>表有多个索引时，<strong>决定使用哪个索引</strong>；</li>
+<li>多表关联查询时，<strong>决定表的查询顺序</strong>。</li>
+</ul>
+<h6 id="执行器"><a class="markdownIt-Anchor" href="#执行器"></a> 执行器</h6>
+<p>第 5 步：执行查询。</p>
+<p>在执行查询之前，需要检查是否有查询的权限。如果没有，会返回没有权限错误；如果有，就根据表的引擎定义，调用相应的引擎接口。</p>
+<p>如果查询条件中的字段（上面的例子是 <code>ID</code>）没有索引，就全表扫描，从表的第一行开始判断，判断 <code>ID</code> 是否等于 1，将符合条件的行数据存在结果集中返回给客户端。</p>
+<h5 id="引擎层"><a class="markdownIt-Anchor" href="#引擎层"></a> 引擎层</h5>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>MySQL</category>
+      </categories>
   </entry>
   <entry>
     <title>SQL语法</title>
@@ -1163,83 +1328,6 @@ taking a <mark class="label primary">punt</mark><sup class="footnote-ref"><a hre
       </tags>
   </entry>
   <entry>
-    <title>Scraping the bones</title>
-    <url>/archives/6d0cb3b7.html</url>
-    <content><![CDATA[<center><b>China’s law-enforcement agencies are undergoing their biggest purge in more
-than two decades. The aim is to root out the corrupt and politically disloyal</b></center>
-<p>For many members of China’s 3m-strong domestic-security forces, these must be worrying times. On February 27th the Communist Party declared the start of a long-expected purge of their ranks. It will involve, say officials, “turning the knife-blade inward” to <mark class="label primary">gouge</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> out those <mark class="label primary">deemed</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> corrupt or insufficiently loyal to the party and its leader, Xi Jinping. More than eight years into Mr Xi’s iron rule, the party appears to wonder whether a vital <mark class="label primary">bulwark</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> of its power is entirely trustworthy.</p>
-<span id="more"></span>
-<p>State-controlled media have described it as the biggest such campaign since the late 1990s within the domestic-security system, which includes the police, the secret police, the judiciary and prisons. It is due to last for about a year. The aim is to ensure that these agencies are “absolutely loyal, absolutely pure and absolutely reliable”. Officials say the campaign will be like the “Yan’an Rectification” of the early 1940s. That was when Mao—then the leader of a communist <mark class="label primary">insurgency</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>—staged a<br>
-sweeping and brutal purge of the party’s ranks to consolidate his control. Such language suggests that many heads will roll as the party attempts to clear the “dense <mark class="label primary">miasma</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>” surrounding the security apparatus, cure it of “<mark class="label primary">chronic</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> illness” and ensure it remains “surnamed Party” (meaning as loyal to the party as if to a family member).</p>
-<p>It is remarkable that such a campaign is deemed necessary. After he took over as China’s leader in 2012 Mr Xi launched the country’s toughest battle against corruption in decades. Hundreds of thousands of officials were punished, including powerful people with security backgrounds. One of them was Zhou Yongkang, a former member of the Politburo Standing Committee. Before Mr Xi assumed power, Mr Zhou had overseen the entire law-enforcement apparatus. In 2015 he was sentenced to life in prison—<mark class="label primary">ostensibly</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> for graft and leaking state secrets. Officials later alleged—without giving details—that he had engaged in “political plotting”, too. It is widely believed that he was an opponent of Mr Xi. But on February 3rd party investigators said the police had failed to eliminate Mr Zhou’s “pernicious influence” within the force and had not followed the party line “satisfactorily enough”.</p>
-<div class="note info"><p><strong>Politburo Standing Committee</strong> ：政治局常委</p>
-</div>
-<p>Several hig-hranking security officials have been <mark class="label primary">snared</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> by the party’s anti-corruption agency in the past few months. The most <mark class="label primary">prominent</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> is Gong Daoan, then Shanghai’s police chief and one of the city’s deputy mayors. Last August he became the third policeman with a rank equivalent to that of a vice-minister to be placed under investigation since the start of 2020. The following month Mr Gong was stripped of his posts. On March 1st the government announced that he had been arrested and his case referred to prosecutors.</p>
-<p>The charges against Mr Gong include abuse of his positions to promote his and others’ business interests, corruption related to the approval of appointments, misuse of his official car and frequent attendance of banquets that raised questions about his <mark class="label primary">impartiality</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>. But Mr Gong’s alleged political offences are listed first: forming factions within the party and “completely lacking the four awarenesses”, ie, of the need for loyalty to the party and to Mr Xi, and for <mark class="label primary">compliance</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> with their orders and total <mark class="label primary">adherence</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> to the party’s line. Such accusations will probably be levelled at more police chiefs during the upcoming China’s law-enforcement agencies are undergoing their biggest purge in more than two decades. The aim is to root out the corrupt and politically disloyal purge. The loyalty of the security agencies “directly affects the party’s position at the <mark class="label primary">helm</mark><sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> of state and the continuance of political stability”, said an official report on a meeting of party bosses that kicked off the nationwide campaign.</p>
-<p>Its launch was <mark class="label primary">heralded</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup> in July with trial runs in a handful of local police forces, courts and prosecutors’ offices, as well as in two prisons and one local state-security bureau (home to the <mark class="label primary">dissident</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup> and spy-hunting secret police). In charge of this experimental phase was Chen Yixin, a senior security official who appears to be a trouble-shooter for Mr Xi—in February last year, in the early days of the covid-19 pandemic, he was sent to Wuhan to help <mark class="label primary">supervise</mark><sup class="footnote-ref"><a href="#fn16" id="fnref16">[16]</a></sup> efforts to crush and contain the central city’s massive outbreak of the disease. Mr Chen said “education and rectification” of the security forces was a task of “urgency and extreme importance”. He described the campaign as “scraping the bones to remove the poison, and draining away the <mark class="label primary">filth</mark><sup class="footnote-ref"><a href="#fn17" id="fnref17">[17]</a></sup> to bring in fresh water”. Police at the time were reaching the end of a three-year campaign against criminal gangs and their “protective umbrellas” within the government. That effort resulted in the smashing of more than 14,700 criminal groups. But apparently it did not succeed in purifying the police.</p>
-<p>Assuming the campaign will follow the pattern of last year’s experiments, participants can expect to spend a month studying the kind of behaviour that is expected of them. They will then perform “self-examination” and be required to admit to any wrong-doing. These <mark class="label primary">confessions</mark><sup class="footnote-ref"><a href="#fn18" id="fnref18">[18]</a></sup> will be compared with other submissions, including complaints from members of the public. High-level teams will be dispatched from Beijing to ensure the job is done properly. Among the 16,000 people who were involved in the trial phase, more than 2,200 were <mark class="label primary">disciplined</mark><sup class="footnote-ref"><a href="#fn19" id="fnref19">[19]</a></sup>, including 39 who were formally charged. If punishments are meted out at the same rate nationally, then the “overall <mark class="label primary">reckoning</mark><sup class="footnote-ref"><a href="#fn20" id="fnref20">[20]</a></sup>”, as one newspaper described the purge, may result in thousands being jailed and hundreds of thousands punished in other ways.</p>
-<p>The campaign may benefit Mr Xi. Late next year he will <mark class="label primary">preside</mark><sup class="footnote-ref"><a href="#fn21" id="fnref21">[21]</a></sup> over a five-yearly party congress, which will mark a critical juncture of his leadership. Normally he would be expected to step down at this event, having served as general secretary for a decade. But he shows no intention of doing so. There have been few obvious signs of opposition to granting him another five-year term. The contrast between China’s successful control of the coronavirus and the West’s <mark class="label primary">fumbling</mark><sup class="footnote-ref"><a href="#fn22" id="fnref22">[22]</a></sup> response may have further strengthened his hand. But by tightening his grip on the security forces he can be even more certain that no one will dare to oppose him.</p>
-<hr class="footnotes-sep">
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>美 [ɡaʊdʒ] 凿；敲竹杠，漫天要价 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn2" class="footnote-item"><p>英 [diːm] 认为，相信 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn3" class="footnote-item"><p>美 [‘bʊlwərk] 堡垒，壁垒 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn4" class="footnote-item"><p>美 [ɪn’sɜrdʒənsi] 叛乱，造反 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn5" class="footnote-item"><p>美 [mi’æzmə] 瘴气，污浊的空气 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn6" class="footnote-item"><p>美 [‘krɑnɪk] 长期的，慢性的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn7" class="footnote-item"><p>美 [ɑ’stensəbli] 表面上 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn8" class="footnote-item"><p>美 [sner] 圈套，陷阱；设陷阱捕捉 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn9" class="footnote-item"><p>美 [‘prɑmɪnənt] 著名的，杰出的 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn10" class="footnote-item"><p>美 [ ˌɪmpɑrʃɪˈælətɪ] 公平，公正 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn11" class="footnote-item"><p>美 [kəm’plaɪəns] 遵从，服从 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn12" class="footnote-item"><p>美 [əd’hɪrəns] 遵守，坚持 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn13" class="footnote-item"><p>美 [helm] 掌舵，掌握 <a href="#fnref13" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn14" class="footnote-item"><p>美 [‘herəld] 通告 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn15" class="footnote-item"><p>美 [‘dɪsɪdənt] 持不同政见者 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn16" class="footnote-item"><p>美 [‘supər.vaɪz] 监督，主管，指导 <a href="#fnref16" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn17" class="footnote-item"><p>美 [fɪlθ] 污秽，污垢；下流言辞；淫秽书刊 <a href="#fnref17" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn18" class="footnote-item"><p>美 [kən’feʃ(ə)n] 坦白，认罪 <a href="#fnref18" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn19" class="footnote-item"><p>美 [‘dɪsəplɪn] 纪律；处罚 <a href="#fnref19" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn20" class="footnote-item"><p>美 [‘rekən] 估计，估算 <a href="#fnref20" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn21" class="footnote-item"><p>美 [.pri’zaɪd] 主持（会议、仪式等）；担任（会议）主席 <a href="#fnref21" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn22" class="footnote-item"><p>美 ['fʌmb(ə)l] 摸索，笨拙的 <a href="#fnref22" class="footnote-backref">↩︎</a></p>
-</li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>The Economist</category>
-        <category>China</category>
-      </categories>
-      <tags>
-        <tag>The Economist</tag>
-        <tag>经济学人</tag>
-        <tag>China</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>The lessons of Fukushima</title>
     <url>/archives/5188b436.html</url>
     <content><![CDATA[<center><b>Nuclear power must be well run, not ditched</b></center>
@@ -1321,6 +1409,83 @@ equivalents to join the importers. If Chinese reactors are designed in the knowl
         <tag>The Economist</tag>
         <tag>经济学人</tag>
         <tag>Leaders</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Scraping the bones</title>
+    <url>/archives/6d0cb3b7.html</url>
+    <content><![CDATA[<center><b>China’s law-enforcement agencies are undergoing their biggest purge in more
+than two decades. The aim is to root out the corrupt and politically disloyal</b></center>
+<p>For many members of China’s 3m-strong domestic-security forces, these must be worrying times. On February 27th the Communist Party declared the start of a long-expected purge of their ranks. It will involve, say officials, “turning the knife-blade inward” to <mark class="label primary">gouge</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> out those <mark class="label primary">deemed</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> corrupt or insufficiently loyal to the party and its leader, Xi Jinping. More than eight years into Mr Xi’s iron rule, the party appears to wonder whether a vital <mark class="label primary">bulwark</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> of its power is entirely trustworthy.</p>
+<span id="more"></span>
+<p>State-controlled media have described it as the biggest such campaign since the late 1990s within the domestic-security system, which includes the police, the secret police, the judiciary and prisons. It is due to last for about a year. The aim is to ensure that these agencies are “absolutely loyal, absolutely pure and absolutely reliable”. Officials say the campaign will be like the “Yan’an Rectification” of the early 1940s. That was when Mao—then the leader of a communist <mark class="label primary">insurgency</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>—staged a<br>
+sweeping and brutal purge of the party’s ranks to consolidate his control. Such language suggests that many heads will roll as the party attempts to clear the “dense <mark class="label primary">miasma</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>” surrounding the security apparatus, cure it of “<mark class="label primary">chronic</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> illness” and ensure it remains “surnamed Party” (meaning as loyal to the party as if to a family member).</p>
+<p>It is remarkable that such a campaign is deemed necessary. After he took over as China’s leader in 2012 Mr Xi launched the country’s toughest battle against corruption in decades. Hundreds of thousands of officials were punished, including powerful people with security backgrounds. One of them was Zhou Yongkang, a former member of the Politburo Standing Committee. Before Mr Xi assumed power, Mr Zhou had overseen the entire law-enforcement apparatus. In 2015 he was sentenced to life in prison—<mark class="label primary">ostensibly</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> for graft and leaking state secrets. Officials later alleged—without giving details—that he had engaged in “political plotting”, too. It is widely believed that he was an opponent of Mr Xi. But on February 3rd party investigators said the police had failed to eliminate Mr Zhou’s “pernicious influence” within the force and had not followed the party line “satisfactorily enough”.</p>
+<div class="note info"><p><strong>Politburo Standing Committee</strong> ：政治局常委</p>
+</div>
+<p>Several hig-hranking security officials have been <mark class="label primary">snared</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> by the party’s anti-corruption agency in the past few months. The most <mark class="label primary">prominent</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> is Gong Daoan, then Shanghai’s police chief and one of the city’s deputy mayors. Last August he became the third policeman with a rank equivalent to that of a vice-minister to be placed under investigation since the start of 2020. The following month Mr Gong was stripped of his posts. On March 1st the government announced that he had been arrested and his case referred to prosecutors.</p>
+<p>The charges against Mr Gong include abuse of his positions to promote his and others’ business interests, corruption related to the approval of appointments, misuse of his official car and frequent attendance of banquets that raised questions about his <mark class="label primary">impartiality</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>. But Mr Gong’s alleged political offences are listed first: forming factions within the party and “completely lacking the four awarenesses”, ie, of the need for loyalty to the party and to Mr Xi, and for <mark class="label primary">compliance</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> with their orders and total <mark class="label primary">adherence</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> to the party’s line. Such accusations will probably be levelled at more police chiefs during the upcoming China’s law-enforcement agencies are undergoing their biggest purge in more than two decades. The aim is to root out the corrupt and politically disloyal purge. The loyalty of the security agencies “directly affects the party’s position at the <mark class="label primary">helm</mark><sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> of state and the continuance of political stability”, said an official report on a meeting of party bosses that kicked off the nationwide campaign.</p>
+<p>Its launch was <mark class="label primary">heralded</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup> in July with trial runs in a handful of local police forces, courts and prosecutors’ offices, as well as in two prisons and one local state-security bureau (home to the <mark class="label primary">dissident</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup> and spy-hunting secret police). In charge of this experimental phase was Chen Yixin, a senior security official who appears to be a trouble-shooter for Mr Xi—in February last year, in the early days of the covid-19 pandemic, he was sent to Wuhan to help <mark class="label primary">supervise</mark><sup class="footnote-ref"><a href="#fn16" id="fnref16">[16]</a></sup> efforts to crush and contain the central city’s massive outbreak of the disease. Mr Chen said “education and rectification” of the security forces was a task of “urgency and extreme importance”. He described the campaign as “scraping the bones to remove the poison, and draining away the <mark class="label primary">filth</mark><sup class="footnote-ref"><a href="#fn17" id="fnref17">[17]</a></sup> to bring in fresh water”. Police at the time were reaching the end of a three-year campaign against criminal gangs and their “protective umbrellas” within the government. That effort resulted in the smashing of more than 14,700 criminal groups. But apparently it did not succeed in purifying the police.</p>
+<p>Assuming the campaign will follow the pattern of last year’s experiments, participants can expect to spend a month studying the kind of behaviour that is expected of them. They will then perform “self-examination” and be required to admit to any wrong-doing. These <mark class="label primary">confessions</mark><sup class="footnote-ref"><a href="#fn18" id="fnref18">[18]</a></sup> will be compared with other submissions, including complaints from members of the public. High-level teams will be dispatched from Beijing to ensure the job is done properly. Among the 16,000 people who were involved in the trial phase, more than 2,200 were <mark class="label primary">disciplined</mark><sup class="footnote-ref"><a href="#fn19" id="fnref19">[19]</a></sup>, including 39 who were formally charged. If punishments are meted out at the same rate nationally, then the “overall <mark class="label primary">reckoning</mark><sup class="footnote-ref"><a href="#fn20" id="fnref20">[20]</a></sup>”, as one newspaper described the purge, may result in thousands being jailed and hundreds of thousands punished in other ways.</p>
+<p>The campaign may benefit Mr Xi. Late next year he will <mark class="label primary">preside</mark><sup class="footnote-ref"><a href="#fn21" id="fnref21">[21]</a></sup> over a five-yearly party congress, which will mark a critical juncture of his leadership. Normally he would be expected to step down at this event, having served as general secretary for a decade. But he shows no intention of doing so. There have been few obvious signs of opposition to granting him another five-year term. The contrast between China’s successful control of the coronavirus and the West’s <mark class="label primary">fumbling</mark><sup class="footnote-ref"><a href="#fn22" id="fnref22">[22]</a></sup> response may have further strengthened his hand. But by tightening his grip on the security forces he can be even more certain that no one will dare to oppose him.</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>美 [ɡaʊdʒ] 凿；敲竹杠，漫天要价 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>英 [diːm] 认为，相信 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>美 [‘bʊlwərk] 堡垒，壁垒 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>美 [ɪn’sɜrdʒənsi] 叛乱，造反 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>美 [mi’æzmə] 瘴气，污浊的空气 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>美 [‘krɑnɪk] 长期的，慢性的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>美 [ɑ’stensəbli] 表面上 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>美 [sner] 圈套，陷阱；设陷阱捕捉 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>美 [‘prɑmɪnənt] 著名的，杰出的 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>美 [ ˌɪmpɑrʃɪˈælətɪ] 公平，公正 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>美 [kəm’plaɪəns] 遵从，服从 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>美 [əd’hɪrəns] 遵守，坚持 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p>美 [helm] 掌舵，掌握 <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn14" class="footnote-item"><p>美 [‘herəld] 通告 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn15" class="footnote-item"><p>美 [‘dɪsɪdənt] 持不同政见者 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn16" class="footnote-item"><p>美 [‘supər.vaɪz] 监督，主管，指导 <a href="#fnref16" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn17" class="footnote-item"><p>美 [fɪlθ] 污秽，污垢；下流言辞；淫秽书刊 <a href="#fnref17" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn18" class="footnote-item"><p>美 [kən’feʃ(ə)n] 坦白，认罪 <a href="#fnref18" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn19" class="footnote-item"><p>美 [‘dɪsəplɪn] 纪律；处罚 <a href="#fnref19" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn20" class="footnote-item"><p>美 [‘rekən] 估计，估算 <a href="#fnref20" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn21" class="footnote-item"><p>美 [.pri’zaɪd] 主持（会议、仪式等）；担任（会议）主席 <a href="#fnref21" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn22" class="footnote-item"><p>美 ['fʌmb(ə)l] 摸索，笨拙的 <a href="#fnref22" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>The Economist</category>
+        <category>China</category>
+      </categories>
+      <tags>
+        <tag>The Economist</tag>
+        <tag>经济学人</tag>
+        <tag>China</tag>
       </tags>
   </entry>
   <entry>
@@ -1761,6 +1926,25 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 ]]></content>
   </entry>
   <entry>
+    <title>二分查找</title>
+    <url>/archives/e8eb0481.html</url>
+    <content><![CDATA[<h4 id="在两个长度相等的排序数组中找到中位数"><a class="markdownIt-Anchor" href="#在两个长度相等的排序数组中找到中位数"></a> 在两个长度相等的排序数组中找到中位数</h4>
+<div class="note "><p>给定两个有序数组arr1和arr2，已知两个数组的长度都为N，求两个数组中所有数的上中位数。</p>
+<p>上中位数：假设递增序列长度为n，若n为奇数，则上中位数为第n/2+1个数；否则为第n/2个数。</p>
+<p>[要求] 时间复杂度为<code>O(logN)</code>，额外空间复杂度为<code>O(1)</code>。</p>
+</div>
+<span id="more"></span>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">findMedianinTwoSortedAray</span><span class="params">(<span class="keyword">int</span>[] arr1, <span class="keyword">int</span>[] arr2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = arr1.length;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> right = n;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">        <span class="keyword">int</span> i = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> j = n - i;</span><br><span class="line">        <span class="keyword">if</span> (arr1[i] &lt; arr2[j - <span class="number">1</span>]) &#123;</span><br><span class="line">            left = i + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            right = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (left == n) <span class="keyword">return</span> arr1[n - <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (left == <span class="number">0</span>) <span class="keyword">return</span> arr2[n - <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Math.max(arr1[left - <span class="number">1</span>], arr2[n - left - <span class="number">1</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>数据结构&amp;算法</category>
+        <category>二分查找</category>
+      </categories>
+      <tags>
+        <tag>二分查找</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>位运算</title>
     <url>/archives/2633a26.html</url>
     <content><![CDATA[<h4 id="原理"><a class="markdownIt-Anchor" href="#原理"></a> 原理</h4>
@@ -1840,22 +2024,69 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
       </tags>
   </entry>
   <entry>
-    <title>二分查找</title>
-    <url>/archives/e8eb0481.html</url>
-    <content><![CDATA[<h4 id="在两个长度相等的排序数组中找到中位数"><a class="markdownIt-Anchor" href="#在两个长度相等的排序数组中找到中位数"></a> 在两个长度相等的排序数组中找到中位数</h4>
-<div class="note "><p>给定两个有序数组arr1和arr2，已知两个数组的长度都为N，求两个数组中所有数的上中位数。</p>
-<p>上中位数：假设递增序列长度为n，若n为奇数，则上中位数为第n/2+1个数；否则为第n/2个数。</p>
-<p>[要求] 时间复杂度为<code>O(logN)</code>，额外空间复杂度为<code>O(1)</code>。</p>
+    <title>单例模式</title>
+    <url>/archives/f1601c3e.html</url>
+    <content><![CDATA[<div class="note "><p>单例模式确保一个类只有一个实例，并提供该实例的全局访问点。</p>
+<p>单例模式的类包括：</p>
+<ul>
+<li>私有构造函数</li>
+<li>私有静态变量</li>
+<li>共有静态函数</li>
+</ul>
+<p>私有构造函数和公有静态函数保证了该类不能通过构造函数生成新的实例，只能通过公有静态函数返回类的唯一实例。</p>
 </div>
 <span id="more"></span>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">findMedianinTwoSortedAray</span><span class="params">(<span class="keyword">int</span>[] arr1, <span class="keyword">int</span>[] arr2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = arr1.length;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> right = n;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">        <span class="keyword">int</span> i = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> j = n - i;</span><br><span class="line">        <span class="keyword">if</span> (arr1[i] &lt; arr2[j - <span class="number">1</span>]) &#123;</span><br><span class="line">            left = i + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            right = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (left == n) <span class="keyword">return</span> arr1[n - <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (left == <span class="number">0</span>) <span class="keyword">return</span> arr2[n - <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Math.max(arr1[left - <span class="number">1</span>], arr2[n - left - <span class="number">1</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="恶汉式-线程安全"><a class="markdownIt-Anchor" href="#恶汉式-线程安全"></a> 恶汉式 - 线程安全</h4>
+<div class="note "><p>在定义时直接实例化 <code>uniqueInstance</code>，<code>static</code> 保证只会实例化一次，但是如果 <code>uniqueInstance</code> 之后没有被用到，就浪费了资源。</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance = <span class="keyword">new</span> Singleton(); </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123; &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getUniqueInstance</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">return</span> uniqueInstance; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="懒汉式-线程不安全"><a class="markdownIt-Anchor" href="#懒汉式-线程不安全"></a> 懒汉式 - 线程不安全</h4>
+<div class="note "><p><code>uniqueInstance</code> 延迟初始化，但这个实现在多线程环境下不安全。</p>
+<p>如果多个线程先后通过 <code>if (uniqueInstance == null)</code> 判断，然后让出 <code>CPU</code> ，其中某个线程先执行 <code>uniqueInstance = new Singleton()</code> 后，其他线程重新获得执行后依旧会再次执行该语句，导致 <code>uniqueInstance</code> 被多次实例化。</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123; &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getUniqueInstance</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">if</span> (uniqueInstance == <span class="keyword">null</span>) &#123; </span><br><span class="line">            uniqueInstance = <span class="keyword">new</span> Singleton(); </span><br><span class="line">        &#125; </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> uniqueInstance; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="懒汉式-线程安全"><a class="markdownIt-Anchor" href="#懒汉式-线程安全"></a> 懒汉式 - 线程安全</h4>
+<div class="note "><p><code>uniqueInstance</code> 延迟初始化，并且是多线程安全的。</p>
+<p>在 <code>getUniqueInstance()</code> 之前加上 <code>synchronized</code> 保证同时最多只会有一个线程进入该方法。</p>
+<p>第一个进去该方法的线程，会通过 <code>if (uniqueInstance == null)</code> 判断，并执行 <code>uniqueInstance = new Singleton();</code></p>
+<p>其他线程再进入该方法时，不能通过 <code>if (uniqueInstance == null)</code>，直接返回 <code>uniqueInstance</code>，保证了 <code>uniqueInstance</code> 不会被多次实例化。</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123; &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getUniqueInstance</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">if</span> (uniqueInstance == <span class="keyword">null</span>) &#123; </span><br><span class="line">            uniqueInstance = <span class="keyword">new</span> Singleton(); </span><br><span class="line">        &#125; </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> uniqueInstance; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="双重校验-线程安全"><a class="markdownIt-Anchor" href="#双重校验-线程安全"></a> 双重校验 - 线程安全</h4>
+<div class="note "><p>直接对 <code>getUniqueInstance()</code> 加锁没有必要，因为当 <code>uniqueInstance</code> 实例化之后，只需要判断一下其是否为 <code>null</code> 就可以了，如果已经实例化，直接返回即可；如果没有实例化，再对实例化语句部分加锁以保证只会实例化一次即可。</p>
+<p>第 2 个 <code>if (uniqueInstance == null)</code> 是必要的。</p>
+<p><code>uniqueInstance</code> 采用 <code>volatile</code> 关键字修饰也是很有必要的，<code>uniqueInstance = new Singleton();</code> 实际上分为三步执行：</p>
+<ol>
+<li>
+<p>为 <code>new Singleton()</code> 对象分配内存空间</p>
+</li>
+<li>
+<p>初始化 <code>new Singleton()</code> 对象</p>
+</li>
+<li>
+<p>将 <code>uniqueInstance</code> 指向分配的内存地址</p>
+</li>
+</ol>
+<p>但是由于 <code>JVM</code> 具有指令重排的特性，执行顺序有可能变成 1&gt;3&gt;2。</p>
+<p>指令重排在单线程环境下不会出现问题，但是在多线程环境下会导致一个线程获得还没有初始化的实例。</p>
+<p>例如，线程 <code>T1</code> 执行了 1 和 3，<code>uniqueInstance</code> 还未初始化；<code>CPU</code> 切换执行 <code>T2</code> ，<code>T2</code> 调用 <code>getUniqueInstance()</code> 后发现 <code>uniqueInstance</code> 不为空，返回 <code>uniqueInstance</code> 并使用，就有可能出错。</p>
+<p>使用 <code>volatile</code> 可以禁止 <code>JVM</code> 的指令重排。</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getUniqueInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (uniqueInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (uniqueInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> uniqueInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="静态内部类实现"><a class="markdownIt-Anchor" href="#静态内部类实现"></a> 静态内部类实现</h4>
+<div class="note "><p>在加载 <code>Singleton</code> 时，静态内部类 <code>SingletonHolder</code> 没有被加载</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonHolder</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getUniqueInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SingletonHolder.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="枚举类实现"><a class="markdownIt-Anchor" href="#枚举类实现"></a> 枚举类实现</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String objName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getObjName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> objName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setObjName</span><span class="params">(String objName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.objName = objName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>数据结构&amp;算法</category>
-        <category>二分查找</category>
+        <category>设计模式</category>
+        <category>创建型模式</category>
       </categories>
       <tags>
-        <tag>二分查找</tag>
+        <tag>设计模式</tag>
+        <tag>单例模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1874,6 +2105,11 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
       <tags>
         <tag>双指针</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>垃圾收集</title>
+    <url>/archives/b9ab7dc2.html</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>基本排序算法</title>
@@ -1987,24 +2223,6 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
       </tags>
   </entry>
   <entry>
-    <title>字符串</title>
-    <url>/archives/fc81fbfd.html</url>
-    <content><![CDATA[<h4 id="判断字符串是否表示数值"><a class="markdownIt-Anchor" href="#判断字符串是否表示数值"></a> 判断字符串是否表示数值</h4>
-<span id="more"></span>
-<div class="note "><p>请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串&quot;+100&quot;,“5e2”,&quot;-123&quot;,“3.1416&quot;和”-1E-16&quot;都表示数值。 但是&quot;12e&quot;,“1a3.14”,“1.2.3”,&quot;±5&quot;和&quot;12e+4.3&quot;都不是。</p>
-</div>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isNumric</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span>[] chars = str.toCharArray();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> hasNum = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">boolean</span> hasE = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">boolean</span> hasDot = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; chars.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (Character.isDigit(chars[i])) &#123;</span><br><span class="line">            hasNum = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果前面已经出现 e(E)，循环末尾直接返回 false</span></span><br><span class="line">        <span class="keyword">if</span> (chars[i] == <span class="string">&#x27;e&#x27;</span> || chars[i] == <span class="string">&#x27;E&#x27;</span> &amp;&amp; !hasE) &#123;</span><br><span class="line">            <span class="comment">// e(E) 之前应该已经出现过数字，否则直接返回 false</span></span><br><span class="line">            <span class="keyword">if</span> (hasNum) &#123;</span><br><span class="line">                hasE = <span class="keyword">true</span>;</span><br><span class="line">                hasNum = <span class="keyword">false</span>; <span class="comment">// 将 hasNum 置为 false，保证 e(E) 是最后一位时，返回结果为 false</span></span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果前面出现了 . 或 e(E)，循环末尾直接返回 false</span></span><br><span class="line">        <span class="keyword">if</span> (chars[i] == <span class="string">&#x27;.&#x27;</span> &amp;&amp; !hasDot &amp;&amp; !hasE) &#123;</span><br><span class="line">            hasDot = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// +(-) 必须是第一位或前面一位是 e(E)</span></span><br><span class="line">        <span class="keyword">if</span> ((chars[i] == <span class="string">&#x27;+&#x27;</span> || chars[i] == <span class="string">&#x27;-&#x27;</span>) &amp;&amp; (i == <span class="number">0</span> || chars[i - <span class="number">1</span>] == <span class="string">&#x27;e&#x27;</span> || chars[i - <span class="number">1</span>] == <span class="string">&#x27;E&#x27;</span>)) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遇到其他字符直接返回 false</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> hasNum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="判断"><a class="markdownIt-Anchor" href="#判断"></a> 判断</h4>
-]]></content>
-      <categories>
-        <category>数据结构&amp;算法</category>
-        <category>字符串</category>
-      </categories>
-      <tags>
-        <tag>字符串</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>堆、栈、队列</title>
     <url>/archives/68a96ca9.html</url>
     <content><![CDATA[<h3 id="堆"><a class="markdownIt-Anchor" href="#堆"></a> 堆</h3>
@@ -2026,6 +2244,24 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
         <tag>堆</tag>
         <tag>栈</tag>
         <tag>队列</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串</title>
+    <url>/archives/fc81fbfd.html</url>
+    <content><![CDATA[<h4 id="判断字符串是否表示数值"><a class="markdownIt-Anchor" href="#判断字符串是否表示数值"></a> 判断字符串是否表示数值</h4>
+<span id="more"></span>
+<div class="note "><p>请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串&quot;+100&quot;,“5e2”,&quot;-123&quot;,“3.1416&quot;和”-1E-16&quot;都表示数值。 但是&quot;12e&quot;,“1a3.14”,“1.2.3”,&quot;±5&quot;和&quot;12e+4.3&quot;都不是。</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isNumric</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span>[] chars = str.toCharArray();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> hasNum = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">boolean</span> hasE = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">boolean</span> hasDot = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; chars.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (Character.isDigit(chars[i])) &#123;</span><br><span class="line">            hasNum = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果前面已经出现 e(E)，循环末尾直接返回 false</span></span><br><span class="line">        <span class="keyword">if</span> (chars[i] == <span class="string">&#x27;e&#x27;</span> || chars[i] == <span class="string">&#x27;E&#x27;</span> &amp;&amp; !hasE) &#123;</span><br><span class="line">            <span class="comment">// e(E) 之前应该已经出现过数字，否则直接返回 false</span></span><br><span class="line">            <span class="keyword">if</span> (hasNum) &#123;</span><br><span class="line">                hasE = <span class="keyword">true</span>;</span><br><span class="line">                hasNum = <span class="keyword">false</span>; <span class="comment">// 将 hasNum 置为 false，保证 e(E) 是最后一位时，返回结果为 false</span></span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果前面出现了 . 或 e(E)，循环末尾直接返回 false</span></span><br><span class="line">        <span class="keyword">if</span> (chars[i] == <span class="string">&#x27;.&#x27;</span> &amp;&amp; !hasDot &amp;&amp; !hasE) &#123;</span><br><span class="line">            hasDot = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// +(-) 必须是第一位或前面一位是 e(E)</span></span><br><span class="line">        <span class="keyword">if</span> ((chars[i] == <span class="string">&#x27;+&#x27;</span> || chars[i] == <span class="string">&#x27;-&#x27;</span>) &amp;&amp; (i == <span class="number">0</span> || chars[i - <span class="number">1</span>] == <span class="string">&#x27;e&#x27;</span> || chars[i - <span class="number">1</span>] == <span class="string">&#x27;E&#x27;</span>)) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遇到其他字符直接返回 false</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> hasNum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="判断"><a class="markdownIt-Anchor" href="#判断"></a> 判断</h4>
+]]></content>
+      <categories>
+        <category>数据结构&amp;算法</category>
+        <category>字符串</category>
+      </categories>
+      <tags>
+        <tag>字符串</tag>
       </tags>
   </entry>
   <entry>
@@ -2449,56 +2685,48 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
     <url>/archives/2362a8ea.html</url>
     <content><![CDATA[<h3 id="反转链表"><a class="markdownIt-Anchor" href="#反转链表"></a> 反转链表</h3>
 <h4 id="反转整个链表"><a class="markdownIt-Anchor" href="#反转整个链表"></a> 反转整个链表</h4>
+<p><a href="https://www.nowcoder.com/practice/75e878df47f24fdc9dc3e400ec6058ca?tpId=13&amp;tqId=11168&amp;rp=1&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking&amp;tab=answerKey">JZ15</a></p>
+<div class="note "><p>解体思路：</p>
+<p><code>reverseList(head)</code> 表示以 <code>head</code> 为表头反转整个链表；</p>
+<p>根据递归思想，要反转整个链表，只需以 <code>head.next</code> 为表头反转链表，然后修改 <code>head</code> 节点和 <code>head.next</code> 节点的 <code>next</code> 指针即可。</p>
+</div>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) <span class="keyword">return</span> head;</span><br><span class="line">  </span><br><span class="line">    ListNode last = ReverseList(head.next);</span><br><span class="line">  </span><br><span class="line">    head.next.next = head;</span><br><span class="line">    head.next = <span class="keyword">null</span>;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <h4 id="反转链表的前-n-个节点"><a class="markdownIt-Anchor" href="#反转链表的前-n-个节点"></a> 反转链表的前 n 个节点</h4>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ListNode successor = <span class="keyword">null</span>;  <span class="comment">// 第 n 个节点的后继节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseN</span><span class="params">(ListNode head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> (n == <span class="number">1</span>) &#123;  </span><br><span class="line">      	successor = head.next;</span><br><span class="line">      	<span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">  	ListNode last = reverseN(head.next, n - <span class="number">1</span>);</span><br><span class="line">  	</span><br><span class="line">  	head.next.next = head;</span><br><span class="line">  	head.next = successor;</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>与反转整个链表的区别</strong></p>
+<div class="note "><p>解题思路和反转整个链表一样，区别之处：</p>
 <ul>
 <li>递归出口不一样</li>
 <li><code>head.next</code> 指向 <code>successor</code>，而不是 <code>null</code></li>
 </ul>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ListNode successor = <span class="keyword">null</span>;  <span class="comment">// 第 n 个节点的后继节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseN</span><span class="params">(ListNode head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> (n == <span class="number">1</span>) &#123;  </span><br><span class="line">      	successor = head.next;</span><br><span class="line">      	<span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">  	ListNode last = reverseN(head.next, n - <span class="number">1</span>);</span><br><span class="line">  	</span><br><span class="line">  	head.next.next = head;</span><br><span class="line">  	head.next = successor;</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="反转链表的一个区间"><a class="markdownIt-Anchor" href="#反转链表的一个区间"></a> 反转链表的一个区间</h4>
-<p>给定一个区间 <code>[m, n]</code>，反转区间中的节点。</p>
-<p>思路：</p>
+<div class="note "><p>解题思路：</p>
 <ul>
 <li>如果 <code>m == 1</code> ，就是反转链表的前 <code>n</code> 个节点；</li>
 <li>如果 <code>m != 1</code>，相对于 <code>head</code> 节点而言，要反转的起始节点是第 <code>m</code> 个节点；相对于 <code>head.next</code> 节点而言，要反转的起始节点是第 <code>m - 1</code> 个节点… 当递归到第 <code>m</code> 个节点，就相当于从头节点开始反转前 <code>n - m + 1</code> 个节点。</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseM2N</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> (m == <span class="number">1</span>) <span class="keyword">return</span> reverseN(head, n);</span><br><span class="line">  </span><br><span class="line">  	head.next = reversM2N(head.next, m - <span class="number">1</span>, n - <span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>PS：以上三个算法都是使用递归实现的，与迭代相比有以下不同</p>
-<ul>
-<li>
-<p>递归实现相对来说更简洁，更不容易出错；</p>
-</li>
-<li>
-<p>递归需要不断调用自身，效率不如迭代；</p>
-</li>
-<li>
-<p>时间复杂度都是 <code>O(N)</code>，迭代实现的空间复杂度是 <code>O(1)</code>；而递归需要用到栈，空间复杂度是 <code>O(N)</code></p>
-</li>
-</ul>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseM2N</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> (m == <span class="number">1</span>) <span class="keyword">return</span> reverseN(head, n);</span><br><span class="line">  </span><br><span class="line">  	head.next = reversM2N(head.next, m - <span class="number">1</span>, n - <span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseN</span><span class="params">(ListNode head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> (n == <span class="number">1</span>) &#123;  </span><br><span class="line">      	successor = head.next;</span><br><span class="line">      	<span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">  	ListNode last = reverseN(head.next, n - <span class="number">1</span>);</span><br><span class="line">  	</span><br><span class="line">  	head.next.next = head;</span><br><span class="line">  	head.next = successor;</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="每-k-个一组反转链表"><a class="markdownIt-Anchor" href="#每-k-个一组反转链表"></a> 每 k 个一组反转链表</h4>
-<p>思路：</p>
+<p><a href="https://www.nowcoder.com/practice/b49c3dc907814e9bbfa8437c251b028e?tpId=117&amp;tqId=37746&amp;rp=1&amp;ru=%2Factivity%2Foj&amp;qru=%2Fta%2Fjob-code-high%2Fquestion-ranking&amp;tab=answerKey">NC50</a></p>
+<div class="note "><p>思路：</p>
 <ul>
 <li>反转以 <code>head</code> 开头的 <code>k</code> 个节点；</li>
-<li>将第 <code>k + 1</code> 节点作为 <code>head</code> 递归调用</li>
+<li>将第 <code>k + 1</code> 节点作为 <code>head</code> 进行 递归</li>
 </ul>
-<p><strong>递归出口</strong>：不足 <code>k</code> 个元素的子链表不用反转</p>
-<p>具体实现：</p>
-<p>反转整个链表</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) <span class="keyword">return</span> head;</span><br><span class="line"></span><br><span class="line">    ListNode p = <span class="keyword">null</span>;</span><br><span class="line">    ListNode h = head;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (h != <span class="keyword">null</span>) &#123;</span><br><span class="line">        ListNode tmp = h.next;</span><br><span class="line">        h.next = p;</span><br><span class="line">        p = h;</span><br><span class="line">        h = tmp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这其实可以看反转以 <code>null</code> 为边界的有界链表，借着这个思路，可以很容易写出反转以某个不为 <code>null</code> 的节点为边界的链表的代码，只需改一下函数签名和循环判断条件即可</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode a, ListNode b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a == <span class="keyword">null</span> || a.next == <span class="keyword">null</span>) <span class="keyword">return</span> a;</span><br><span class="line"></span><br><span class="line">    ListNode p = <span class="keyword">null</span>;</span><br><span class="line">    ListNode h = a;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (h != b) &#123;</span><br><span class="line">        ListNode tmp = h.next;</span><br><span class="line">        h.next = p;</span><br><span class="line">        p = h;</span><br><span class="line">        h = tmp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>有了反转部分链表的基础，再写每 <code>k</code> 一组反转链表的代码就不难了</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseKGroup</span><span class="params">(ListNode head, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) <span class="keyword">return</span> head;</span><br><span class="line">  </span><br><span class="line">  	ListNode a, b;</span><br><span class="line">  	a = b = head;</span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">      	<span class="keyword">if</span> (b == <span class="keyword">null</span>) <span class="keyword">return</span> head;</span><br><span class="line">      	b = b.next;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">  	ListNode h = reverse(a, b);</span><br><span class="line">  </span><br><span class="line">  	a.next = reverseKGroup(b, k);</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">return</span> h;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseKGroup</span><span class="params">(ListNode head, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) <span class="keyword">return</span> head;</span><br><span class="line">  </span><br><span class="line">  	ListNode a, b;</span><br><span class="line">  	a = b = head;</span><br><span class="line">  	</span><br><span class="line">    <span class="comment">// 找到 b 节点</span></span><br><span class="line">  	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">      	<span class="keyword">if</span> (b == <span class="keyword">null</span>) <span class="keyword">return</span> head; <span class="comment">// b == null 说明链表长度小于 k，不用反转</span></span><br><span class="line">      	b = b.next;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    </span><br><span class="line">  	ListNode h = reverse(a, b); </span><br><span class="line">  </span><br><span class="line">  	a.next = reverseKGroup(b, k); <span class="comment">// a 现在是 reverse(a, b) 的尾节点</span></span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">return</span> h;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 反转从节点 a 到 b 的子链表（不包括 b）</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverse</span><span class="params">(ListNode a, ListNode b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a == <span class="keyword">null</span> || a.next == <span class="keyword">null</span>) <span class="keyword">return</span> a;</span><br><span class="line"></span><br><span class="line">    ListNode p = <span class="keyword">null</span>;</span><br><span class="line">    ListNode h = a;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (h != b) &#123;</span><br><span class="line">        ListNode tmp = h.next;</span><br><span class="line">        h.next = p;</span><br><span class="line">        p = h;</span><br><span class="line">        h = tmp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="快慢指针"><a class="markdownIt-Anchor" href="#快慢指针"></a> 快慢指针</h3>
 <h4 id="找到链表环的入口"><a class="markdownIt-Anchor" href="#找到链表环的入口"></a> 找到链表环的入口</h4>
+<p><a href="https://www.nowcoder.com/practice/253d2c59ec3e4bc68da16833f79a38e4?tpId=13&amp;tqId=11208&amp;rp=1&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking&amp;tab=answerKey">JZ55</a></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">EntryNodeOfLoop</span><span class="params">(ListNode pHead)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (pHead == <span class="keyword">null</span> || pHead.next == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    ListNode fast = pHead;</span><br><span class="line">    ListNode slow = pHead;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (fast.next != <span class="keyword">null</span> &amp;&amp; fast.next.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">        fast = fast.next.next;</span><br><span class="line">        slow = slow.next;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (fast == slow) &#123;</span><br><span class="line">            fast = pHead;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (fast != slow) &#123;</span><br><span class="line">                fast = fast.next;</span><br><span class="line">                slow = slow.next;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> fast;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="判断是否回文单链表"><a class="markdownIt-Anchor" href="#判断是否回文单链表"></a> 判断是否回文单链表</h4>
-<p>如果不是链表，而是一个数组或者字符串，那么判断是否回文就很简单，只需要从左右两端向中间遍历，依次判断是否相等即可。但是单链表只能单向遍历，这就是难点所在。</p>
-<p>最直观的思路是复制一条新链表并反转，然后同时遍历新旧两条链表，依次判断节点的值是否相等。</p>
-<p>其实，如果做过树的前、中、后序遍历，就可以知道要递归可以倒序遍历链表，不用显示反转链表。</p>
+<p><a href="https://www.nowcoder.com/practice/3fed228444e740c8be66232ce8b87c2f?tpId=117&amp;tqId=37813&amp;rp=1&amp;ru=%2Factivity%2Foj&amp;qru=%2Fta%2Fjob-code-high%2Fquestion-ranking&amp;tab=answerKey">NC96</a></p>
+<div class="note "><p>判断数组、数字或者字符串是否是回文结构很简单，只需要从左右两端向中间遍历，依次判断是否相等即可。而判断单链表是否具有回文结构的难点在于单链表只能单向遍历。</p>
+<p>思路一：复制一条新链表并反转，然后同时遍历新旧两条链表，依次判断节点值是否相等。</p>
+<p>思路二：有没有什么方法可以不用反转链表做到倒序遍历。做过树的前、中、后序遍历可以联想到递归。</p>
+</div>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ListNode left;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">  	left = head;</span><br><span class="line">  	<span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">traverse</span><span class="params">(ListNode right)</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> (right == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">boolean</span> res = traverse(right.next);</span><br><span class="line">  </span><br><span class="line">  	res &amp;= (left.val == right.val);</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>虽然通过递归可以不用显示创建并反转链表，但是递归方法的空间复杂度依然是 <code>O(N)</code>，因为递归会产生栈帧。</p>
 <p>更好的思路是这样的：</p>
@@ -3246,7 +3474,7 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
     <title>动态规划</title>
     <url>/archives/a80d0031.html</url>
     <content><![CDATA[<h4 id="连续子数组的最大和"><a class="markdownIt-Anchor" href="#连续子数组的最大和"></a> 连续子数组的最大和</h4>
-<p><a href="https://www.nowcoder.com/practice/459bd355da1549fa8a49e350bf3df484?tpId=13&amp;tqId=11183&amp;rp=1&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking&amp;tab=answerKey">JZ</a></p>
+<p><a href="https://www.nowcoder.com/practice/459bd355da1549fa8a49e350bf3df484?tpId=13&amp;tqId=11183&amp;rp=1&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking&amp;tab=answerKey">JZ30</a></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">FindGreatestSumOfSubArray</span><span class="params">(<span class="keyword">int</span>[] array)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> maxSum = Integer.MIN_VALUE;</span><br><span class="line">          <span class="comment">// 动态规划实现</span></span><br><span class="line"><span class="comment">//        int[] f = new int[array.length];</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//        for (int i = 0; i &lt; array.length; i++) &#123;</span></span><br><span class="line"><span class="comment">//            if (i == 0 || f[i - 1] &lt; 0) &#123;</span></span><br><span class="line"><span class="comment">//                f[i] = array[i];</span></span><br><span class="line"><span class="comment">//            &#125; else &#123;</span></span><br><span class="line"><span class="comment">//                f[i] = f[i - 1] + array[i];</span></span><br><span class="line"><span class="comment">//            &#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//            maxSum = Math.max(maxSum, f[i]);</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i == <span class="number">0</span> || array[i - <span class="number">1</span>] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            array[i] = array[i];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            array[i] += array[i - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        maxSum = Math.max(maxSum, array[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> maxSum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <h4 id="不相邻子序列最大和"><a class="markdownIt-Anchor" href="#不相邻子序列最大和"></a> 不相邻子序列最大和</h4>
@@ -3327,7 +3555,7 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
   <entry>
     <title>并发基础</title>
     <url>/archives/46bf65ac.html</url>
-    <content><![CDATA[<h4 id="使用线程"><a class="markdownIt-Anchor" href="#使用线程"></a> 使用线程</h4>
+    <content><![CDATA[<h4 id="实现线程"><a class="markdownIt-Anchor" href="#实现线程"></a> 实现线程</h4>
 <h5 id="实现-runnable-接口"><a class="markdownIt-Anchor" href="#实现-runnable-接口"></a> 实现 <code>Runnable</code> 接口</h5>
 <p>需要实现 <code>run()</code> 方法</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Task</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;: &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        RunnableDemo task = <span class="keyword">new</span> RunnableDemo();</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(task, <span class="string">&quot;线程&quot;</span>);</span><br><span class="line">        t.start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;: &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 线程: i 和 main: i 会交替显示</span></span><br></pre></td></tr></table></figure>
@@ -3338,12 +3566,17 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 <p>需要注意的是，实现 <code>Runnable</code> 或 <code>Callable</code> 接口的类本身并不具有线程行为，可以把这些类看作是执行某些任务的类，要使这些任务执行起来还是需要真正的线程来驱动。</p>
 <h5 id="继承-thread-类"><a class="markdownIt-Anchor" href="#继承-thread-类"></a> 继承 <code>Thread</code> 类</h5>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateThread1</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadDemo</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.MILLISECONDS.sleep(<span class="number">1</span>); <span class="comment">// 让线程休眠，更好地看到线程交替执行效果</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;: &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Thread thread = <span class="keyword">new</span> ThreadDemo(<span class="string">&quot;线程&quot;</span>);</span><br><span class="line">        thread.start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.MILLISECONDS.sleep(<span class="number">1</span>); <span class="comment">// 让线程休眠，更好地看到线程交替执行效果</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;: &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本质上创建线程只有一种方式，就是 <code>new Thread()</code>，但是实现线程行为的方式有两种，</p>
+<ul>
+<li>继承 <code>Thread</code> 类，重写 <code>run()</code> 方法</li>
+<li>实现 <code>Runnable 接口</code>，重写 <code>run()</code> 方法</li>
+</ul>
 <p>继承 <code>Thread</code> 类与实现 <code>Runnable</code> 接口的比较：</p>
 <ol>
 <li>
 <p>实现 <code>Runnable</code> 接口可以更好的解耦。</p>
 <blockquote>
-<p><code>Runnable</code> 只有一个 <code>run()</code> 方法，定义需要实现的任务;</p>
+<p><code>Runnable</code> 只有一个 <code>run()</code> 方法，定义需要执行的内容；</p>
 <p><code>Thread</code> 则负责线程的属性设置和启动等内容。</p>
 </blockquote>
 </li>
@@ -3351,13 +3584,46 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 <p>在某些情况下，实现 <code>Runnable</code> 接口可以提高性能。</p>
 <blockquote>
 <p>使用继承 <code>Thread</code> 类的方式，每执行一次任务，都需要重新创建一个线程，等任务执行完，线程需要被销毁，增加了额外的开销；</p>
-<p>使用实现 <code>Runnable</code> 接口的方式，在任务定义完之后，配合线程池，只需将任务传入线程池，使用线程池中固有的线程来执行任务，而不需要每次都创建销毁线程。</p>
+<p>使用实现 <code>Runnable</code> 接口的方式，在任务定义完之后，配合线程池，只需将任务传入线程池，使用线程池中固有的线程来执行任务，不需要每次都创建销毁线程。</p>
 </blockquote>
 </li>
 <li>
 <p>Java 不支持多继承，如果继承了 <code>Thread</code> 类，之后就不能再继承其他类，限制了代码代码的可扩展性。</p>
 </li>
 </ol>
+<h5 id="thread"><a class="markdownIt-Anchor" href="#thread"></a> <code>Thread</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">线程开始执行，JVM 调用线程的 run 方法</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">The result is that two threads are running concurrently: the current thread (which returns from the call to the start method) and the other thread (which executes its run method).</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">线程只能启动一次</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Throws:</span></span><br><span class="line"><span class="comment">IllegalThreadStateException – if the thread was already started.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 0 对应的是线程状态 NEW</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (threadStatus != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalThreadStateException();</span><br><span class="line"></span><br><span class="line">    group.add(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> started = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        start0(); <span class="comment">// 本地方法，调用 run()</span></span><br><span class="line">        started = <span class="keyword">true</span>;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (!started) &#123;</span><br><span class="line">                group.threadStartFailed(<span class="keyword">this</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable ignore) &#123;</span><br><span class="line">           </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="停止线程"><a class="markdownIt-Anchor" href="#停止线程"></a> 停止线程</h4>
+<p>通常情况下，不会手动停止一个线程，而是让线程运行到结束，自然停止。但是也有一些情况需要提前停止线程，而 <code>Java</code> 并没有提供简单易用，能够直接安全停止线程的能力。</p>
+<p>对于 <code>Java</code> 来说，停止线程的正确方式是调用线程的 <code>interrupt()</code> 方法，但 <code>interrupt()</code> 仅仅是一个通知。对于被停止的线程而言，它拥有完全的自主权，它既可以选择立即停止，也可以选择一段时间后停止，也可以选择压根不停止。</p>
+<p>停止一个线程的正确方式：在一个循环里判断线程是否被中断。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StopThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (!Thread.currentThread().isInterrupted() &amp;&amp; count &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;count=&quot;</span> + count++);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(Thread.currentThread().isInterrupted()); <span class="comment">// true</span></span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(<span class="keyword">new</span> StopThread());</span><br><span class="line">        t.start();</span><br><span class="line">        TimeUnit.MILLISECONDS.sleep(<span class="number">5</span>);</span><br><span class="line">        t.interrupt();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>isInterrupted()</code> 和 <code>interrupted()</code> 的区别：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">interrupted</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> currentThread().isInterrupted(<span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isInterrupted</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> isInterrupted(<span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">native</span> <span class="keyword">boolean</span> <span class="title">isInterrupted</span><span class="params">(<span class="keyword">boolean</span> ClearInterrupted)</span></span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>底层都是调用本地方法来判断是否中断；</li>
+<li><code>isInterrupted</code> 是实例方法，<code>interrupted</code> 是静态方法；</li>
+<li><code>isInterrupted</code> 不会重置线程的中断状态；<code>interrupted</code> 会重置线程的中断状态。</li>
+</ul>
+<p>如果上面 <code>StopThread</code> 的 <code>run</code> 方法中的循环改为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (!Thread.interrupted() &amp;&amp; count &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;count=&quot;</span> + count++);</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(Thread.currentThread().isInterrupted()); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>因为使用的是 <code>interrupted()</code>，会重置线程的中断状态，退出循环后在判断线程是否中断会返回 <code>false</code>。</p>
+<h5 id="sleep-与-interrupt"><a class="markdownIt-Anchor" href="#sleep-与-interrupt"></a> <code>sleep</code> 与 <code>interrupt</code></h5>
+<p>中断休眠中的线程会排出 <code>java.lang.InterruptedException</code> 异常，并重置线程的中断状态。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StopThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            TimeUnit.SECONDS.sleep(<span class="number">1</span>); <span class="comment">// 先休眠 1 s</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!Thread.currentThread().isInterrupted() &amp;&amp; count &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;count=&quot;</span> + count++);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(Thread.currentThread().isInterrupted());</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(<span class="keyword">new</span> StopThread());</span><br><span class="line">        t.start();</span><br><span class="line">        t.interrupt(); <span class="comment">// 中断休眠中的线程</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java.lang.InterruptedException: sleep interrupted</span><br><span class="line">	at java.lang.Thread.sleep(Native Method)</span><br><span class="line">	at java.lang.Thread.sleep(Thread.java:<span class="number">340</span>)</span><br><span class="line">	at java.util.concurrent.TimeUnit.sleep(TimeUnit.java:<span class="number">386</span>)</span><br><span class="line">	at com.tw.StopThread.run(StopThread.java:<span class="number">15</span>)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:<span class="number">748</span>)</span><br><span class="line">count=<span class="number">0</span></span><br><span class="line">count=<span class="number">1</span></span><br><span class="line">count=<span class="number">2</span></span><br><span class="line">......</span><br><span class="line">count=<span class="number">999</span></span><br><span class="line"><span class="keyword">false</span></span><br></pre></td></tr></table></figure>
+<p>休眠中的线程可以感受到中断信号，但是依然会执行完 <code>run()</code> 方法中的内容。</p>
+<h5 id="正确处理中断信号"><a class="markdownIt-Anchor" href="#正确处理中断信号"></a> 正确处理中断信号</h5>
+<p>错误的处理方式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        <span class="comment">// do nothing</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ......</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>处于休眠状态的线程如果被中断，会抛出 <code>java.lang.InterruptedException</code>，并重置中断状态。</p>
+<p>这里抛出的异常被 <code>catch</code> 到了，但是 <code>catch</code> 子句里没有做任何处理，相当于隐藏了中断信号。</p>
+<p>正确的方式是：</p>
+<ul>
+<li>在 <code>catch</code> 里正确处理</li>
+<li>为方法添加异常声明 - 如果每个方法都遵循这个规范，中断休眠线程抛出的异常就可以被层层传递到顶层，并在顶层正确处理。</li>
+</ul>
 <h4 id="线程基本机制"><a class="markdownIt-Anchor" href="#线程基本机制"></a> 线程基本机制</h4>
 <ul>
 <li><strong>休眠（<code>sleep</code>）</strong></li>
@@ -3387,6 +3653,7 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 <p><code>I/O</code> 和在 <code>synchronized</code> 块上的阻塞是不可中断的。</p>
 <p><code>interrupt()</code> 将会给线程设定一个中断标志，但中断一个阻塞的线程将抛出 <code>InterruptedException</code> 异常，该异常被捕获时将清除线程的中断标志，所以在 <code>catch</code> 子句中，在异常被捕获时这个标志总是为假。</p>
 <h4 id="线程状态"><a class="markdownIt-Anchor" href="#线程状态"></a> 线程状态</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">State</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Thread state for a thread which has not yet started.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    NEW,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Thread state for a runnable thread.  A thread in the runnable</span></span><br><span class="line"><span class="comment">     * state is executing in the Java virtual machine but it may</span></span><br><span class="line"><span class="comment">     * be waiting for other resources from the operating system</span></span><br><span class="line"><span class="comment">     * such as processor.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    RUNNABLE,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Thread state for a thread blocked waiting for a monitor lock.</span></span><br><span class="line"><span class="comment">     * A thread in the blocked state is waiting for a monitor lock</span></span><br><span class="line"><span class="comment">     * to enter a synchronized block/method or</span></span><br><span class="line"><span class="comment">     * reenter a synchronized block/method after calling</span></span><br><span class="line"><span class="comment">     * &#123;<span class="doctag">@link</span> Object#wait() Object.wait&#125;.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    BLOCKED,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Thread state for a waiting thread.</span></span><br><span class="line"><span class="comment">     * A thread is in the waiting state due to calling one of the</span></span><br><span class="line"><span class="comment">     * following methods:</span></span><br><span class="line"><span class="comment">     * &lt;ul&gt;</span></span><br><span class="line"><span class="comment">     *   &lt;li&gt;&#123;<span class="doctag">@link</span> Object#wait() Object.wait&#125; with no timeout&lt;/li&gt;</span></span><br><span class="line"><span class="comment">     *   &lt;li&gt;&#123;<span class="doctag">@link</span> #join() Thread.join&#125; with no timeout&lt;/li&gt;</span></span><br><span class="line"><span class="comment">     *   &lt;li&gt;&#123;<span class="doctag">@link</span> LockSupport#park() LockSupport.park&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">     * &lt;/ul&gt;</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;A thread in the waiting state is waiting for another thread to</span></span><br><span class="line"><span class="comment">     * perform a particular action.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * For example, a thread that has called &lt;tt&gt;Object.wait()&lt;/tt&gt;</span></span><br><span class="line"><span class="comment">     * on an object is waiting for another thread to call</span></span><br><span class="line"><span class="comment">     * &lt;tt&gt;Object.notify()&lt;/tt&gt; or &lt;tt&gt;Object.notifyAll()&lt;/tt&gt; on</span></span><br><span class="line"><span class="comment">     * that object. A thread that has called &lt;tt&gt;Thread.join()&lt;/tt&gt;</span></span><br><span class="line"><span class="comment">     * is waiting for a specified thread to terminate.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    WAITING,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Thread state for a waiting thread with a specified waiting time.</span></span><br><span class="line"><span class="comment">     * A thread is in the timed waiting state due to calling one of</span></span><br><span class="line"><span class="comment">     * the following methods with a specified positive waiting time:</span></span><br><span class="line"><span class="comment">     * &lt;ul&gt;</span></span><br><span class="line"><span class="comment">     *   &lt;li&gt;&#123;<span class="doctag">@link</span> #sleep Thread.sleep&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">     *   &lt;li&gt;&#123;<span class="doctag">@link</span> Object#wait(long) Object.wait&#125; with timeout&lt;/li&gt;</span></span><br><span class="line"><span class="comment">     *   &lt;li&gt;&#123;<span class="doctag">@link</span> #join(long) Thread.join&#125; with timeout&lt;/li&gt;</span></span><br><span class="line"><span class="comment">     *   &lt;li&gt;&#123;<span class="doctag">@link</span> LockSupport#parkNanos LockSupport.parkNanos&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">     *   &lt;li&gt;&#123;<span class="doctag">@link</span> LockSupport#parkUntil LockSupport.parkUntil&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">     * &lt;/ul&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TIMED_WAITING,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Thread state for a terminated thread.</span></span><br><span class="line"><span class="comment">     * The thread has completed execution.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TERMINATED;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>NEW</code></li>
 </ul>
@@ -3764,13 +4031,14 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 ]]></content>
       <categories>
         <category>并发</category>
+        <category>并发基础</category>
       </categories>
       <tags>
         <tag>线程池</tag>
-        <tag>并发</tag>
+        <tag>实现多线程</tag>
+        <tag>线程启动&amp;停止</tag>
         <tag>线程状态</tag>
-        <tag>线程同步</tag>
-        <tag>线程协作</tag>
+        <tag>线程的一些重要方法</tag>
         <tag>J.U.C 构件</tag>
       </tags>
   </entry>
