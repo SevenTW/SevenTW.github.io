@@ -394,14 +394,20 @@
 <p><code>binlog</code> 是 <code>MySQL Server</code> 层实现的，所有存储引擎都可以用。</p>
 </li>
 <li>
-<p><code>redo log</code> 是物理日志；</p>
-<p><code>binlog</code> 是逻辑日志；</p>
+<p><code>redo log</code> 是物理日志，记录物理页做了什么改动；</p>
+<p><code>binlog</code> 是逻辑日志，有两种模式：</p>
+<ul>
+<li><code>statement</code> 模式 - 记录 <code>sql</code> 语句</li>
+<li><code>row</code> 模式 - 记录更新前和更新后的行数据</li>
+</ul>
 </li>
 <li>
 <p><code>redo log</code> 可以循环写，但空间大小固定，满了之后需要写回磁盘；</p>
 <p><code>binlog</code> 是追加写的，写满一个文件后会新建一个文件接着写，不会覆盖之前的日志。</p>
 </li>
 </ul>
+<p><code>innodb_flush_log_at_trx_commit</code>：这个参数置为 1 时表示每次事务的 <code>redo log</code> 都直接持久化到磁盘。</p>
+<p><code>sync_binlog</code>：这个参数置为 1 时表示每次事务的 <code>binlog</code> 都持久化到磁盘。</p>
 <h4 id="更新语句的执行流程"><a class="markdownIt-Anchor" href="#更新语句的执行流程"></a> 更新语句的执行流程</h4>
 <p>有了对 <code>redo log</code> 和 <code>binlog</code> 的初步认识，现在来看看更新语句的执行流程。</p>
 <p>假设有一张表的建表语句如下：</p>
@@ -418,6 +424,20 @@
 </ol>
 <p>其中 <code>redo log</code> 的状态从 <code>prepare</code> 变为 <code>commit</code>，这就是著名的<strong>两阶段提交</strong>。</p>
 <h4 id="两阶段提交"><a class="markdownIt-Anchor" href="#两阶段提交"></a> 两阶段提交</h4>
+<p>两阶段提交的目的是为了保持 <code>redo log</code> 和 <code>binlog</code> 的逻辑一致性。</p>
+<p>假设 <code>redo log</code> 不是两阶段提交，我们看看会出现什么情况：</p>
+<ul>
+<li>写完 <code>redo log</code> 并提交后，在还未写 <code>binlog</code> 前，系统崩溃了</li>
+</ul>
+<div class="note "><p>因为 <code>redo log</code> 具有 <code>crash-safe</code> 能力，所以系统恢复后，能恢复数据库更新后的数据；</p>
+<p>但是因为在写 <code>binlog</code> 之前系统就崩溃了，因此 <code>binlog</code> 并没有记录下此次更新，如果之后用这个 <code>binlog</code> 来恢复临时库，就会少一次更新。</p>
+</div>
+<ul>
+<li>写完 <code>binlog</code> 后，还为写 <code>redo log</code> 前，系统崩溃了</li>
+</ul>
+<div class="note "><p>因为 <code>InnoDB</code> 是根据 <code>redo log</code> 的状态来提交事务的，如果一次更新操作在写 <code>redo log</code> 之前，系统就奔溃了，那此次更新（事务）是无效的。系统恢复时，根据 <code>redo log</code> 恢复数据库也不会有这次更新。但是 <code>binlog</code> 是记录了此次更新的，之后如果这个 <code>binlog</code> 来恢复临时库，就会多一次更新。</p>
+</div>
+<p>总结：如果没有两阶段提交，数据库的状态就可能会和用 <code>binlog</code> 恢复的临时库状态不一致。</p>
 ]]></content>
       <categories>
         <category>数据库</category>
@@ -1256,78 +1276,6 @@ taking a <mark class="label primary">punt</mark><sup class="footnote-ref"><a hre
       </tags>
   </entry>
   <entry>
-    <title>The darkest corners</title>
-    <url>/archives/bef6e425.html</url>
-    <content><![CDATA[<center><b>A clear-out of the security agencies shows the opacity of power in China</b></center>
-<p>Purges have grown more common since Xi Jinping took over as China’s leader in 2012. To <mark class="label primary">curb</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> <mark class="label primary">graft</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> and <mark class="label primary">snuff</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> out any opposition to his rule , Mr Xi has been hunting in every corner of the country’s vast bureaucracy. Hundreds of thousands of officials have been punished. Thousands, many of them high-ranking, have been sent to prison. Remarkably, however, some people do not appear to have got the message. A new campaign has just been launched within the domestic security services (see China section). Weeding out the disloyal is its primary goal.</p>
-<span id="more"></span>
-<div class="note info"><p><strong>Weeding out</strong>：淘汰，清除</p>
-</div>
-<p>Can there still be serious opposition to Mr Xi? There is certainly little sign of it on the streets. Many ordinary citizens express content with his rule. Under him, China has become far more influential globally. The economy has kept on growing at a healthy rate (and surprisingly well despite the pandemic). His anti-corruption efforts are popular. Neither is there any obvious sign of discontent within the Communist Party elite. It seems likely that many bitterly <mark class="label primary">resent</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> the anti-graft inspectors, and that some senior officials even <mark class="label primary">gnash</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> their teeth. But those with <mark class="label primary">misgivings</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> about Mr Xi know they must keep their mouths shut and their heads down.</p>
-<p>A lesson from this latest purge, however, is that the outside world only dimly understands Mr Xi’s political world. One stated aim of the campaign is to remove the “<mark class="label primary">pernicious</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> influence” of Zhou Yongkang, who was China’s security overlord just before Mr Xi took power. Mr Zhou was jailed in 2015 for corruption and leaking state secrets. Officials also accused him of “political plotting”—shorthand, many observers believe, for scheming against Mr Xi. That his name is still being in voked years later hints at tensions, but it is hard for outsiders to judge how serious they are. The agencies being targeted in the new campaign occupy the darkest corners of an opaque political system: the police, the secret police, the <mark class="label primary">judiciary</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> and the prison service. In the months leading up to the purge several powerful figures within this apparatus were <mark class="label primary">toppled</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>. One was the chief of police in Shanghai, who has been accused of forming “<mark class="label primary">factions</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>”. All detail of what that may mean is a closely guarded secret.</p>
-<p>Despite this, the new purge contains clear messages. One is Mr Xi’s appetite for power. The campaign will wrap up in time for a big political event late in 2022: the five-yearly party congress. He looks sure to use this to extend his rule for another five years, in <mark class="label primary">defiance</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> of the convention that general secretaries step down after a decade. Tightening control over the security forces will help crush any opposition to his innovation.</p>
-<div class="note info"><p><strong>wrap up</strong>：完成，结束</p>
-<p>**step down **：辞职，下台</p>
-</div>
-<p>That raises the other, still bigger, reason to pay attention. For all the seeming <mark class="label primary">relentlessness</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> of the rise of China under an increasingly <mark class="label primary">adamantine</mark><sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> <mark class="label primary">authoritarianism</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>, politics can pack surprises that suddenly change the country’s <mark class="label primary">trajectory</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup>. Consider the arrest of Mao Zedong’s widow and others in the “Gang of Four” in 1976, the struggle that brought Deng Xiaoping to power two years later, the regime-threatening splits within the party that emerged during the Tiananmen Square <mark class="label primary">protests</mark><sup class="footnote-ref"><a href="#fn16" id="fnref16">[16]</a></sup> of 1989 and the political bloodletting that eliminated Mr Xi’s rivals in the lead-up to his own anointment. You cannot rule out more such <mark class="label primary">disruptive</mark><sup class="footnote-ref"><a href="#fn17" id="fnref17">[17]</a></sup> shocks.</p>
-<p>In the build-up to next year’s congress, the <mark class="label primary">murky</mark><sup class="footnote-ref"><a href="#fn18" id="fnref18">[18]</a></sup> waters of Chinese politics will deserve even closer <mark class="label primary">scrutiny</mark><sup class="footnote-ref"><a href="#fn19" id="fnref19">[19]</a></sup>. That is in part because Mr Xi <mark class="label primary">defies</mark><sup class="footnote-ref"><a href="#fn20" id="fnref20">[20]</a></sup> norms. As well as rejecting the modern principle that China’s leader gets only ten years at the top, he has seized more levers of power than any ruler since Mao. It is also because, under Mr Xi, the regime has become even more secretive. Alas, such secrecy makes for a government less accountable to citizens and more likely to catch the world unaware.</p>
-<hr class="footnotes-sep">
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>美 [kɜrb] 抑制，遏制 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn2" class="footnote-item"><p>美 [ɡræft] 贪污 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn3" class="footnote-item"><p>美 [snʌf] 掐灭 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn4" class="footnote-item"><p>美 [rɪ’zent] 愤恨，憎恶 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn5" class="footnote-item"><p>美 [næʃ] 咬牙切齿 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn6" class="footnote-item"><p>美 [mɪs’ɡɪvɪŋ] 疑虑，顾忌，不安 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn7" class="footnote-item"><p>美 [pər’nɪʃəs] 有害的，恶性的 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn8" class="footnote-item"><p>美 [dʒu’dɪʃəri] 司法机关 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn9" class="footnote-item"><p>美 ['tɑp(ə)l] 推翻，颠覆 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn10" class="footnote-item"><p>美 ['fækʃ(ə)n] 派别，党派 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn11" class="footnote-item"><p>美 [dɪ’faɪəns] 反抗，违抗，挑战，拒绝服从 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn12" class="footnote-item"><p>美 [rɪ’lentləs] 无情，残酷 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn13" class="footnote-item"><p>美 [ˌædə’mæntaɪn] 坚韧的，坚定不移的 <a href="#fnref13" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn14" class="footnote-item"><p>美 [ɔ.θɔrɪ’teriə.nɪzəm] 独裁主义 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn15" class="footnote-item"><p>美 [trə’dʒektəri] 轨迹，轨道 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn16" class="footnote-item"><p>美 [‘proʊ.test] 抗议，反对 <a href="#fnref16" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn17" class="footnote-item"><p>美 [dɪs’rʌptɪv] 破坏性的，颠覆性的，引起混乱的 <a href="#fnref17" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn18" class="footnote-item"><p>美 [‘mɜrki] 浑浊的，阴暗的 <a href="#fnref18" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn19" class="footnote-item"><p>美 ['skrut(ə)ni] 仔细检查；认真彻底的审查 <a href="#fnref19" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn20" class="footnote-item"><p>美 [dɪ’faɪ] 蔑视，不顾，公然反抗 <a href="#fnref20" class="footnote-backref">↩︎</a></p>
-</li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>The Economist</category>
-        <category>Leaders</category>
-      </categories>
-      <tags>
-        <tag>The Economist</tag>
-        <tag>经济学人</tag>
-        <tag>Leaders</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>The lessons of Fukushima</title>
     <url>/archives/5188b436.html</url>
     <content><![CDATA[<center><b>Nuclear power must be well run, not ditched</b></center>
@@ -1412,6 +1360,137 @@ equivalents to join the importers. If Chinese reactors are designed in the knowl
       </tags>
   </entry>
   <entry>
+    <title>The darkest corners</title>
+    <url>/archives/bef6e425.html</url>
+    <content><![CDATA[<center><b>A clear-out of the security agencies shows the opacity of power in China</b></center>
+<p>Purges have grown more common since Xi Jinping took over as China’s leader in 2012. To <mark class="label primary">curb</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> <mark class="label primary">graft</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> and <mark class="label primary">snuff</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> out any opposition to his rule , Mr Xi has been hunting in every corner of the country’s vast bureaucracy. Hundreds of thousands of officials have been punished. Thousands, many of them high-ranking, have been sent to prison. Remarkably, however, some people do not appear to have got the message. A new campaign has just been launched within the domestic security services (see China section). Weeding out the disloyal is its primary goal.</p>
+<span id="more"></span>
+<div class="note info"><p><strong>Weeding out</strong>：淘汰，清除</p>
+</div>
+<p>Can there still be serious opposition to Mr Xi? There is certainly little sign of it on the streets. Many ordinary citizens express content with his rule. Under him, China has become far more influential globally. The economy has kept on growing at a healthy rate (and surprisingly well despite the pandemic). His anti-corruption efforts are popular. Neither is there any obvious sign of discontent within the Communist Party elite. It seems likely that many bitterly <mark class="label primary">resent</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> the anti-graft inspectors, and that some senior officials even <mark class="label primary">gnash</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> their teeth. But those with <mark class="label primary">misgivings</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> about Mr Xi know they must keep their mouths shut and their heads down.</p>
+<p>A lesson from this latest purge, however, is that the outside world only dimly understands Mr Xi’s political world. One stated aim of the campaign is to remove the “<mark class="label primary">pernicious</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> influence” of Zhou Yongkang, who was China’s security overlord just before Mr Xi took power. Mr Zhou was jailed in 2015 for corruption and leaking state secrets. Officials also accused him of “political plotting”—shorthand, many observers believe, for scheming against Mr Xi. That his name is still being in voked years later hints at tensions, but it is hard for outsiders to judge how serious they are. The agencies being targeted in the new campaign occupy the darkest corners of an opaque political system: the police, the secret police, the <mark class="label primary">judiciary</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> and the prison service. In the months leading up to the purge several powerful figures within this apparatus were <mark class="label primary">toppled</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>. One was the chief of police in Shanghai, who has been accused of forming “<mark class="label primary">factions</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>”. All detail of what that may mean is a closely guarded secret.</p>
+<p>Despite this, the new purge contains clear messages. One is Mr Xi’s appetite for power. The campaign will wrap up in time for a big political event late in 2022: the five-yearly party congress. He looks sure to use this to extend his rule for another five years, in <mark class="label primary">defiance</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> of the convention that general secretaries step down after a decade. Tightening control over the security forces will help crush any opposition to his innovation.</p>
+<div class="note info"><p><strong>wrap up</strong>：完成，结束</p>
+<p>**step down **：辞职，下台</p>
+</div>
+<p>That raises the other, still bigger, reason to pay attention. For all the seeming <mark class="label primary">relentlessness</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> of the rise of China under an increasingly <mark class="label primary">adamantine</mark><sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> <mark class="label primary">authoritarianism</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>, politics can pack surprises that suddenly change the country’s <mark class="label primary">trajectory</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup>. Consider the arrest of Mao Zedong’s widow and others in the “Gang of Four” in 1976, the struggle that brought Deng Xiaoping to power two years later, the regime-threatening splits within the party that emerged during the Tiananmen Square <mark class="label primary">protests</mark><sup class="footnote-ref"><a href="#fn16" id="fnref16">[16]</a></sup> of 1989 and the political bloodletting that eliminated Mr Xi’s rivals in the lead-up to his own anointment. You cannot rule out more such <mark class="label primary">disruptive</mark><sup class="footnote-ref"><a href="#fn17" id="fnref17">[17]</a></sup> shocks.</p>
+<p>In the build-up to next year’s congress, the <mark class="label primary">murky</mark><sup class="footnote-ref"><a href="#fn18" id="fnref18">[18]</a></sup> waters of Chinese politics will deserve even closer <mark class="label primary">scrutiny</mark><sup class="footnote-ref"><a href="#fn19" id="fnref19">[19]</a></sup>. That is in part because Mr Xi <mark class="label primary">defies</mark><sup class="footnote-ref"><a href="#fn20" id="fnref20">[20]</a></sup> norms. As well as rejecting the modern principle that China’s leader gets only ten years at the top, he has seized more levers of power than any ruler since Mao. It is also because, under Mr Xi, the regime has become even more secretive. Alas, such secrecy makes for a government less accountable to citizens and more likely to catch the world unaware.</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>美 [kɜrb] 抑制，遏制 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>美 [ɡræft] 贪污 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>美 [snʌf] 掐灭 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>美 [rɪ’zent] 愤恨，憎恶 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>美 [næʃ] 咬牙切齿 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>美 [mɪs’ɡɪvɪŋ] 疑虑，顾忌，不安 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>美 [pər’nɪʃəs] 有害的，恶性的 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>美 [dʒu’dɪʃəri] 司法机关 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>美 ['tɑp(ə)l] 推翻，颠覆 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>美 ['fækʃ(ə)n] 派别，党派 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>美 [dɪ’faɪəns] 反抗，违抗，挑战，拒绝服从 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>美 [rɪ’lentləs] 无情，残酷 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p>美 [ˌædə’mæntaɪn] 坚韧的，坚定不移的 <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn14" class="footnote-item"><p>美 [ɔ.θɔrɪ’teriə.nɪzəm] 独裁主义 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn15" class="footnote-item"><p>美 [trə’dʒektəri] 轨迹，轨道 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn16" class="footnote-item"><p>美 [‘proʊ.test] 抗议，反对 <a href="#fnref16" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn17" class="footnote-item"><p>美 [dɪs’rʌptɪv] 破坏性的，颠覆性的，引起混乱的 <a href="#fnref17" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn18" class="footnote-item"><p>美 [‘mɜrki] 浑浊的，阴暗的 <a href="#fnref18" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn19" class="footnote-item"><p>美 ['skrut(ə)ni] 仔细检查；认真彻底的审查 <a href="#fnref19" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn20" class="footnote-item"><p>美 [dɪ’faɪ] 蔑视，不顾，公然反抗 <a href="#fnref20" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>The Economist</category>
+        <category>Leaders</category>
+      </categories>
+      <tags>
+        <tag>The Economist</tag>
+        <tag>经济学人</tag>
+        <tag>Leaders</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>The law kicks in</title>
+    <url>/archives/40ddc300.html</url>
+    <content><![CDATA[<center><b>The territory will soon find out how its
+new security law works in court</b></center>
+<p>Since china imposed a <mark class="label primary">draconian</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> security law on Hong Kong last year, protests in the city—already <mark class="label primary">dampened</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> by pandemic-related controls—have been rare. But on March 1st hundreds of people gathered outside a court to demonstrate against the largest case so far related to the security bill. They held banners calling for the release of “political prisoners” and chanted slogans that were popular during the unrest that <mark class="label primary">engulfed</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> the territory in 2019. Students at a primary school nearby stood outside their classrooms, shouting in solidarity. It was a rare act of defiance in a city that, to many residents, feels crushed.</p>
+<span id="more"></span>
+<p>A day earlier, 47 people had been charged for alleged <mark class="label primary">misdeeds</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> as part of the case. They included some of Hong Kong’s best-known pro-democracy activists, such as Leung Kwokhung, a <mark class="label primary">veteran</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> campaigner commonly known as “Long Hair”; Lester Shum, a politician; Benny Tai, an academic, and Joshua Wong, whose then-teenage face became <mark class="label primary">emblematic</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> of the “Umbrella Movement” of 2014 (he is already in prison for a protest-related offence). They have been accused of crimes such as conspiracy to commit <mark class="label primary">subversion</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> by plotting to overthrow Hong Kong’s government.</p>
+<p>The case relates to an informal primary ballot that was held last year to select pro-democracy<br>
+candidates for elections to the Legislative Council. This sensible-sounding effort was seen by the government as an attempt to gain control of the council and paralyse its work. (The elections were<br>
+due to be held in September but were postponed for a year, <mark class="label primary">purportedly</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> because of the pandemic.) If convicted, the defendants face sentences of up to life in prison.</p>
+<p>The proceedings that began on March 1st relate to applications for bail—the trial itself may not begin for several more weeks. Under the security law, there is a presumption that bail will be denied, so even this stage has involved <mark class="label primary">protracted</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> debate in court and a <mark class="label primary">gruelling</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup> <mark class="label primary">ordeal</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> for the defendants. They have had to endure sessions lasting many hours that have eaten into normal times for meals and sleep. The physical toll has been evident—several of them have received hospital treatment. The prosecution argues that defendants could pose a threat to national security if given bail. Soon after The Economist went to press, the court was expected to <mark class="label primary">rule</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> on whether to <mark class="label primary">remand</mark><sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> them in <mark class="label primary">custody</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>.</p>
+<p>No national-security trial has yet been concluded. So this one will be watched for signs of how the new law—which has the <mark class="label primary">hallmarks</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup> of Chinese mainland-style legislation, with its vaguely defined political terms—works in a judicial system steeped in British legal tradition. Dominic Raab, Britain’s foreign minister, has described the case as “deeply disturbing”. America and the European Union have called for the release of the 47 activists. On March 2nd Hong Kong’s Department of Justice said that prosecutors’ decisions had been made “without political consider ations” and no one should interfere in them. But a few days before the 47 were charged, Xia Baolong, a central-government official who oversees Hong Kong affairs, had said that “anti-China elements” should be “severely punished under the law”. He had named two members of the group: Mr Wong and Mr Tai. The Communist Party may be an exception to Hong Kong’s rule.</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>美 [drə’koʊniən] 严酷的，残忍的，苛刻的 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>美 [‘dæmpən] 抑制 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>美 [ɪn’ɡʌlf] 把…卷入旋涡；吞没 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>美 [mɪs’did] 罪行 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>美 ['vet(ə)rən] 老兵，退伍军人；富有经验的 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>美 [.emblə’mætɪk] 标志的，象征性的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>美 [səb’vɜrʒ(ə)n] 颠覆，破坏 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>据称 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>美 [prəˈtræktəd] 拖沓的，旷日持久的 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>美 ['ɡru(ə)lɪŋ] 使人筋疲力尽的；折磨人的 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>美 [ɔr’dil] 折磨，煎熬 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>美 [rul] 统治；控制；支配；裁定 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p>美 [rɪ’mænd] 还押(被告、嫌疑犯) <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn14" class="footnote-item"><p>美 [ˈkʌstədi] 拘留，监禁 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn15" class="footnote-item"><p>美 [‘hɔl.mɑrk] 特点，特征 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>The Economist</category>
+        <category>China</category>
+      </categories>
+      <tags>
+        <tag>The Economist</tag>
+        <tag>经济学人</tag>
+        <tag>China</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Scraping the bones</title>
     <url>/archives/6d0cb3b7.html</url>
     <content><![CDATA[<center><b>China’s law-enforcement agencies are undergoing their biggest purge in more
@@ -1474,65 +1553,6 @@ sweeping and brutal purge of the party’s ranks to consolidate his control. Suc
 <li id="fn21" class="footnote-item"><p>美 [.pri’zaɪd] 主持（会议、仪式等）；担任（会议）主席 <a href="#fnref21" class="footnote-backref">↩︎</a></p>
 </li>
 <li id="fn22" class="footnote-item"><p>美 ['fʌmb(ə)l] 摸索，笨拙的 <a href="#fnref22" class="footnote-backref">↩︎</a></p>
-</li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>The Economist</category>
-        <category>China</category>
-      </categories>
-      <tags>
-        <tag>The Economist</tag>
-        <tag>经济学人</tag>
-        <tag>China</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>The law kicks in</title>
-    <url>/archives/40ddc300.html</url>
-    <content><![CDATA[<center><b>The territory will soon find out how its
-new security law works in court</b></center>
-<p>Since china imposed a <mark class="label primary">draconian</mark><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> security law on Hong Kong last year, protests in the city—already <mark class="label primary">dampened</mark><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> by pandemic-related controls—have been rare. But on March 1st hundreds of people gathered outside a court to demonstrate against the largest case so far related to the security bill. They held banners calling for the release of “political prisoners” and chanted slogans that were popular during the unrest that <mark class="label primary">engulfed</mark><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> the territory in 2019. Students at a primary school nearby stood outside their classrooms, shouting in solidarity. It was a rare act of defiance in a city that, to many residents, feels crushed.</p>
-<span id="more"></span>
-<p>A day earlier, 47 people had been charged for alleged <mark class="label primary">misdeeds</mark><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> as part of the case. They included some of Hong Kong’s best-known pro-democracy activists, such as Leung Kwokhung, a <mark class="label primary">veteran</mark><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> campaigner commonly known as “Long Hair”; Lester Shum, a politician; Benny Tai, an academic, and Joshua Wong, whose then-teenage face became <mark class="label primary">emblematic</mark><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> of the “Umbrella Movement” of 2014 (he is already in prison for a protest-related offence). They have been accused of crimes such as conspiracy to commit <mark class="label primary">subversion</mark><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> by plotting to overthrow Hong Kong’s government.</p>
-<p>The case relates to an informal primary ballot that was held last year to select pro-democracy<br>
-candidates for elections to the Legislative Council. This sensible-sounding effort was seen by the government as an attempt to gain control of the council and paralyse its work. (The elections were<br>
-due to be held in September but were postponed for a year, <mark class="label primary">purportedly</mark><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> because of the pandemic.) If convicted, the defendants face sentences of up to life in prison.</p>
-<p>The proceedings that began on March 1st relate to applications for bail—the trial itself may not begin for several more weeks. Under the security law, there is a presumption that bail will be denied, so even this stage has involved <mark class="label primary">protracted</mark><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup> debate in court and a <mark class="label primary">gruelling</mark><sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup> <mark class="label primary">ordeal</mark><sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup> for the defendants. They have had to endure sessions lasting many hours that have eaten into normal times for meals and sleep. The physical toll has been evident—several of them have received hospital treatment. The prosecution argues that defendants could pose a threat to national security if given bail. Soon after The Economist went to press, the court was expected to <mark class="label primary">rule</mark><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> on whether to <mark class="label primary">remand</mark><sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> them in <mark class="label primary">custody</mark><sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>.</p>
-<p>No national-security trial has yet been concluded. So this one will be watched for signs of how the new law—which has the <mark class="label primary">hallmarks</mark><sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup> of Chinese mainland-style legislation, with its vaguely defined political terms—works in a judicial system steeped in British legal tradition. Dominic Raab, Britain’s foreign minister, has described the case as “deeply disturbing”. America and the European Union have called for the release of the 47 activists. On March 2nd Hong Kong’s Department of Justice said that prosecutors’ decisions had been made “without political consider ations” and no one should interfere in them. But a few days before the 47 were charged, Xia Baolong, a central-government official who oversees Hong Kong affairs, had said that “anti-China elements” should be “severely punished under the law”. He had named two members of the group: Mr Wong and Mr Tai. The Communist Party may be an exception to Hong Kong’s rule.</p>
-<hr class="footnotes-sep">
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>美 [drə’koʊniən] 严酷的，残忍的，苛刻的 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn2" class="footnote-item"><p>美 [‘dæmpən] 抑制 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn3" class="footnote-item"><p>美 [ɪn’ɡʌlf] 把…卷入旋涡；吞没 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn4" class="footnote-item"><p>美 [mɪs’did] 罪行 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn5" class="footnote-item"><p>美 ['vet(ə)rən] 老兵，退伍军人；富有经验的 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn6" class="footnote-item"><p>美 [.emblə’mætɪk] 标志的，象征性的 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn7" class="footnote-item"><p>美 [səb’vɜrʒ(ə)n] 颠覆，破坏 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn8" class="footnote-item"><p>据称 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn9" class="footnote-item"><p>美 [prəˈtræktəd] 拖沓的，旷日持久的 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn10" class="footnote-item"><p>美 ['ɡru(ə)lɪŋ] 使人筋疲力尽的；折磨人的 <a href="#fnref10" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn11" class="footnote-item"><p>美 [ɔr’dil] 折磨，煎熬 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn12" class="footnote-item"><p>美 [rul] 统治；控制；支配；裁定 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn13" class="footnote-item"><p>美 [rɪ’mænd] 还押(被告、嫌疑犯) <a href="#fnref13" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn14" class="footnote-item"><p>美 [ˈkʌstədi] 拘留，监禁 <a href="#fnref14" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn15" class="footnote-item"><p>美 [‘hɔl.mɑrk] 特点，特征 <a href="#fnref15" class="footnote-backref">↩︎</a></p>
 </li>
 </ol>
 </section>
@@ -2082,10 +2102,11 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 ]]></content>
       <categories>
         <category>设计模式</category>
-        <category>创建型模式</category>
+        <category>创建型</category>
       </categories>
       <tags>
         <tag>设计模式</tag>
+        <tag>创建型模式</tag>
         <tag>单例模式</tag>
       </tags>
   </entry>
@@ -2602,7 +2623,7 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 ]]></content>
       <categories>
         <category>设计模式</category>
-        <category>行为型模式</category>
+        <category>行为型</category>
       </categories>
       <tags>
         <tag>设计模式</tag>
@@ -2744,7 +2765,7 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
         <category>结构型</category>
       </categories>
       <tags>
-        <tag>结构型</tag>
+        <tag>结构型模式</tag>
         <tag>适配器模式</tag>
       </tags>
   </entry>
