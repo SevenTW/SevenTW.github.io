@@ -2577,6 +2577,40 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
       </tags>
   </entry>
   <entry>
+    <title>策略模式</title>
+    <url>/archives/72e3b671.html</url>
+    <content><![CDATA[<div class="note "><p>定义一系列可以互换的算法。</p>
+<p><code>Strategy</code> 是一个接口，<code>ConcreteStrategyA</code> 和 <code>ConcreteStrategyB</code> 实现了该接口。</p>
+<p><code>Context</code> 可以设置想使用哪个具体的实现类，但不必关心具体实现细节。</p>
+<p><code>setStrategy()</code> 用父类指针指向具体的实现类，体现了里氏替换原则的设计思想。</p>
+</div>
+<img data-src="/archives/72e3b671/Strategy.png" alt="Strategy" style="zoom:60%;">
+<!--mores-->
+<h4 id="简单实现"><a class="markdownIt-Anchor" href="#简单实现"></a> 简单实现</h4>
+<h5 id="strategy"><a class="markdownIt-Anchor" href="#strategy"></a> <code>Strategy</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">QuackBehavior</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="concretestrategya"><a class="markdownIt-Anchor" href="#concretestrategya"></a> <code>ConcreteStrategyA</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Quack</span> <span class="keyword">implements</span> <span class="title">QuackBehavior</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;quack!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="concretestrategyb"><a class="markdownIt-Anchor" href="#concretestrategyb"></a> <code>ConcreteStrategyB</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Squeak</span> <span class="keyword">implements</span> <span class="title">QuackBehavior</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;squeak!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="context"><a class="markdownIt-Anchor" href="#context"></a> <code>Context</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> QuackBehavior quackBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performQuack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (quackBehavior != <span class="keyword">null</span>) &#123;</span><br><span class="line">            quackBehavior.quack();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setQuackBehavior</span><span class="params">(QuackBehavior quackBehavior)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.quackBehavior = quackBehavior;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Duck duck = <span class="keyword">new</span> Duck();</span><br><span class="line">        duck.setQuackBehavior(<span class="keyword">new</span> Squeak());</span><br><span class="line">        duck.performQuack();</span><br><span class="line">        duck.setQuackBehavior(<span class="keyword">new</span> Quack());</span><br><span class="line">        duck.performQuack();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="jdk-中的应用"><a class="markdownIt-Anchor" href="#jdk-中的应用"></a> <code>JDK</code> 中的应用</h4>
+<ul>
+<li><code>java.util.Comparator#compare()</code></li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>行为型模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>行为型模式</tag>
+        <tag>策略模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>线程池</title>
     <url>/archives/de7c53fe.html</url>
     <content><![CDATA[<h4 id="线程池状态"><a class="markdownIt-Anchor" href="#线程池状态"></a> 线程池状态</h4>
@@ -2678,6 +2712,40 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
       <tags>
         <tag>线程池</tag>
         <tag>ThreadPoolExecutor</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>适配器模式</title>
+    <url>/archives/f5c535ea.html</url>
+    <content><![CDATA[<div class="note "><p>把一个类接口转换成另一个用户需要的接口。</p>
+<p><code>Target</code>：想要的接口</p>
+<p><code>Adaptee</code>：适配器</p>
+<p><code>Adapter</code>：现有接口（被适配接口）</p>
+</div>
+<img data-src="/archives/f5c535ea/Adapter.png" alt="Adapter" style="zoom:60%;">
+<span id="more"></span>
+<h4 id="简单实现"><a class="markdownIt-Anchor" href="#简单实现"></a> 简单实现</h4>
+<h5 id="target"><a class="markdownIt-Anchor" href="#target"></a> <code>Target</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Client 想要一个 Duck</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Duck</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="adapter"><a class="markdownIt-Anchor" href="#adapter"></a> <code>Adapter</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Turkey</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">gobble</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 现在有一个 Turkey</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WildTurkey</span> <span class="keyword">implements</span> <span class="title">Turkey</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">gobble</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;gobble!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="adaptee"><a class="markdownIt-Anchor" href="#adaptee"></a> <code>Adaptee</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 定义一个 Duck 的实现类，并调用 Turkey 中的方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TurkeyAdaptee</span> <span class="keyword">implements</span> <span class="title">Duck</span> </span>&#123;</span><br><span class="line">    Turkey turkey;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TurkeyAdapter</span><span class="params">(Turkey turkey)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.turkey = turkey;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        turkey.gobble();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="client"><a class="markdownIt-Anchor" href="#client"></a> <code>Client</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Turkey turkey = <span class="keyword">new</span> WildTurkey();</span><br><span class="line">        Duck duck = <span class="keyword">new</span> TurkeyAdaptee(turkey);</span><br><span class="line">        duck.quack();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="jdk-中的应用"><a class="markdownIt-Anchor" href="#jdk-中的应用"></a> <code>JDK</code> 中的应用</h4>
+<ul>
+<li><code>java.util.Arrays#asList()</code></li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>结构型</category>
+      </categories>
+      <tags>
+        <tag>结构型</tag>
+        <tag>适配器模式</tag>
       </tags>
   </entry>
   <entry>
