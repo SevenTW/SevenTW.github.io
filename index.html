@@ -582,7 +582,7 @@ if(canvas.getContext){
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-05-26 17:15:04 / Modified: 18:20:36" itemprop="dateCreated datePublished" datetime="2021-05-26T17:15:04+08:00">2021-05-26</time>
+      <time title="Created: 2021-05-26 17:15:04 / Modified: 20:53:26" itemprop="dateCreated datePublished" datetime="2021-05-26T17:15:04+08:00">2021-05-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -623,59 +623,14 @@ if(canvas.getContext){
 <li>面向报文（对于应用程序传下来的报文不合并也不拆分，只是添加 <code>UDP</code> 首部）</li>
 <li>支持一对一、一对多、多对一和多对多的交互通信</li>
 </ul>
-<h5 id="udp-首部"><a class="markdownIt-Anchor" href="#udp-首部"></a> <code>UDP</code> 首部</h5>
-<img data-src="/archives/c18409ab/UDP%E9%A6%96%E9%83%A8.png" alt="UDP首部" style="zoom:60%;">
-<h4 id="tcp"><a class="markdownIt-Anchor" href="#tcp"></a> <code>TCP</code></h4>
-<h5 id="tcp-特点"><a class="markdownIt-Anchor" href="#tcp-特点"></a> <code>TCP</code> 特点</h5>
-<ul>
-<li>传输控制协议（<code>Transmission Control Protocol</code>，<code>TCP</code>）的特点：</li>
-<li>面向连接</li>
-<li>提供可靠交付</li>
-<li>有流量控制和拥塞控制，</li>
-<li>提供全双工通信</li>
-<li>面向字节流（把应用层传下来的报文看成字节流，把字节流组织成大小不等的数据块）</li>
-<li>每一条 <code>TCP</code> 连接只能是点对点的（一对一）。</li>
-</ul>
-<h5 id="tcp-首部"><a class="markdownIt-Anchor" href="#tcp-首部"></a> <code>TCP</code> 首部</h5>
-<img data-src="/archives/c18409ab/TCP%E9%A6%96%E9%83%A8.png" alt="TCP首部" style="zoom:50%;">
-<ul>
-<li>序号 - 用于对报文段进行编号</li>
-<li>确认号 - 期望收到的下一个报文段的编号</li>
-<li><code>ACK</code> -</li>
-<li><code>SYN</code> -</li>
-<li><code>FIN</code> -</li>
-<li>窗口 -</li>
-</ul>
-<h4 id="tcp-三次握手"><a class="markdownIt-Anchor" href="#tcp-三次握手"></a> <code>TCP</code> 三次握手</h4>
-<img data-src="/archives/c18409ab/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="TCP三次握手" style="zoom:60%;">
-<p>三次握手过程：</p>
-<ul>
-<li>服务器 <code>B</code> 处于监听状态，等待连接请求</li>
-<li>客户端 <code>A</code> 向 <code>B</code> 发起一个连接请求，选择一个初始序号 x</li>
-<li><code>B</code> 收到连接请求后，向 <code>A</code> 发送确认报文，确认号为 x + 1，同时也选择一个初始号 y</li>
-<li><code>A</code> 收到 <code>B</code> 的确认报文后，再次向 <code>B</code> 发送确认报文</li>
-<li><code>B</code> 收到确认，连接真正建立</li>
-</ul>
-<p>为什么需要三次握手：</p>
-<p>第三次握手是为了过滤掉失效的连接请求。</p>
-<p>如果不进行三次握手，服务器每收到一个连接请求就建立一个连接。但是会有这样的情况，客户端第一发送连接请求，由于网络拥塞，迟迟没有收到服务器的确认报文，在等待一段时间后，重新发起了一个连接请求，并很快收到了应答。此时服务器端建立了两个连接，但是对于客户端来说，服务端为其第一次请求建立的连接是无效的，白白浪费了资源。</p>
-<p>而如果有三次握手，服务端并不是在收到连接请求后就建立一个连接，而是要等客服端对此次连接再进行确认才会真正建立一个连接。向上面所说那种情况，客户端收到第一次连接请求的确认报文后会忽略，不再向服务端发出确认，服务端也就不会建立这个连接。</p>
-<h4 id="tcp-四次挥手"><a class="markdownIt-Anchor" href="#tcp-四次挥手"></a> <code>TCP</code> 四次挥手</h4>
-<img data-src="/archives/c18409ab/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="TCP四次挥手" style="zoom:67%;">
-<p>四次挥手过程：</p>
-<ul>
-<li><code>A</code> 向 <code>B</code> 发送连接释放报文</li>
-<li><code>B</code> 收到后向 <code>A</code> 发送确认报文，此时连接处于半关闭状态，<code>B</code> 可以向 <code>A</code> 继续发送数据</li>
-<li>当 <code>B</code> 数据发送完毕，向 <code>A</code> 发送连接释放报文</li>
-<li><code>A</code> 收到后向 <code>B</code> 发送确认报文，<code>A</code> 进入 <code>TIME_WAIT</code> 状态，等待 <code>2MSL</code>（最大报文存活时间）后释放连接</li>
-<li><code>B</code> 收到 <code>A</code> 的确认后释放连接</li>
-</ul>
-<p>为什么要有一个 <code>TIME_WAIT</code> 状态：</p>
-<ul>
-<li>如果 <code>B</code> 没有在 <code>2MSL</code> 时间内收到 <code>A</code> 的确认，可以重新向 <code>A</code> 发送释放连接报文。</li>
-<li>等待 <code>2MSL</code> 时间可以让此次连接的所有报文从网络中消失，如果新的请求 <code>IP</code> 和端口如果和此次一样，不会造成旧连接的报文出现在新连接中。</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/archives/c18409ab.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -726,10 +681,16 @@ if(canvas.getContext){
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-05-25 18:59:21 / Modified: 19:30:55" itemprop="dateCreated datePublished" datetime="2021-05-25T18:59:21+08:00">2021-05-25</time>
+      <time title="Created: 2021-05-25 18:59:21" itemprop="dateCreated datePublished" datetime="2021-05-25T18:59:21+08:00">2021-05-25</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-26 20:52:46" itemprop="dateModified" datetime="2021-05-26T20:52:46+08:00">2021-05-26</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -768,7 +729,6 @@ if(canvas.getContext){
 <p><code>Adaptee</code>：适配器</p>
 <p><code>Adapter</code>：现有接口（被适配接口）</p>
 </div>
-<img src="/archives/f5c535ea/Adapter.png" alt="Adapter" style="zoom:60%;">
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/archives/f5c535ea.html#more" rel="contents">
@@ -827,10 +787,16 @@ if(canvas.getContext){
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-05-25 18:41:13 / Modified: 19:30:40" itemprop="dateCreated datePublished" datetime="2021-05-25T18:41:13+08:00">2021-05-25</time>
+      <time title="Created: 2021-05-25 18:41:13" itemprop="dateCreated datePublished" datetime="2021-05-25T18:41:13+08:00">2021-05-25</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-26 20:52:10" itemprop="dateModified" datetime="2021-05-26T20:52:10+08:00">2021-05-26</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -869,22 +835,14 @@ if(canvas.getContext){
 <p><code>Context</code> 可以设置想使用哪个具体的实现类，但不必关心具体实现细节。</p>
 <p><code>setStrategy()</code> 用父类指针指向具体的实现类，体现了里氏替换原则的设计思想。</p>
 </div>
-<img data-src="/archives/72e3b671/Strategy.png" alt="Strategy" style="zoom:60%;">
-<!--mores-->
-<h4 id="简单实现"><a class="markdownIt-Anchor" href="#简单实现"></a> 简单实现</h4>
-<h5 id="strategy"><a class="markdownIt-Anchor" href="#strategy"></a> <code>Strategy</code></h5>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">QuackBehavior</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="concretestrategya"><a class="markdownIt-Anchor" href="#concretestrategya"></a> <code>ConcreteStrategyA</code></h5>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Quack</span> <span class="keyword">implements</span> <span class="title">QuackBehavior</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;quack!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="concretestrategyb"><a class="markdownIt-Anchor" href="#concretestrategyb"></a> <code>ConcreteStrategyB</code></h5>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Squeak</span> <span class="keyword">implements</span> <span class="title">QuackBehavior</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;squeak!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="context"><a class="markdownIt-Anchor" href="#context"></a> <code>Context</code></h5>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> QuackBehavior quackBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performQuack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (quackBehavior != <span class="keyword">null</span>) &#123;</span><br><span class="line">            quackBehavior.quack();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setQuackBehavior</span><span class="params">(QuackBehavior quackBehavior)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.quackBehavior = quackBehavior;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Duck duck = <span class="keyword">new</span> Duck();</span><br><span class="line">        duck.setQuackBehavior(<span class="keyword">new</span> Squeak());</span><br><span class="line">        duck.performQuack();</span><br><span class="line">        duck.setQuackBehavior(<span class="keyword">new</span> Quack());</span><br><span class="line">        duck.performQuack();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="jdk-中的应用"><a class="markdownIt-Anchor" href="#jdk-中的应用"></a> <code>JDK</code> 中的应用</h4>
-<ul>
-<li><code>java.util.Comparator#compare()</code></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/archives/72e3b671.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
