@@ -201,20 +201,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-count">81</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -557,6 +557,152 @@ if(canvas.getContext){
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/c18409ab.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/bear.jpeg">
+      <meta itemprop="name" content="Time_Wait">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Time_Wait">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/archives/c18409ab.html" class="post-title-link" itemprop="url">UDP和TCP</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-05-26 17:15:04 / Modified: 18:20:36" itemprop="dateCreated datePublished" datetime="2021-05-26T17:15:04+08:00">2021-05-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>997</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="udp"><a class="markdownIt-Anchor" href="#udp"></a> <code>UDP</code></h4>
+<h5 id="udp-特点"><a class="markdownIt-Anchor" href="#udp-特点"></a> <code>UDP</code> 特点</h5>
+<p>用户数据报协议（<code>User Datagram Protocol</code>，<code>UDP</code>）的特点：</p>
+<ul>
+<li>无连接</li>
+<li>尽最大可能交付</li>
+<li>没有拥塞控制</li>
+<li>面向报文（对于应用程序传下来的报文不合并也不拆分，只是添加 <code>UDP</code> 首部）</li>
+<li>支持一对一、一对多、多对一和多对多的交互通信</li>
+</ul>
+<h5 id="udp-首部"><a class="markdownIt-Anchor" href="#udp-首部"></a> <code>UDP</code> 首部</h5>
+<img data-src="/archives/c18409ab/UDP%E9%A6%96%E9%83%A8.png" alt="UDP首部" style="zoom:60%;">
+<h4 id="tcp"><a class="markdownIt-Anchor" href="#tcp"></a> <code>TCP</code></h4>
+<h5 id="tcp-特点"><a class="markdownIt-Anchor" href="#tcp-特点"></a> <code>TCP</code> 特点</h5>
+<ul>
+<li>传输控制协议（<code>Transmission Control Protocol</code>，<code>TCP</code>）的特点：</li>
+<li>面向连接</li>
+<li>提供可靠交付</li>
+<li>有流量控制和拥塞控制，</li>
+<li>提供全双工通信</li>
+<li>面向字节流（把应用层传下来的报文看成字节流，把字节流组织成大小不等的数据块）</li>
+<li>每一条 <code>TCP</code> 连接只能是点对点的（一对一）。</li>
+</ul>
+<h5 id="tcp-首部"><a class="markdownIt-Anchor" href="#tcp-首部"></a> <code>TCP</code> 首部</h5>
+<img data-src="/archives/c18409ab/TCP%E9%A6%96%E9%83%A8.png" alt="TCP首部" style="zoom:50%;">
+<ul>
+<li>序号 - 用于对报文段进行编号</li>
+<li>确认号 - 期望收到的下一个报文段的编号</li>
+<li><code>ACK</code> -</li>
+<li><code>SYN</code> -</li>
+<li><code>FIN</code> -</li>
+<li>窗口 -</li>
+</ul>
+<h4 id="tcp-三次握手"><a class="markdownIt-Anchor" href="#tcp-三次握手"></a> <code>TCP</code> 三次握手</h4>
+<img data-src="/archives/c18409ab/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="TCP三次握手" style="zoom:60%;">
+<p>三次握手过程：</p>
+<ul>
+<li>服务器 <code>B</code> 处于监听状态，等待连接请求</li>
+<li>客户端 <code>A</code> 向 <code>B</code> 发起一个连接请求，选择一个初始序号 x</li>
+<li><code>B</code> 收到连接请求后，向 <code>A</code> 发送确认报文，确认号为 x + 1，同时也选择一个初始号 y</li>
+<li><code>A</code> 收到 <code>B</code> 的确认报文后，再次向 <code>B</code> 发送确认报文</li>
+<li><code>B</code> 收到确认，连接真正建立</li>
+</ul>
+<p>为什么需要三次握手：</p>
+<p>第三次握手是为了过滤掉失效的连接请求。</p>
+<p>如果不进行三次握手，服务器每收到一个连接请求就建立一个连接。但是会有这样的情况，客户端第一发送连接请求，由于网络拥塞，迟迟没有收到服务器的确认报文，在等待一段时间后，重新发起了一个连接请求，并很快收到了应答。此时服务器端建立了两个连接，但是对于客户端来说，服务端为其第一次请求建立的连接是无效的，白白浪费了资源。</p>
+<p>而如果有三次握手，服务端并不是在收到连接请求后就建立一个连接，而是要等客服端对此次连接再进行确认才会真正建立一个连接。向上面所说那种情况，客户端收到第一次连接请求的确认报文后会忽略，不再向服务端发出确认，服务端也就不会建立这个连接。</p>
+<h4 id="tcp-四次挥手"><a class="markdownIt-Anchor" href="#tcp-四次挥手"></a> <code>TCP</code> 四次挥手</h4>
+<img data-src="/archives/c18409ab/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="TCP四次挥手" style="zoom:67%;">
+<p>四次挥手过程：</p>
+<ul>
+<li><code>A</code> 向 <code>B</code> 发送连接释放报文</li>
+<li><code>B</code> 收到后向 <code>A</code> 发送确认报文，此时连接处于半关闭状态，<code>B</code> 可以向 <code>A</code> 继续发送数据</li>
+<li>当 <code>B</code> 数据发送完毕，向 <code>A</code> 发送连接释放报文</li>
+<li><code>A</code> 收到后向 <code>B</code> 发送确认报文，<code>A</code> 进入 <code>TIME_WAIT</code> 状态，等待 <code>2MSL</code>（最大报文存活时间）后释放连接</li>
+<li><code>B</code> 收到 <code>A</code> 的确认后释放连接</li>
+</ul>
+<p>为什么要有一个 <code>TIME_WAIT</code> 状态：</p>
+<ul>
+<li>如果 <code>B</code> 没有在 <code>2MSL</code> 时间内收到 <code>A</code> 的确认，可以重新向 <code>A</code> 发送释放连接报文。</li>
+<li>等待 <code>2MSL</code> 时间可以让此次连接的所有报文从网络中消失，如果新的请求 <code>IP</code> 和端口如果和此次一样，不会造成旧连接的报文出现在新连接中。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/f5c535ea.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -838,6 +984,119 @@ if(canvas.getContext){
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/archives/f1601c3e.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/cf5bf327.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/bear.jpeg">
+      <meta itemprop="name" content="Time_Wait">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Time_Wait">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/archives/cf5bf327.html" class="post-title-link" itemprop="url">SQL更新语句的执行流程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-25 15:34:25" itemprop="dateCreated datePublished" datetime="2021-05-25T15:34:25+08:00">2021-05-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-26 15:45:43" itemprop="dateModified" datetime="2021-05-26T15:45:43+08:00">2021-05-26</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>1.6k</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>与查询一样，执行更新要经过的步骤：</p>
+<ul>
+<li>连接数据库 - 获取权限</li>
+<li>分析 <code>SQL</code> 语句 - 分析 <code>SQL</code> 语句是否正确，以及 <code>SQL</code> 语句要执行什么操作</li>
+<li>优化 - 是否有索引可用，以及使用哪个索引</li>
+<li>执行更新</li>
+</ul>
+<p>与查询不一样的是，更新涉及两个重要的日志模块：</p>
+<ul>
+<li><code>redo log</code> - <code>InnoDB</code> 特有</li>
+<li><code>binlog</code> - <code>MySQL Server</code></li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/archives/cf5bf327.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1314,226 +1573,6 @@ if(canvas.getContext){
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/archives/68a96ca9.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/2362a8ea.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/bear.jpeg">
-      <meta itemprop="name" content="Time_Wait">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Time_Wait">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/2362a8ea.html" class="post-title-link" itemprop="url">链表</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-24 15:17:32" itemprop="dateCreated datePublished" datetime="2021-05-24T15:17:32+08:00">2021-05-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-25 13:30:17" itemprop="dateModified" datetime="2021-05-25T13:30:17+08:00">2021-05-25</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构&算法</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8/" itemprop="url" rel="index"><span itemprop="name">链表</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>6.2k</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="反转链表"><a class="markdownIt-Anchor" href="#反转链表"></a> 反转链表</h3>
-<h4 id="反转整个链表"><a class="markdownIt-Anchor" href="#反转整个链表"></a> 反转整个链表</h4>
-<p><a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/75e878df47f24fdc9dc3e400ec6058ca?tpId=13&amp;tqId=11168&amp;rp=1&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking&amp;tab=answerKey">JZ15</a></p>
-<div class="note "><p>解体思路：</p>
-<p><code>reverseList(head)</code> 表示以 <code>head</code> 为表头反转整个链表；</p>
-<p>根据递归思想，要反转整个链表，只需以 <code>head.next</code> 为表头反转链表，然后修改 <code>head</code> 节点和 <code>head.next</code> 节点的 <code>next</code> 指针即可。</p>
-</div>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) <span class="keyword">return</span> head;</span><br><span class="line">  </span><br><span class="line">    ListNode last = ReverseList(head.next);</span><br><span class="line">  </span><br><span class="line">    head.next.next = head;</span><br><span class="line">    head.next = <span class="keyword">null</span>;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/2362a8ea.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/351e2939.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/bear.jpeg">
-      <meta itemprop="name" content="Time_Wait">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Time_Wait">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/351e2939.html" class="post-title-link" itemprop="url">数据库系统原理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-23 22:53:15" itemprop="dateCreated datePublished" datetime="2021-05-23T22:53:15+08:00">2021-05-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-24 16:04:32" itemprop="dateModified" datetime="2021-05-24T16:04:32+08:00">2021-05-24</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">系统原理</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>1.6k</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="事务"><a class="markdownIt-Anchor" href="#事务"></a> 事务</h4>
-<p>满足 <code>ACID</code> 特性的一组操作。</p>
-<h5 id="acid"><a class="markdownIt-Anchor" href="#acid"></a> <code>ACID</code></h5>
-<ul>
-<li>原子性（Atomicity）- 事务的一组操作要么全部成功，要不全部失败回滚。回滚可以根据 <code>Undo log</code> 来实现。</li>
-<li>一致性（Consistency）- 数据库在事务执行前后都保持一致性状态。</li>
-<li>隔离性（Isolation）- 一个事务所做的修改在最终提交以前，对其它事务是不可见的。</li>
-<li>持久性（Durability）- 一旦事务提交，所做的修改将会永远保存到数据库中。如果系统崩溃，可以根据 <code>Redo log</code> 来恢复数据。</li>
-</ul>
-<p><code>Undo log</code> 记录的是逻辑修改，<code>Redo log</code> 记录的是物理修改。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/351e2939.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
