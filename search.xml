@@ -2197,18 +2197,6 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
       </tags>
   </entry>
   <entry>
-    <title>垃圾收集</title>
-    <url>/archives/b9ab7dc2.html</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>JVM</category>
-        <category>垃圾收集</category>
-      </categories>
-      <tags>
-        <tag>垃圾收集</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>双指针</title>
     <url>/archives/91a7e4d1.html</url>
     <content><![CDATA[<h4 id="容器盛水问题"><a class="markdownIt-Anchor" href="#容器盛水问题"></a> 容器盛水问题</h4>
@@ -2223,6 +2211,18 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
       </categories>
       <tags>
         <tag>双指针</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>垃圾收集</title>
+    <url>/archives/b9ab7dc2.html</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>JVM</category>
+        <category>垃圾收集</category>
+      </categories>
+      <tags>
+        <tag>垃圾收集</tag>
       </tags>
   </entry>
   <entry>
@@ -2838,6 +2838,24 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 <li><code>SynchronousQueue</code></li>
 <li><code>DelayedWorkQueue</code></li>
 </ul>
+<h4 id="关闭线程池"><a class="markdownIt-Anchor" href="#关闭线程池"></a> 关闭线程池</h4>
+<ul>
+<li><code>shutdown</code></li>
+<li><code>shutdownNow</code></li>
+</ul>
+<h4 id="任务提交"><a class="markdownIt-Anchor" href="#任务提交"></a> 任务提交</h4>
+<p>线程池根据不同的业务需求提供了两种方式提交任务：</p>
+<ul>
+<li>
+<p><code>Executor.execute()</code></p>
+<p><code>ThreadPoolExecutor</code> 中的实现：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (command == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Proceed in 3 steps:</span></span><br><span class="line"><span class="comment">     * 1. 线程数少于 corePoolSize，创建新线程执行任务。</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 2. 任务入队，成功之后仍需再次检查线程池状态，</span></span><br><span class="line"><span class="comment">     *    如果线程池已经停止了，任务出队。</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * 3. 如果不能入队，尝试创建一个新线程执行任务。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">int</span> c = ctl.get();</span><br><span class="line">    <span class="comment">// 获取当前线程数并与 corePoolSize 比较</span></span><br><span class="line">    <span class="keyword">if</span> (workerCountOf(c) &lt; corePoolSize) &#123; </span><br><span class="line">        <span class="keyword">if</span> (addWorker(command, <span class="keyword">true</span>)) <span class="comment">// 创建新线程</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        c = ctl.get();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (isRunning(c) &amp;&amp; workQueue.offer(command)) &#123;</span><br><span class="line">        <span class="keyword">int</span> recheck = ctl.get();</span><br><span class="line">        <span class="keyword">if</span> (! isRunning(recheck) &amp;&amp; remove(command))</span><br><span class="line">            reject(command);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (workerCountOf(recheck) == <span class="number">0</span>)</span><br><span class="line">            addWorker(<span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!addWorker(command, <span class="keyword">false</span>))</span><br><span class="line">        reject(command);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>ExecutorService.submit()</code>。</p>
+<p>可以获取该任务执行的 <code>Future</code>。</p>
+</li>
+</ul>
 <h4 id="合理线程数"><a class="markdownIt-Anchor" href="#合理线程数"></a> 合理线程数</h4>
 <div class="note "><p>任务类型：</p>
 <ul>
@@ -2856,21 +2874,7 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 <li>平均工作时间长（<code>CPU</code> 密集型），线程数就随之减少；</li>
 <li>平均等待时间长（<code>IO</code> 密集型），线程数就随之增加。</li>
 </ul>
-</div>
-<h4 id="任务提交"><a class="markdownIt-Anchor" href="#任务提交"></a> 任务提交</h4>
-<p>线程池根据不同的业务需求提供了两种方式提交任务：</p>
-<ul>
-<li>
-<p><code>Executor.execute()</code></p>
-<p><code>ThreadPoolExecutor</code> 中的实现：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (command == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Proceed in 3 steps:</span></span><br><span class="line"><span class="comment">     * 1. 线程数少于 corePoolSize，创建新线程执行任务。</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 2. 任务入队，成功之后仍需再次检查线程池状态，</span></span><br><span class="line"><span class="comment">     *    如果线程池已经停止了，任务出队。</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * 3. 如果不能入队，尝试创建一个新线程执行任务。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">int</span> c = ctl.get();</span><br><span class="line">    <span class="comment">// 获取当前线程数并与 corePoolSize 比较</span></span><br><span class="line">    <span class="keyword">if</span> (workerCountOf(c) &lt; corePoolSize) &#123; </span><br><span class="line">        <span class="keyword">if</span> (addWorker(command, <span class="keyword">true</span>)) <span class="comment">// 创建新线程</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        c = ctl.get();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (isRunning(c) &amp;&amp; workQueue.offer(command)) &#123;</span><br><span class="line">        <span class="keyword">int</span> recheck = ctl.get();</span><br><span class="line">        <span class="keyword">if</span> (! isRunning(recheck) &amp;&amp; remove(command))</span><br><span class="line">            reject(command);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (workerCountOf(recheck) == <span class="number">0</span>)</span><br><span class="line">            addWorker(<span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!addWorker(command, <span class="keyword">false</span>))</span><br><span class="line">        reject(command);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p><code>ExecutorService.submit()</code>。</p>
-<p>可以获取该任务执行的 <code>Future</code>。</p>
-</li>
-</ul>
-]]></content>
+</div>]]></content>
       <categories>
         <category>并发</category>
       </categories>
