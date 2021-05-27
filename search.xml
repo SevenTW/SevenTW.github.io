@@ -360,10 +360,27 @@
         <category>MySQL</category>
       </categories>
       <tags>
+        <tag>数据库</tag>
         <tag>MySQL</tag>
         <tag>索引</tag>
         <tag>存储引擎</tag>
         <tag>InnoDB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL的事务隔离</title>
+    <url>/archives/fb61c3a5.html</url>
+    <content><![CDATA[<h4 id="事务的隔离级别"><a class="markdownIt-Anchor" href="#事务的隔离级别"></a> <a href="!--swig%EF%BF%BC0--">事务的隔离级别</a></h4>
+<p><a href>隔离级别</a></p>
+<p>在实现上，数据库里面会创建一个视图，访问的时候以视图的逻辑结果为准。在“可重复读”隔离级别下，这个视图是在事务启动时创建的，整个事务存在期间都用这个视图。在“读提交”隔离级别下，这个视图是在每个 SQL 语句开始执行的时候创建的。这里需要注意的是，“读未提交”隔离级别下直接返回记录上的最新值，没有视图概念；而“串行化”隔离级别下直接用加锁的方式来避免并行访问。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>MySQL事务隔离</tag>
       </tags>
   </entry>
   <entry>
@@ -2413,6 +2430,7 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
     <url>/archives/351e2939.html</url>
     <content><![CDATA[<h4 id="事务"><a class="markdownIt-Anchor" href="#事务"></a> 事务</h4>
 <p>满足 <code>ACID</code> 特性的一组操作。</p>
+<p>在 <code>MySQL</code> 中，事务支持是在存储引擎层实现的。</p>
 <h5 id="acid"><a class="markdownIt-Anchor" href="#acid"></a> <code>ACID</code></h5>
 <ul>
 <li>原子性（Atomicity）- 事务的一组操作要么全部成功，要不全部失败回滚。回滚可以根据 <code>Undo log</code> 来实现。</li>
@@ -2502,7 +2520,7 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 <h5 id="提交读read-committed"><a class="markdownIt-Anchor" href="#提交读read-committed"></a> 提交读（Read Committed）</h5>
 <p>一个事务只能读取已提交事务所做的修改。</p>
 <h5 id="可重复读repeatable-read"><a class="markdownIt-Anchor" href="#可重复读repeatable-read"></a> 可重复读（Repeatable Read）</h5>
-<p>一个事务多次读取同一数据得到的结果是一样的。</p>
+<p>一个事务执行过程中多次读取同一数据得到的结果是一样的。</p>
 <h5 id="串行化serializable"><a class="markdownIt-Anchor" href="#串行化serializable"></a> 串行化（Serializable）</h5>
 <p>事务串行化执行。</p>
 <p>隔离级别能解决的并发一致性问题：</p>
@@ -2542,6 +2560,7 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
 </tr>
 </tbody>
 </table>
+<p><a href="#####ACID">跳转到ACID</a></p>
 <h4 id="多版本并发控制"><a class="markdownIt-Anchor" href="#多版本并发控制"></a> 多版本并发控制</h4>
 ]]></content>
       <categories>
@@ -2549,7 +2568,7 @@ Permalink for &gt; <a href="#tab-two-3">Tab two 3</a>.</p>
         <category>系统原理</category>
       </categories>
       <tags>
-        <tag>数据库系统原理</tag>
+        <tag>数据库</tag>
         <tag>事务</tag>
         <tag>并发一致性</tag>
         <tag>隔离级别</tag>

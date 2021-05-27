@@ -27,17 +27,17 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"time_wait.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.3.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="事务 满足 ACID 特性的一组操作。  ACID  原子性（Atomicity）- 事务的一组操作要么全部成功，要不全部失败回滚。回滚可以根据 Undo log 来实现。 一致性（Consistency）- 数据库在事务执行前后都保持一致性状态。 隔离性（Isolation）- 一个事务所做的修改在最终提交以前，对其它事务是不可见的。 持久性（Durability）- 一旦事务提交，所做的修改">
+<meta name="description" content="事务 满足 ACID 特性的一组操作。 在 MySQL 中，事务支持是在存储引擎层实现的。  ACID  原子性（Atomicity）- 事务的一组操作要么全部成功，要不全部失败回滚。回滚可以根据 Undo log 来实现。 一致性（Consistency）- 数据库在事务执行前后都保持一致性状态。 隔离性（Isolation）- 一个事务所做的修改在最终提交以前，对其它事务是不可见的。 持久性">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库系统原理">
 <meta property="og:url" content="http://time_wait.gitee.io/archives/351e2939.html">
 <meta property="og:site_name" content="Time_Wait">
-<meta property="og:description" content="事务 满足 ACID 特性的一组操作。  ACID  原子性（Atomicity）- 事务的一组操作要么全部成功，要不全部失败回滚。回滚可以根据 Undo log 来实现。 一致性（Consistency）- 数据库在事务执行前后都保持一致性状态。 隔离性（Isolation）- 一个事务所做的修改在最终提交以前，对其它事务是不可见的。 持久性（Durability）- 一旦事务提交，所做的修改">
+<meta property="og:description" content="事务 满足 ACID 特性的一组操作。 在 MySQL 中，事务支持是在存储引擎层实现的。  ACID  原子性（Atomicity）- 事务的一组操作要么全部成功，要不全部失败回滚。回滚可以根据 Undo log 来实现。 一致性（Consistency）- 数据库在事务执行前后都保持一致性状态。 隔离性（Isolation）- 一个事务所做的修改在最终提交以前，对其它事务是不可见的。 持久性">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-23T14:53:15.000Z">
-<meta property="article:modified_time" content="2021-05-24T08:04:32.313Z">
+<meta property="article:modified_time" content="2021-05-27T03:24:27.652Z">
 <meta property="article:author" content="Time_Wait">
-<meta property="article:tag" content="数据库系统原理">
+<meta property="article:tag" content="数据库">
 <meta property="article:tag" content="事务">
 <meta property="article:tag" content="并发一致性">
 <meta property="article:tag" content="隔离级别">
@@ -211,7 +211,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -599,7 +599,7 @@ if(canvas.getContext){
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-24 16:04:32" itemprop="dateModified" datetime="2021-05-24T16:04:32+08:00">2021-05-24</time>
+        <time title="Modified: 2021-05-27 11:24:27" itemprop="dateModified" datetime="2021-05-27T11:24:27+08:00">2021-05-27</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -643,6 +643,7 @@ if(canvas.getContext){
     <div class="post-body" itemprop="articleBody">
         <h4 id="事务"><a class="markdownIt-Anchor" href="#事务"></a> 事务</h4>
 <p>满足 <code>ACID</code> 特性的一组操作。</p>
+<p>在 <code>MySQL</code> 中，事务支持是在存储引擎层实现的。</p>
 <h5 id="acid"><a class="markdownIt-Anchor" href="#acid"></a> <code>ACID</code></h5>
 <ul>
 <li>原子性（Atomicity）- 事务的一组操作要么全部成功，要不全部失败回滚。回滚可以根据 <code>Undo log</code> 来实现。</li>
@@ -732,7 +733,7 @@ if(canvas.getContext){
 <h5 id="提交读read-committed"><a class="markdownIt-Anchor" href="#提交读read-committed"></a> 提交读（Read Committed）</h5>
 <p>一个事务只能读取已提交事务所做的修改。</p>
 <h5 id="可重复读repeatable-read"><a class="markdownIt-Anchor" href="#可重复读repeatable-read"></a> 可重复读（Repeatable Read）</h5>
-<p>一个事务多次读取同一数据得到的结果是一样的。</p>
+<p>一个事务执行过程中多次读取同一数据得到的结果是一样的。</p>
 <h5 id="串行化serializable"><a class="markdownIt-Anchor" href="#串行化serializable"></a> 串行化（Serializable）</h5>
 <p>事务串行化执行。</p>
 <p>隔离级别能解决的并发一致性问题：</p>
@@ -772,6 +773,7 @@ if(canvas.getContext){
 </tr>
 </tbody>
 </table>
+<p><a href="#####ACID">跳转到ACID</a></p>
 <h4 id="多版本并发控制"><a class="markdownIt-Anchor" href="#多版本并发控制"></a> 多版本并发控制</h4>
 
     </div>
@@ -780,6 +782,18 @@ if(canvas.getContext){
     
     
       
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/c24675b4.html" rel="bookmark">MySQL</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/fb61c3a5.html" rel="bookmark">MySQL的事务隔离</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/e272e39a.html" rel="bookmark">SQL语法</a></div>
+    </li>
+  </ul>
 
 
     <footer class="post-footer">
@@ -801,7 +815,7 @@ if(canvas.getContext){
 </div>
 
           <div class="post-tags">
-              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 数据库系统原理</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
               <a href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag"><i class="fa fa-tag"></i> 事务</a>
               <a href="/tags/%E5%B9%B6%E5%8F%91%E4%B8%80%E8%87%B4%E6%80%A7/" rel="tag"><i class="fa fa-tag"></i> 并发一致性</a>
               <a href="/tags/%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" rel="tag"><i class="fa fa-tag"></i> 隔离级别</a>
