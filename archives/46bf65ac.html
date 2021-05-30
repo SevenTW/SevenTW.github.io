@@ -35,17 +35,16 @@
 <meta property="og:description" content="实现线程  实现 Runnable 接口 需要实现 run() 方法 1234567891011121314151617181920public class Task implements Runnable &amp;#123;    @Override    public void run() &amp;#123;        for (int i &#x3D; 0; i &lt; 1000; i++) &amp;#123;">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://time_wait.gitee.io/archives/46bf65ac/ThreadLocalMap.png">
-<meta property="og:image" content="http://time_wait.gitee.io/archives/46bf65ac/%E5%86%85%E5%AD%98%E9%97%B4%E7%9A%84%E4%BA%A4%E4%BA%92%E6%93%8D%E4%BD%9C.png">
 <meta property="article:published_time" content="2021-05-21T14:51:09.000Z">
-<meta property="article:modified_time" content="2021-05-27T15:07:33.121Z">
+<meta property="article:modified_time" content="2021-05-30T09:36:15.599Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="并发">
+<meta property="article:tag" content="线程协作">
 <meta property="article:tag" content="线程池">
 <meta property="article:tag" content="实现多线程">
 <meta property="article:tag" content="线程启动&amp;停止">
 <meta property="article:tag" content="线程状态">
 <meta property="article:tag" content="线程同步">
-<meta property="article:tag" content="线程协作">
 <meta property="article:tag" content="生产者消费者">
 <meta property="article:tag" content="线程安全">
 <meta property="article:tag" content="线程的一些重要方法">
@@ -204,7 +203,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text"> 实现线程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-runnable-%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.1.</span> <span class="nav-text"> 实现 Runnable 接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-callable-%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.2.</span> <span class="nav-text"> 实现 Callable 接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF-thread-%E7%B1%BB"><span class="nav-number">1.3.</span> <span class="nav-text"> 继承 Thread 类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#thread-%E7%9A%84-start"><span class="nav-number">1.4.</span> <span class="nav-text"> Thread 的 start()</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text"> 停止线程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#sleep-%E4%B8%8E-interrupt"><span class="nav-number">2.1.</span> <span class="nav-text"> sleep 与 interrupt</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E5%A4%84%E7%90%86%E4%B8%AD%E6%96%AD%E4%BF%A1%E5%8F%B7"><span class="nav-number">2.2.</span> <span class="nav-text"> 正确处理中断信号</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81"><span class="nav-number">3.</span> <span class="nav-text"> 线程状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5"><span class="nav-number">4.</span> <span class="nav-text"> 线程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#synchronized"><span class="nav-number">4.1.</span> <span class="nav-text"> synchronized</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#synchronized-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">4.1.1.</span> <span class="nav-text"> synchronized 基本使用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#synchronized-%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">4.1.2.</span> <span class="nav-text"> synchronized 的实现原理</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#synchronized-%E4%BC%98%E5%8C%96"><span class="nav-number">4.1.3.</span> <span class="nav-text"> synchronized 优化</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#reentrantlock"><span class="nav-number">4.2.</span> <span class="nav-text"> ReentrantLock</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#synchronized-%E5%92%8C-reentrantlock-%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">4.3.</span> <span class="nav-text"> synchronized 和 ReentrantLock 的比较</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%8D%8F%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text"> 线程协作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#wait-%E6%80%BB%E6%98%AF%E5%BA%94%E8%AF%A5%E5%86%99%E5%9C%A8-synchronized-%E4%BF%9D%E6%8A%A4%E7%9A%84-while-%E5%BE%AA%E7%8E%AF%E5%86%85"><span class="nav-number">5.1.</span> <span class="nav-text"> wait() 总是应该写在 synchronized 保护的 while 循环内</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98"><span class="nav-number">5.2.</span> <span class="nav-text"> 生产者消费者问题</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-blockingqueue-%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.2.1.</span> <span class="nav-text"> 使用 BlockingQueue 实现</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-wait-notifynotifyall-%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.2.2.</span> <span class="nav-text"> 使用 wait + notify&#x2F;notifyAll 实现</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-await-signalsignalall-%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.2.3.</span> <span class="nav-text"> 使用 await + signal&#x2F;signalAll 实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">6.</span> <span class="nav-text"> 线程安全</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="nav-number">6.1.</span> <span class="nav-text"> 常见的线程安全问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%B9%E6%B3%95%E6%9C%89%E4%BB%A5%E4%B8%8B%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">6.2.</span> <span class="nav-text"> 保证线程安全的方法有以下几种方式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#juc-%E4%B8%AD%E7%9A%84%E6%9E%84%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text"> J.U.C 中的构件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#countdownlatch"><span class="nav-number">7.1.</span> <span class="nav-text"> CountDownLatch</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cyclicbarrier"><span class="nav-number">7.2.</span> <span class="nav-text"> CyclicBarrier</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#semaphore"><span class="nav-number">7.3.</span> <span class="nav-text"> Semaphore</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#blockingqueue"><span class="nav-number">7.4.</span> <span class="nav-text"> BlockingQueue</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#aqs"><span class="nav-number">8.</span> <span class="nav-text"> AQS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cas"><span class="nav-number">9.</span> <span class="nav-text"> CAS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">10.</span> <span class="nav-text"> Java内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BB%E5%86%85%E5%AD%98%E4%B8%8E%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%98"><span class="nav-number">10.1.</span> <span class="nav-text"> 主内存与工作内存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E9%97%B4%E7%9A%84%E4%BA%A4%E4%BA%92%E6%93%8D%E4%BD%9C"><span class="nav-number">10.2.</span> <span class="nav-text"> 内存间的交互操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">10.3.</span> <span class="nav-text"> 三大特性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#happens-before"><span class="nav-number">10.4.</span> <span class="nav-text"> happens-before</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">11.</span> <span class="nav-text"> 面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#start-%E5%92%8C-run-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">11.1.</span> <span class="nav-text"> start() 和 run() 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sleep-%E5%92%8C-wait-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">11.2.</span> <span class="nav-text"> sleep() 和 wait() 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E4%BB%BB%E5%8A%A1%E6%97%B6%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%E6%BB%A1%E4%BA%86%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88"><span class="nav-number">11.3.</span> <span class="nav-text"> 提交任务时，任务队列满了，会发生什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#volatile-%E6%95%B0%E7%BB%84"><span class="nav-number">11.4.</span> <span class="nav-text"> volatile 数组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#synchronized-%E5%92%8C-volatile-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">11.5.</span> <span class="nav-text"> synchronized 和 volatile 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%82%B2%E8%A7%82%E9%94%81%E5%92%8C%E4%B9%90%E8%A7%82%E9%94%81"><span class="nav-number">11.6.</span> <span class="nav-text"> 悲观锁和乐观锁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#threadlocal-%E9%80%A0%E6%88%90%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">11.7.</span> <span class="nav-text"> ThreadLocal 造成内存泄漏的原因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#linkedblockingqueue-%E5%85%A5%E9%98%9F%E5%87%BA%E9%98%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E9%94%81"><span class="nav-number">11.8.</span> <span class="nav-text"> LinkedBlockingQueue 入队出队为什么用不同的锁</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text"> 实现线程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-runnable-%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.1.</span> <span class="nav-text"> 实现 Runnable 接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-callable-%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.2.</span> <span class="nav-text"> 实现 Callable 接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF-thread-%E7%B1%BB"><span class="nav-number">1.3.</span> <span class="nav-text"> 继承 Thread 类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#thread-%E7%9A%84-start"><span class="nav-number">1.4.</span> <span class="nav-text"> Thread 的 start()</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text"> 停止线程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#sleep-%E4%B8%8E-interrupt"><span class="nav-number">2.1.</span> <span class="nav-text"> sleep 与 interrupt</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E5%A4%84%E7%90%86%E4%B8%AD%E6%96%AD%E4%BF%A1%E5%8F%B7"><span class="nav-number">2.2.</span> <span class="nav-text"> 正确处理中断信号</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81"><span class="nav-number">3.</span> <span class="nav-text"> 线程状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5"><span class="nav-number">4.</span> <span class="nav-text"> 线程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#synchronized"><span class="nav-number">4.1.</span> <span class="nav-text"> synchronized</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#synchronized-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">4.1.1.</span> <span class="nav-text"> synchronized 基本使用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#synchronized-%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">4.1.2.</span> <span class="nav-text"> synchronized 的实现原理</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#synchronized-%E4%BC%98%E5%8C%96"><span class="nav-number">4.1.3.</span> <span class="nav-text"> synchronized 优化</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#reentrantlock"><span class="nav-number">4.2.</span> <span class="nav-text"> ReentrantLock</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#synchronized-%E5%92%8C-reentrantlock-%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">4.3.</span> <span class="nav-text"> synchronized 和 ReentrantLock 的比较</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%8D%8F%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text"> 线程协作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#wait-%E6%80%BB%E6%98%AF%E5%BA%94%E8%AF%A5%E5%86%99%E5%9C%A8-synchronized-%E4%BF%9D%E6%8A%A4%E7%9A%84-while-%E5%BE%AA%E7%8E%AF%E5%86%85"><span class="nav-number">5.1.</span> <span class="nav-text"> wait() 总是应该写在 synchronized 保护的 while 循环内</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98"><span class="nav-number">5.2.</span> <span class="nav-text"> 生产者消费者问题</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-blockingqueue-%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.2.1.</span> <span class="nav-text"> 使用 BlockingQueue 实现</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-wait-notifynotifyall-%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.2.2.</span> <span class="nav-text"> 使用 wait + notify&#x2F;notifyAll 实现</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-await-signalsignalall-%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.2.3.</span> <span class="nav-text"> 使用 await + signal&#x2F;signalAll 实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">6.</span> <span class="nav-text"> 线程安全</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="nav-number">6.1.</span> <span class="nav-text"> 常见的线程安全问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%B9%E6%B3%95%E6%9C%89%E4%BB%A5%E4%B8%8B%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">6.2.</span> <span class="nav-text"> 保证线程安全的方法有以下几种方式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#juc-%E4%B8%AD%E7%9A%84%E6%9E%84%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text"> J.U.C 中的构件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#countdownlatch"><span class="nav-number">7.1.</span> <span class="nav-text"> CountDownLatch</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cyclicbarrier"><span class="nav-number">7.2.</span> <span class="nav-text"> CyclicBarrier</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#semaphore"><span class="nav-number">7.3.</span> <span class="nav-text"> Semaphore</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#blockingqueue"><span class="nav-number">7.4.</span> <span class="nav-text"> BlockingQueue</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text"> 面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#start-%E5%92%8C-run-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.1.</span> <span class="nav-text"> start() 和 run() 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sleep-%E5%92%8C-wait-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.2.</span> <span class="nav-text"> sleep() 和 wait() 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E4%BB%BB%E5%8A%A1%E6%97%B6%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%E6%BB%A1%E4%BA%86%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88"><span class="nav-number">8.3.</span> <span class="nav-text"> 提交任务时，任务队列满了，会发生什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#volatile-%E6%95%B0%E7%BB%84"><span class="nav-number">8.4.</span> <span class="nav-text"> volatile 数组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#synchronized-%E5%92%8C-volatile-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.5.</span> <span class="nav-text"> synchronized 和 volatile 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%82%B2%E8%A7%82%E9%94%81%E5%92%8C%E4%B9%90%E8%A7%82%E9%94%81"><span class="nav-number">8.6.</span> <span class="nav-text"> 悲观锁和乐观锁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#threadlocal-%E9%80%A0%E6%88%90%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">8.7.</span> <span class="nav-text"> ThreadLocal 造成内存泄漏的原因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#linkedblockingqueue-%E5%85%A5%E9%98%9F%E5%87%BA%E9%98%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E9%94%81"><span class="nav-number">8.8.</span> <span class="nav-text"> LinkedBlockingQueue 入队出队为什么用不同的锁</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -220,20 +219,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -608,7 +607,7 @@ if(canvas.getContext){
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-27 23:07:33" itemprop="dateModified" datetime="2021-05-27T23:07:33+08:00">2021-05-27</time>
+        <time title="Modified: 2021-05-30 17:36:15" itemprop="dateModified" datetime="2021-05-30T17:36:15+08:00">2021-05-30</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -635,7 +634,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>23k</span>
+      <span>22k</span>
     </span>
 </div>
 
@@ -726,12 +725,14 @@ if(canvas.getContext){
 <li>同步代码块</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (obj) &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同步代码块在字节码中会在代码入口插入 <code>monitorenter</code> 指令，在代码出口和可能抛出异常处插入 <code>monitorexit</code> 指令，这样可以保证即使抛出异常，锁也能正常释放。</p>
 <ul>
 <li>同步方法</li>
 </ul>
 <p>锁定调用这个方法的对象 （this）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">g</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果某个线程在一个对象上调用了 <code>f()</code>，对于该对象而言，只有等到 <code>f()</code> 调用结束释放了对象锁，其他线程才能调用 <code>f()</code> 和 <code>g()</code>。也即是说，对于一个特定对象来说，其所有的 <code>synchronized</code> 方法共享同一个锁。</p>
+<p>与同步代码块不同，同步方法不是插入 <code>monitorenter</code> 和 <code>monitorexit</code> 指令，而是在字节码中添加一个 <code>ACC_SYNCHRONIZED</code> 标志，类似 <code>public</code> 标志。</p>
 <h6 id="synchronized-的实现原理"><a class="markdownIt-Anchor" href="#synchronized-的实现原理"></a> <code>synchronized</code> 的实现原理</h6>
 <p><code>Java</code> 中每个对象都有一个 <code>monitor</code> 与之关联，当一个对象的 <code>monitor</code> 被获取后，该对象将处于锁定状态。</p>
 <p>在 <code>Java</code> 虚拟机（<code>HotSpot</code>）中，<code>monitor</code> 是基于 <code>ObjectMonitor</code> 实现的：</p>
@@ -961,90 +962,6 @@ if(canvas.getContext){
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(E e)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="comment">// Note: convention in all put/take/etc is to preset local var</span></span><br><span class="line">    <span class="comment">// holding count negative to indicate failure unless set.</span></span><br><span class="line">    <span class="keyword">int</span> c = -<span class="number">1</span>;</span><br><span class="line">    Node&lt;E&gt; node = <span class="keyword">new</span> Node&lt;E&gt;(e);</span><br><span class="line">    <span class="keyword">final</span> ReentrantLock putLock = <span class="keyword">this</span>.putLock;</span><br><span class="line">    <span class="keyword">final</span> AtomicInteger count = <span class="keyword">this</span>.count;</span><br><span class="line">    putLock.lockInterruptibly();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (count.get() == capacity) &#123; <span class="comment">// 队列已满</span></span><br><span class="line">            notFull.await(); <span class="comment">// 线程阻塞，在 notFull 上等待</span></span><br><span class="line">        &#125;</span><br><span class="line">        enqueue(node); <span class="comment">// 入队</span></span><br><span class="line">        c = count.getAndIncrement(); <span class="comment">// count + 1</span></span><br><span class="line">        <span class="keyword">if</span> (c + <span class="number">1</span> &lt; capacity)</span><br><span class="line">            notFull.signal();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        putLock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (c == <span class="number">0</span>)</span><br><span class="line">        signalNotEmpty();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">enqueue</span><span class="params">(Node&lt;E&gt; node)</span> </span>&#123;</span><br><span class="line">    last = last.next = node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>出队：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">take</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    E x;</span><br><span class="line">    <span class="keyword">int</span> c = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">final</span> AtomicInteger count = <span class="keyword">this</span>.count;</span><br><span class="line">    <span class="keyword">final</span> ReentrantLock takeLock = <span class="keyword">this</span>.takeLock;</span><br><span class="line">    takeLock.lockInterruptibly();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (count.get() == <span class="number">0</span>) &#123; <span class="comment">// 队列为空</span></span><br><span class="line">            notEmpty.await(); <span class="comment">// 线程阻塞，在 notEmpty 上阻塞</span></span><br><span class="line">        &#125;</span><br><span class="line">        x = dequeue(); <span class="comment">// 出队</span></span><br><span class="line">        c = count.getAndDecrement(); <span class="comment">// count - 1</span></span><br><span class="line">        <span class="keyword">if</span> (c &gt; <span class="number">1</span>)</span><br><span class="line">            notEmpty.signal(); </span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        takeLock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (c == capacity)</span><br><span class="line">        signalNotFull();</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> E <span class="title">dequeue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Node&lt;E&gt; h = head;</span><br><span class="line">    Node&lt;E&gt; first = h.next;</span><br><span class="line">    h.next = h; <span class="comment">// help GC</span></span><br><span class="line">    head = first;</span><br><span class="line">    E x = first.item;</span><br><span class="line">    first.item = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="aqs"><a class="markdownIt-Anchor" href="#aqs"></a> <code>AQS</code></h4>
-<p>队列同步器（<code>AbstractQueuedSynchronizer</code>，<code>AQS</code>）是构建锁（<code>ReentrantLock</code>）或其他同步组件（<code>CountDownLatch</code>、<code>CyclicBarrier</code>、<code>Semaphore</code> 等）的基础框架。</p>
-<h4 id="cas"><a class="markdownIt-Anchor" href="#cas"></a> <code>CAS</code></h4>
-<p>比较并交换（Compare-and-Swap，<code>CAS</code>）。<code>CAS</code> 指令需要有 3 个操作数，分别是内存地址 <code>V</code>、旧的预期值 <code>A</code> 和新值 <code>B</code>。当执行操作时，只有当 <code>V</code> 的值等于 <code>A</code>，才将 <code>V</code> 的值更新为 <code>B</code>。</p>
-<p>问题：</p>
-<ul>
-<li><code>ABA</code> 问题</li>
-<li>自旋消耗资源</li>
-<li>只能保证一个共享变量的原子操作</li>
-</ul>
-<h4 id="java内存模型"><a class="markdownIt-Anchor" href="#java内存模型"></a> Java内存模型</h4>
-<p><code>Java</code> 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，以实现让 <code>Java</code> 程序在各种平台下都能达到一致的内存访问效果。</p>
-<h5 id="主内存与工作内存"><a class="markdownIt-Anchor" href="#主内存与工作内存"></a> 主内存与工作内存</h5>
-<p><code>CPU</code> 寄存器的读写速度比内存快几个数量级，为了缓解这种速度矛盾，在它们之间加入了高速缓存。</p>
-<p>但是加入高速缓存带来了一个新的问题：<strong>缓存一致性</strong>。</p>
-<p>在并发环境中，通常多个线程需要共享主内存中的数据；每个线程有自己的工作内存，线程只能只能操作自己工作内存中的数据，因此需要将主内存中的数据拷贝到工作内存。</p>
-<h5 id="内存间的交互操作"><a class="markdownIt-Anchor" href="#内存间的交互操作"></a> 内存间的交互操作</h5>
-<p><img data-src="/archives/46bf65ac/%E5%86%85%E5%AD%98%E9%97%B4%E7%9A%84%E4%BA%A4%E4%BA%92%E6%93%8D%E4%BD%9C.png" alt="内存间交互操作"></p>
-<ul>
-<li>read：把一个变量的值从主内存读到工作内存</li>
-<li>load：把读到的值放入工作内存的变量副本</li>
-<li>use：使用变量副本</li>
-<li>assign：把一个新值赋给工作内存的变量副本</li>
-<li>store：把工作内存中变量副本的值存到主内存</li>
-<li>write：把值写入主内存中的变量</li>
-<li>lock：作用于主内存的变量</li>
-<li>unlock</li>
-</ul>
-<h5 id="三大特性"><a class="markdownIt-Anchor" href="#三大特性"></a> 三大特性</h5>
-<ul>
-<li>
-<p><strong>原子性</strong></p>
-<p>使用继承 <code>Number</code> 类的原子类或者 <code>synchronized</code> 可以保证操作的原子性</p>
-</li>
-<li>
-<p><strong>可见性</strong></p>
-<p>一个线程对共享变量的修改，其他线程立刻可见。</p>
-<p>使用 <code>volatile</code> 或 <code>synchronized</code> 来保证可见性。</p>
-</li>
-<li>
-<p><strong>有序性</strong></p>
-<p>在 <code>Java</code> 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。</p>
-<p><code>volatile</code> 关键字通过添加<strong>内存屏障</strong>的方式来禁止指令重排，即重排序时不能把后面的指令放到内存屏障之前；也可以通过 <code>synchronized</code> 来保证有序性。</p>
-</li>
-</ul>
-<p>总结：</p>
-<ul>
-<li>使用 <code>synchronized</code> 可以同时保证三大特性</li>
-<li><code>volatile</code> 只能保证可见性，无法保证原子性</li>
-</ul>
-<h5 id="happens-before"><a class="markdownIt-Anchor" href="#happens-before"></a> happens-before</h5>
-<p>除了可以用 <code>volatile</code> 和 <code>synchronized</code> 来保证有序性之外，<code>JVM</code> 还规定了先行发生原则（happens-before），让一个操作无需控制就能先于另一个操作完成。</p>
-<ul>
-<li>
-<p>单一线程原则</p>
-</li>
-<li>
-<p>管程锁定原则</p>
-<blockquote>
-<p>一个 <code>unlock</code> 操作先行发生于后面对同一个锁的 <code>lock</code> 操作。</p>
-</blockquote>
-</li>
-<li>
-<p><code>volatile</code> 变量原则</p>
-<blockquote>
-<p>对一个 <code>volatile</code> 变量的写操作先行发生于后面对这个变量的读操作。</p>
-</blockquote>
-</li>
-<li>
-<p>线程启动原则</p>
-</li>
-<li>
-<p>线程加入原则</p>
-</li>
-<li>
-<p>线程中断原则</p>
-</li>
-<li>
-<p>对象终结原则</p>
-</li>
-<li>
-<p>传递性原则</p>
-</li>
-</ul>
 <h4 id="面试题"><a class="markdownIt-Anchor" href="#面试题"></a> 面试题</h4>
 <h5 id="start-和-run-的区别"><a class="markdownIt-Anchor" href="#start-和-run-的区别"></a> <code>start()</code> 和 <code>run()</code> 的区别</h5>
 <h5 id="sleep-和-wait-的区别"><a class="markdownIt-Anchor" href="#sleep-和-wait-的区别"></a> <code>sleep()</code> 和 <code>wait()</code> 的区别</h5>
@@ -1077,10 +994,19 @@ if(canvas.getContext){
   <div class="popular-posts-header">Related Posts</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/94135b31.html" rel="bookmark">线程协作</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/de7c53fe.html" rel="bookmark">线程池</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/d6e0ce95.html" rel="bookmark">锁</a></div>
+      <div class="popular-posts-title"><a href="/archives/dfdb52be.html" rel="bookmark">AQS</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/969d9481.html" rel="bookmark">CAS</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/91e798bc.html" rel="bookmark">Java内存模型</a></div>
     </li>
   </ul>
 
@@ -1105,12 +1031,12 @@ if(canvas.getContext){
 
           <div class="post-tags">
               <a href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag"><i class="fa fa-tag"></i> 并发</a>
+              <a href="/tags/%E7%BA%BF%E7%A8%8B%E5%8D%8F%E4%BD%9C/" rel="tag"><i class="fa fa-tag"></i> 线程协作</a>
               <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" rel="tag"><i class="fa fa-tag"></i> 线程池</a>
               <a href="/tags/%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 实现多线程</a>
               <a href="/tags/%E7%BA%BF%E7%A8%8B%E5%90%AF%E5%8A%A8-%E5%81%9C%E6%AD%A2/" rel="tag"><i class="fa fa-tag"></i> 线程启动&停止</a>
               <a href="/tags/%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81/" rel="tag"><i class="fa fa-tag"></i> 线程状态</a>
               <a href="/tags/%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/" rel="tag"><i class="fa fa-tag"></i> 线程同步</a>
-              <a href="/tags/%E7%BA%BF%E7%A8%8B%E5%8D%8F%E4%BD%9C/" rel="tag"><i class="fa fa-tag"></i> 线程协作</a>
               <a href="/tags/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/" rel="tag"><i class="fa fa-tag"></i> 生产者消费者</a>
               <a href="/tags/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8/" rel="tag"><i class="fa fa-tag"></i> 线程安全</a>
               <a href="/tags/%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%B8%80%E4%BA%9B%E9%87%8D%E8%A6%81%E6%96%B9%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 线程的一些重要方法</a>
@@ -1182,7 +1108,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:58</span>
+    <span title="Reading time total">3:05</span>
   </span>
 </div>
 <div class="busuanzi-count">
