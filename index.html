@@ -201,20 +201,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">95</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -557,6 +557,124 @@ if(canvas.getContext){
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/a4a81253.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/bear.jpeg">
+      <meta itemprop="name" content="Time_Wait">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Time_Wait">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/archives/a4a81253.html" class="post-title-link" itemprop="url">Linux基础</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-01 16:07:16" itemprop="dateCreated datePublished" datetime="2021-06-01T16:07:16+08:00">2021-06-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-02 09:51:44" itemprop="dateModified" datetime="2021-06-02T09:51:44+08:00">2021-06-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>1.5k</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="文件系统"><a class="markdownIt-Anchor" href="#文件系统"></a> 文件系统</h4>
+<img src="/archives/a4a81253/Linux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84.png" alt="Linux文件系统结构" style="zoom:40%;">
+<p>最主要的几个组成部分如下：</p>
+<ul>
+<li>
+<p><code>superblock</code>：记录文件系统的整体信息，包括 <code>inode</code> 和 <code>block</code> 的总量、使用量、剩余量，以及文件系统的格式与相关信息等；</p>
+</li>
+<li>
+<p><code>block bitmap</code>：记录 <code>block</code> 是否被使用的位图；</p>
+</li>
+<li>
+<p><code>inode</code>：一个文件占用一个 <code>inode</code>，记录文件的属性，和文件内容所在的 <code>block</code> 编号；</p>
+</li>
+<li>
+<p><code>block</code>：存储文件内容，文件太大时，会占用多个 <code>block</code>。</p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/archives/a4a81253.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/dfdb52be.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -580,10 +698,16 @@ if(canvas.getContext){
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-05-30 16:51:43 / Modified: 18:14:01" itemprop="dateCreated datePublished" datetime="2021-05-30T16:51:43+08:00">2021-05-30</time>
+      <time title="Created: 2021-05-30 16:51:43" itemprop="dateCreated datePublished" datetime="2021-05-30T16:51:43+08:00">2021-05-30</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-02 10:27:30" itemprop="dateModified" datetime="2021-06-02T10:27:30+08:00">2021-06-02</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -602,7 +726,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>295</span>
+      <span>239</span>
     </span>
 </div>
 
@@ -614,7 +738,15 @@ if(canvas.getContext){
     
     <div class="post-body" itemprop="articleBody">
           <h4 id="aqs-概述"><a class="markdownIt-Anchor" href="#aqs-概述"></a> <code>AQS</code> 概述</h4>
-<p>队列同步器（<code>AbstractQueuedSynchronizer</code>，<code>AQS</code>）是构建锁（<code>ReentrantLock</code>）或其他同步组件（<code>CountDownLatch</code>、<code>CyclicBarrier</code>、<code>Semaphore</code> 等）的基础框架。</p>
+<p>队列同步器（<code>AbstractQueuedSynchronizer</code>，<code>AQS</code>）是构建锁或其他同步组件的基础框架。</p>
+<p><code>AQS</code> 的子类包括：</p>
+<ul>
+<li><code>ReentrantLock</code> 中的 <code>Sync</code>、<code>FairSync</code>、<code>NonFariSync</code></li>
+<li><code>ReentrantReadWriteLock</code> 中的 <code>Sync</code>、<code>FairSync</code>、<code>NonFariSync</code></li>
+<li><code>Semaphore</code> 中的 <code>Sync</code>、<code>FairSync</code>、<code>NonFariSync</code></li>
+<li><code>CountDownLatch</code> 中的 <code>Sync</code></li>
+<li><code>ThreadPoolExecutor</code> 中的 <code>Worker</code></li>
+</ul>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/archives/dfdb52be.html#more" rel="contents">
@@ -779,10 +911,16 @@ if(canvas.getContext){
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-05-30 09:09:21 / Modified: 12:39:18" itemprop="dateCreated datePublished" datetime="2021-05-30T09:09:21+08:00">2021-05-30</time>
+      <time title="Created: 2021-05-30 09:09:21" itemprop="dateCreated datePublished" datetime="2021-05-30T09:09:21+08:00">2021-05-30</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-02 09:06:41" itemprop="dateModified" datetime="2021-06-02T09:06:41+08:00">2021-06-02</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -801,7 +939,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>1.2k</span>
+      <span>2.7k</span>
     </span>
 </div>
 
@@ -812,75 +950,15 @@ if(canvas.getContext){
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="java内存模型"><a class="markdownIt-Anchor" href="#java内存模型"></a> Java内存模型</h4>
-<p><code>Java</code> 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，以实现让 <code>Java</code> 程序在各种平台下都能达到一致的内存访问效果。</p>
-<h5 id="主内存与工作内存"><a class="markdownIt-Anchor" href="#主内存与工作内存"></a> 主内存与工作内存</h5>
-<p><code>CPU</code> 寄存器的读写速度比内存快几个数量级，为了缓解这种速度矛盾，在它们之间加入了高速缓存。</p>
-<p>但是加入高速缓存带来了一个新的问题：<strong>缓存一致性</strong>。</p>
-<p>在并发环境中，通常多个线程需要共享主内存中的数据；每个线程有自己的工作内存，线程只能只能操作自己工作内存中的数据，因此需要将主内存中的数据拷贝到工作内存。</p>
-<h5 id="内存间的交互操作"><a class="markdownIt-Anchor" href="#内存间的交互操作"></a> 内存间的交互操作</h5>
-<img data-src="/archives/91e798bc/%E5%86%85%E5%AD%98%E9%97%B4%E4%BA%A4%E4%BA%92%E6%93%8D%E4%BD%9C.png" alt="内存间交互操作" style="zoom:60%;">
-<ul>
-<li>read：把一个变量的值从主内存读到工作内存</li>
-<li>load：把读到的值放入工作内存的变量副本</li>
-<li>use：使用变量副本</li>
-<li>assign：把一个新值赋给工作内存的变量副本</li>
-<li>store：把工作内存中变量副本的值存到主内存</li>
-<li>write：把值写入主内存中的变量</li>
-<li>lock：作用于主内存的变量</li>
-<li>unlock</li>
-</ul>
-<h5 id="指令重排"><a class="markdownIt-Anchor" href="#指令重排"></a> 指令重排</h5>
-<h5 id="三大特性"><a class="markdownIt-Anchor" href="#三大特性"></a> 三大特性</h5>
-<h6 id="原子性"><a class="markdownIt-Anchor" href="#原子性"></a> 原子性</h6>
-<p>一组操作要么全部执行成功，要不全部不执行。</p>
-<p>能保证原子性的操作为原子操作，<code>Java</code> 中的原子操作包括：</p>
-<ul>
-<li>除了 <code>long</code> 和 <code>double</code> 之外的基本类型（<code>int、byte、boolean、short、char、float</code>）的赋值操作</li>
-<li><code>reference</code> 的赋值操作</li>
-<li><code>java.concurrent.Atomic.*</code> 包下所有类的一切操作（通过 <code>CAS</code> 实现）</li>
-<li><code>synchronized</code> 保护的操作</li>
-</ul>
-<h6 id="可见性"><a class="markdownIt-Anchor" href="#可见性"></a> 可见性</h6>
-<p>一个线程对共享变量的修改，其他线程立刻可见。</p>
-<p>使用 <code>volatile</code> 或 <code>synchronized</code> 来保证可见性。</p>
-<h6 id="有序性"><a class="markdownIt-Anchor" href="#有序性"></a> 有序性</h6>
-<p>在 <code>Java</code> 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。</p>
-<p><code>volatile</code> 关键字通过添加<strong>内存屏障</strong>的方式来禁止指令重排，即重排序时不能把后面的指令放到内存屏障之前；也可以通过 <code>synchronized</code> 来保证有序性。</p>
-<p>总结：</p>
-<ul>
-<li>使用 <code>synchronized</code> 可以同时保证三大特性</li>
-<li><code>volatile</code> 只能保证可见性，无法保证原子性</li>
-</ul>
-<h5 id="happens-before"><a class="markdownIt-Anchor" href="#happens-before"></a> happens-before</h5>
-<p>除了可以用 <code>volatile</code> 和 <code>synchronized</code> 来保证有序性之外，<code>JVM</code> 还规定了先行发生原则（happens-before），让一个操作无需控制就能先于另一个操作完成。</p>
-<ul>
-<li>
-<p>单一线程原则 - 在一个线程内，在程序前面的操作先行发生于后面的操作。</p>
-</li>
-<li>
-<p>锁原则 - 一个 <code>unlock</code> 操作先行发生于后面对同一个锁的 <code>lock</code> 操作。</p>
-</li>
-<li>
-<p><code>volatile</code> 变量原则 - 对一个 <code>volatile</code> 变量的写操作先行发生于后面对这个变量的读操作。</p>
-</li>
-<li>
-<p>线程启动原则 - <code>Thread</code> 对象的 <code>start()</code> 方法调用先行发生于此线程的每一个动作。</p>
-</li>
-<li>
-<p>线程加入原则 - <code>Thread</code> 对象的结束先行发生于 <code>join()</code> 方法返回。</p>
-</li>
-<li>
-<p>线程中断原则 - 对线程 <code>interrupt()</code> 方法的调用先行发生于被中断线程检测到中断事件的发生</p>
-</li>
-<li>
-<p>对象终结原则 - 一个对象的初始化完成先行发生于它的 <code>finalize()</code> 方法的开始。</p>
-</li>
-<li>
-<p>传递性原则 - 如果操作 <code>A</code> 先行发生于操作 <code>B</code>，<code>B</code> 先行发生于 <code>C</code>，那么 <code>A</code> 先行发生于 <code>C</code>。</p>
-</li>
-</ul>
-
+          <p><code>Java</code> 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，以实现让 <code>Java</code> 程序在各种平台下都能达到一致的内存访问效果。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/archives/91e798bc.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1129,7 +1207,7 @@ if(canvas.getContext){
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-30 12:38:39" itemprop="dateModified" datetime="2021-05-30T12:38:39+08:00">2021-05-30</time>
+        <time title="Modified: 2021-06-01 22:17:43" itemprop="dateModified" datetime="2021-06-01T22:17:43+08:00">2021-06-01</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1149,7 +1227,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>1.2k</span>
+      <span>2.4k</span>
     </span>
 </div>
 
@@ -1161,8 +1239,8 @@ if(canvas.getContext){
     
     <div class="post-body" itemprop="articleBody">
           <h4 id="cas-概述"><a class="markdownIt-Anchor" href="#cas-概述"></a> <code>CAS</code> 概述</h4>
-<p><code>CAS</code> 有三个操作数：内存值 <code>V</code>、预期值 <code>A</code>、要修改的值 <code>B</code>。</p>
-<p><code>CAS</code> 的核心是：仅当预期值 <code>A</code> 和当前的内存值 <code>V</code> 相同时，才将内存值修改为 <code>B</code>。</p>
+<p><code>CAS</code> 有三个操作数：内存值 <code>V</code>、预期值 <code>A</code>、要写入的值 <code>B</code>。</p>
+<p><code>CAS</code> 的核心是：仅当预期值 <code>A</code> 和当前的内存值 <code>V</code> 相同时，才将内存值修改为 <code>B</code>。比较和更新是一个原子操作。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/archives/969d9481.html#more" rel="contents">
@@ -1426,7 +1504,7 @@ if(canvas.getContext){
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-28 14:35:21" itemprop="dateModified" datetime="2021-05-28T14:35:21+08:00">2021-05-28</time>
+        <time title="Modified: 2021-06-02 09:51:24" itemprop="dateModified" datetime="2021-06-02T09:51:24+08:00">2021-06-02</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1446,7 +1524,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>4.8k</span>
+      <span>11k</span>
     </span>
 </div>
 
@@ -1457,118 +1535,11 @@ if(canvas.getContext){
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="锁的分类"><a class="markdownIt-Anchor" href="#锁的分类"></a> 锁的分类</h4>
-<h5 id="偏向锁vs轻量级锁vs重量级锁"><a class="markdownIt-Anchor" href="#偏向锁vs轻量级锁vs重量级锁"></a> 偏向锁vs轻量级锁vs重量级锁</h5>
-<p>这是 <code>synchronized</code> 锁的三种状态。</p>
-<ul>
-<li>偏向锁</li>
-</ul>
-<p>使用偏向锁只需要检查是否为偏向锁、锁标识为以及 <code>ThreadID</code> 即可。</p>
-<p>偏向锁可以在无多线程竞争的情况下尽量减少不必要的轻量级锁执行路径。</p>
+          <p><code>Java</code> 中的锁因其特性不同，在不同场景选择合适的锁，可以提高程序的性能。</p>
+<img src="/archives/d6e0ce95/Java%E4%B8%AD%E9%94%81%E7%9A%84%E5%88%86%E7%B1%BB.png" alt="Java中锁的分类" style="zoom:67%;">
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/archives/d6e0ce95.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/d940f18d.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/bear.jpeg">
-      <meta itemprop="name" content="Time_Wait">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Time_Wait">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/d940f18d.html" class="post-title-link" itemprop="url">MySQL锁</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-05-27 17:02:37 / Modified: 21:23:02" itemprop="dateCreated datePublished" datetime="2021-05-27T17:02:37+08:00">2021-05-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>1.6k</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>锁的设计是为了处理并发问题。根据锁的范围（粒度），<code>MySQL</code> 中的锁可以分为三类：</p>
-<ul>
-<li>全局锁</li>
-<li>表锁</li>
-<li>行锁</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/d940f18d.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1639,7 +1610,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:05</span>
+    <span title="Reading time total">3:14</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -27,15 +27,15 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"time_wait.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.3.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="CAS 概述 CAS 有三个操作数：内存值 V、预期值 A、要修改的值 B。 CAS 的核心是：仅当预期值 A 和当前的内存值 V 相同时，才将内存值修改为 B。">
+<meta name="description" content="CAS 概述 CAS 有三个操作数：内存值 V、预期值 A、要写入的值 B。 CAS 的核心是：仅当预期值 A 和当前的内存值 V 相同时，才将内存值修改为 B。比较和更新是一个原子操作。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CAS">
 <meta property="og:url" content="http://time_wait.gitee.io/archives/969d9481.html">
 <meta property="og:site_name" content="Time_Wait">
-<meta property="og:description" content="CAS 概述 CAS 有三个操作数：内存值 V、预期值 A、要修改的值 B。 CAS 的核心是：仅当预期值 A 和当前的内存值 V 相同时，才将内存值修改为 B。">
+<meta property="og:description" content="CAS 概述 CAS 有三个操作数：内存值 V、预期值 A、要写入的值 B。 CAS 的核心是：仅当预期值 A 和当前的内存值 V 相同时，才将内存值修改为 B。比较和更新是一个原子操作。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-28T13:27:41.000Z">
-<meta property="article:modified_time" content="2021-05-30T04:38:39.948Z">
+<meta property="article:modified_time" content="2021-06-01T14:17:43.194Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="并发">
 <meta property="article:tag" content="CAS">
@@ -208,20 +208,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">95</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -596,7 +596,7 @@ if(canvas.getContext){
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-30 12:38:39" itemprop="dateModified" datetime="2021-05-30T12:38:39+08:00">2021-05-30</time>
+        <time title="Modified: 2021-06-01 22:17:43" itemprop="dateModified" datetime="2021-06-01T22:17:43+08:00">2021-06-01</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -623,7 +623,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>1.2k</span>
+      <span>2.4k</span>
     </span>
 </div>
 
@@ -635,8 +635,8 @@ if(canvas.getContext){
     
     <div class="post-body" itemprop="articleBody">
         <h4 id="cas-概述"><a class="markdownIt-Anchor" href="#cas-概述"></a> <code>CAS</code> 概述</h4>
-<p><code>CAS</code> 有三个操作数：内存值 <code>V</code>、预期值 <code>A</code>、要修改的值 <code>B</code>。</p>
-<p><code>CAS</code> 的核心是：仅当预期值 <code>A</code> 和当前的内存值 <code>V</code> 相同时，才将内存值修改为 <code>B</code>。</p>
+<p><code>CAS</code> 有三个操作数：内存值 <code>V</code>、预期值 <code>A</code>、要写入的值 <code>B</code>。</p>
+<p><code>CAS</code> 的核心是：仅当预期值 <code>A</code> 和当前的内存值 <code>V</code> 相同时，才将内存值修改为 <code>B</code>。比较和更新是一个原子操作。</p>
 <span id="more"></span>
 <h4 id="cas-的应用"><a class="markdownIt-Anchor" href="#cas-的应用"></a> <code>CAS</code> 的应用</h4>
 <h5 id="concurrenthashmap"><a class="markdownIt-Anchor" href="#concurrenthashmap"></a> <code>ConcurrentHashMap</code></h5>
@@ -651,7 +651,22 @@ if(canvas.getContext){
 <li>积累器 - <code>LongAdder、DoubleAdder</code></li>
 </ul>
 <h6 id="基本类型原子类"><a class="markdownIt-Anchor" href="#基本类型原子类"></a> 基本类型原子类</h6>
-<p><code>AtomicInteger</code> 对 <code>int</code> 类型进行封装，提供了原子性的访问和更新。</p>
+<p>以 <code>AtomicInteger</code> 为例，看一下 <code>CAS</code> 在基本原子类中的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AtomicInteger</span> <span class="keyword">extends</span> <span class="title">Number</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">6214790243416807050L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// setup to use Unsafe.compareAndSwapInt for updates</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Unsafe unsafe = Unsafe.getUnsafe();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> valueOffset;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            valueOffset = unsafe.objectFieldOffset</span><br><span class="line">                (AtomicInteger.class.getDeclaredField(<span class="string">&quot;value&quot;</span>));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123; <span class="keyword">throw</span> <span class="keyword">new</span> Error(ex); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> value;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ......</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>unsafe</code> - 操作内存</li>
+<li><code>valueOffset</code> - <code>value</code> 在 <code>AtomicInteger</code> 对象中的偏移量</li>
+</ul>
+<p><code>AtomicInteger</code> 自增：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">incrementAndGet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> unsafe.getAndAddInt(<span class="keyword">this</span>, valueOffset, <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用的是 <code>unsafe</code> 对象的 <code>getAndAddInt()</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndAddInt</span><span class="params">(Object var1, <span class="keyword">long</span> var2, <span class="keyword">int</span> var4)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> var5;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        var5 = <span class="keyword">this</span>.getIntVolatile(var1, var2);</span><br><span class="line">    &#125; <span class="keyword">while</span>(!<span class="keyword">this</span>.compareAndSwapInt(var1, var2, var5, var5 + var4));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> var5;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是 <code>Unsafe.class</code> 中的代码，看上去各个参数代表的意义不是很明确。</p>
+<p>为了更好地理解函数的意义，可以看 <code>OpenJDK 8</code> 中的源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndAddInt</span><span class="params">(Object o, <span class="keyword">long</span> offset, <span class="keyword">int</span> delta)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> v;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        v = getIntVolatile(o, offset);</span><br><span class="line">    &#125; <span class="keyword">while</span> (!compareAndSwapInt(o, offset, v, v + delta));</span><br><span class="line">    <span class="keyword">return</span> v;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从 <code>OpenJDK 8</code> 中的代码可以看出，<code>getAndAddInt()</code> 循环读取主内存中对象 <code>o</code> 的偏移量 <code>offset</code> 处的值 <code>v</code>，</p>
+<p>如果 <code>v</code> 和工作内存中值（预期值） <code>A</code> 相等，就将新值 <code>B</code> 写入主内存，返回旧值 <code>v</code>；</p>
+<p>如果不相等，将 <code>A</code> 的值更新为 <code>v</code>，循环，直到更新成功为止。</p>
 <p>在高并发情况下，基本原子类的性能不是很好。</p>
 <p>加法器在这方面做了改进。</p>
 <h6 id="数组类型原子类"><a class="markdownIt-Anchor" href="#数组类型原子类"></a> 数组类型原子类</h6>
@@ -676,7 +691,7 @@ if(canvas.getContext){
 <ul>
 <li><code>ABA</code></li>
 <li>自旋消耗 <code>CPU</code> 时间</li>
-<li>针对的是单个变量</li>
+<li>只能保证单个变量的原子操作</li>
 </ul>
 
     </div>
@@ -793,7 +808,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:05</span>
+    <span title="Reading time total">3:14</span>
   </span>
 </div>
 <div class="busuanzi-count">
