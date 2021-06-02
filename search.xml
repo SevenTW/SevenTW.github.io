@@ -3774,12 +3774,62 @@ advertising campaign could hope to.</p>
   <entry>
     <title>代理模式</title>
     <url>/archives/7b510e10.html</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<div class="note "><p>控制对其它对象的访问。</p>
+<p>代理有以下几种：</p>
+<ul>
+<li>远程代理（<code>Remote Proxy</code>）：控制对远程对象（不同地址空间）的访问，它负责将请求及其参数进行编码，并向不同地址空间中的对象发送已经编码的请求。</li>
+<li>虚拟代理（<code>Virtual Proxy</code>）：根据需要创建开销很大的对象，它可以缓存实体的附加信息，以便延迟对它的访问，例如在网站加载一个很大图片时，不能马上完成，可以用虚拟代理缓存图片的大小信息，然后生成一张临时图片代替原始图片。</li>
+<li>保护代理（<code>Protection Proxy</code>）：按权限控制对象的访问，它负责检查调用者是否具有实现一个请求所必须的访问权限。</li>
+<li>智能代理（<code>Smart Reference</code>）：取代了简单的指针，它在访问对象时执行一些附加操作：记录对象的引用次数；当第一次引用一个对象时，将它装入内存；在访问一个实际对象前，检查是否已经锁定了它，以确保其它对象不能改变它。</li>
+</ul>
+</div>
+<span id="more"></span>
+<img data-src="/archives/7b510e10/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F.png" alt="代理模式" style="zoom:50%;">
+<h4 id="设计原则"><a class="markdownIt-Anchor" href="#设计原则"></a> 设计原则</h4>
+<h4 id="简单实现"><a class="markdownIt-Anchor" href="#简单实现"></a> 简单实现</h4>
+<h4 id="jdk-中的应用"><a class="markdownIt-Anchor" href="#jdk-中的应用"></a> <code>JDK</code> 中的应用</h4>
+<ul>
+<li><code>java.lang.reflect.Proxy</code></li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>结构型</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>结构型模式</tag>
+        <tag>代理模式</tag>
+        <tag>Proxy</tag>
+      </tags>
   </entry>
   <entry>
     <title>外观模式</title>
     <url>/archives/f7de8aa8.html</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<div class="note "><p>提供了一个统一的接口，用来访问子系统中的一群接口，从而让子系统更容易使用。</p>
+</div>
+<span id="more"></span>
+<img data-src="/archives/f7de8aa8/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F.png" alt="外观模式" style="zoom:67%;">
+<h4 id="设计原则"><a class="markdownIt-Anchor" href="#设计原则"></a> 设计原则</h4>
+<h4 id="简单实现"><a class="markdownIt-Anchor" href="#简单实现"></a> 简单实现</h4>
+<h5 id="subsystem"><a class="markdownIt-Anchor" href="#subsystem"></a> <code>SubSystem</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SubSystem</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">turnOnTV</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;turnOnTV()&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCD</span><span class="params">(String cd)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;setCD( &quot;</span> + cd + <span class="string">&quot; )&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startWatching</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;startWatching()&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="facade"><a class="markdownIt-Anchor" href="#facade"></a> <code>Facade</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Facade</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> SubSystem subSystem = <span class="keyword">new</span> SubSystem();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">watchMovie</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        subSystem.turnOnTV();</span><br><span class="line">        subSystem.setCD(<span class="string">&quot;a movie&quot;</span>);</span><br><span class="line">        subSystem.startWatching();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="client"><a class="markdownIt-Anchor" href="#client"></a> <code>Client</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Facade facade = <span class="keyword">new</span> Facade();</span><br><span class="line">        facade.watchMovie();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="jdk-中的应用"><a class="markdownIt-Anchor" href="#jdk-中的应用"></a> <code>JDK</code> 中的应用</h4>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>结构型</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>结构型模式</tag>
+        <tag>外观模式</tag>
+        <tag>Facade</tag>
+      </tags>
   </entry>
   <entry>
     <title>组合模式</title>
