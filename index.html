@@ -208,13 +208,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">121</span>
+        <span class="site-state-item-count">119</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -548,6 +548,218 @@ if(canvas.getContext){
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/2b2295bb.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/bear.jpeg">
+      <meta itemprop="name" content="Time_Wait">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Time_Wait">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/archives/2b2295bb.html" class="post-title-link" itemprop="url">InnoDB</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-06-02 16:54:26 / Modified: 16:57:19" itemprop="dateCreated datePublished" datetime="2021-06-02T16:54:26+08:00">2021-06-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>274</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在 <code>InnoDB</code> 中，表是根据主键顺序以索引的形式存放的，这种存储方式的表称为索引组织表。</p>
+<p>每一个索引在 <code>InnoDB</code> 里面对应一棵 B+ 树。</p>
+<p>索引类型包括主键索引和非主键索引：</p>
+<ul>
+<li><strong>主键索引 - 也称聚簇索引</strong>，叶子节点存储存储的是整行数据。</li>
+<li><strong>非主键索引 - 也称普通索引、二级索引</strong>，叶子节点存储的是主键的值。</li>
+</ul>
+<p>基于主键索引的查询通过查询主键索引树可以直接得到整行数据；</p>
+<p>而基于普通索引，得先查询普通索引树，得到主键的值，然后根据主键的值去查询主键索引树才能得到想要的数据，这个过称为<strong>回表</strong>。</p>
+<p>显然，基于普通索引的查询比基于主键索引的查询需要多扫描一颗索引树，因此建议尽量通过主键查询。</p>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/43a71ae4.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/bear.jpeg">
+      <meta itemprop="name" content="Time_Wait">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Time_Wait">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/archives/43a71ae4.html" class="post-title-link" itemprop="url">MySQL索引</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-06-02 16:50:40 / Modified: 16:53:29" itemprop="dateCreated datePublished" datetime="2021-06-02T16:50:40+08:00">2021-06-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>2.1k</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>索引的作用是提高查询效率。</p>
+<p>实现索引可以有多种方式，常见的有<strong>哈希表</strong>、<strong>有序数组</strong>和<strong>搜索树</strong>。</p>
+<ul>
+<li>
+<p>哈希表</p>
+<div class="note "><p>哈希表是一种存储键值对的数据结构，根据 <code>key</code> 可以在 <code>O(1)</code> 时间内找到对应的 <code>value</code>。</p>
+<p>哈希表在<strong>等值（单个）查询</strong>场景表现很好，但是因为哈希表不是有序的，因此在做<strong>区间查询</strong>时性能就很差。</p>
+</div>
+</li>
+<li>
+<p>有序数组</p>
+<div class="note "><p>有序数组在等值查询和区间查询场景中的性能都很优秀，但是如果有数据插入和删除就比较耗时了，因为可能需要移动很多数据。</p>
+</div>
+</li>
+<li>
+<p>搜索树</p>
+</li>
+</ul>
+<p>在 <code>MySQL</code> 中，<mark class="label primary">索引是在存储引擎层实现的</mark>，因此不同的存储引擎可能有不一样的索引实现。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/archives/43a71ae4.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1340,202 +1552,6 @@ if(canvas.getContext){
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/archives/1abadc07.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/91e798bc.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/bear.jpeg">
-      <meta itemprop="name" content="Time_Wait">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Time_Wait">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/91e798bc.html" class="post-title-link" itemprop="url">Java内存模型</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-30 09:09:21" itemprop="dateCreated datePublished" datetime="2021-05-30T09:09:21+08:00">2021-05-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-02 09:06:41" itemprop="dateModified" datetime="2021-06-02T09:06:41+08:00">2021-06-02</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B9%B6%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">并发</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>2.7k</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><code>Java</code> 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，以实现让 <code>Java</code> 程序在各种平台下都能达到一致的内存访问效果。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/91e798bc.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/94135b31.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/bear.jpeg">
-      <meta itemprop="name" content="Time_Wait">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Time_Wait">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/94135b31.html" class="post-title-link" itemprop="url">线程协作</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-29 16:26:37" itemprop="dateCreated datePublished" datetime="2021-05-29T16:26:37+08:00">2021-05-29</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-30 12:39:18" itemprop="dateModified" datetime="2021-05-30T12:39:18+08:00">2021-05-30</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B9%B6%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">并发</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>36</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="semaphore"><a class="markdownIt-Anchor" href="#semaphore"></a> <code>Semaphore</code></h4>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/94135b31.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>

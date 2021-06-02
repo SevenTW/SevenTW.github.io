@@ -27,25 +27,23 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"time_wait.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.3.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="存储引擎  InnoDB 在 InnoDB 中，表是根据主键顺序以索引的形式存放的，这种存储方式的表称为索引组织表。 每一个索引在 InnoDB 里面对应一棵 B+ 树。 索引类型包括主键索引和非主键索引：  主键索引 - 也称聚簇索引，叶子节点存储存储的是整行数据。 非主键索引 - 也称普通索引、二级索引，叶子节点存储的是主键的值。  基于主键索引的查询通过查询主键索引树可以直接得到整行数据；">
+<meta name="description" content="索引的作用是提高查询效率。 实现索引可以有多种方式，常见的有哈希表、有序数组和搜索树。   哈希表 哈希表是一种存储键值对的数据结构，根据 key 可以在 O(1) 时间内找到对应的 value。 哈希表在等值（单个）查询场景表现很好，但是因为哈希表不是有序的，因此在做区间查询时性能就很差。    有序数组 有序数组在等值查询和区间查询场景中的性能都很优秀，但是如果有数据插入和删除就比较耗时了，因">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL">
-<meta property="og:url" content="http://time_wait.gitee.io/archives/c24675b4.html">
+<meta property="og:title" content="MySQL索引">
+<meta property="og:url" content="http://time_wait.gitee.io/archives/43a71ae4.html">
 <meta property="og:site_name" content="Time_Wait">
-<meta property="og:description" content="存储引擎  InnoDB 在 InnoDB 中，表是根据主键顺序以索引的形式存放的，这种存储方式的表称为索引组织表。 每一个索引在 InnoDB 里面对应一棵 B+ 树。 索引类型包括主键索引和非主键索引：  主键索引 - 也称聚簇索引，叶子节点存储存储的是整行数据。 非主键索引 - 也称普通索引、二级索引，叶子节点存储的是主键的值。  基于主键索引的查询通过查询主键索引树可以直接得到整行数据；">
+<meta property="og:description" content="索引的作用是提高查询效率。 实现索引可以有多种方式，常见的有哈希表、有序数组和搜索树。   哈希表 哈希表是一种存储键值对的数据结构，根据 key 可以在 O(1) 时间内找到对应的 value。 哈希表在等值（单个）查询场景表现很好，但是因为哈希表不是有序的，因此在做区间查询时性能就很差。    有序数组 有序数组在等值查询和区间查询场景中的性能都很优秀，但是如果有数据插入和删除就比较耗时了，因">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-05-21T14:55:34.000Z">
-<meta property="article:modified_time" content="2021-05-27T10:22:51.370Z">
+<meta property="article:published_time" content="2021-06-02T08:50:40.000Z">
+<meta property="article:modified_time" content="2021-06-02T08:53:29.308Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="索引">
-<meta property="article:tag" content="存储引擎">
-<meta property="article:tag" content="InnoDB">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://time_wait.gitee.io/archives/c24675b4.html">
+<link rel="canonical" href="http://time_wait.gitee.io/archives/43a71ae4.html">
 
 
 <script class="page-configurations">
@@ -57,7 +55,7 @@
     lang   : 'en'
   };
 </script>
-<title>MySQL | Time_Wait</title>
+<title>MySQL索引 | Time_Wait</title>
   
 
 
@@ -195,7 +193,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">1.</span> <span class="nav-text"> 存储引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#innodb"><span class="nav-number">1.1.</span> <span class="nav-text"> InnoDB</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#b%E6%A0%91"><span class="nav-number">1.</span> <span class="nav-text"> B+树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A6%86%E7%9B%96%E7%B4%A2%E5%BC%95"><span class="nav-number">2.</span> <span class="nav-text"> 覆盖索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E5%B7%A6%E5%89%8D%E7%BC%80%E5%8E%9F%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text"> 最左前缀原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8"><span class="nav-number">4.</span> <span class="nav-text"> 索引下推</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88"><span class="nav-number">5.</span> <span class="nav-text"> 索引失效</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="nav-number">6.</span> <span class="nav-text"> 重建索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text"> 问题</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -218,13 +216,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">121</span>
+        <span class="site-state-item-count">119</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -568,7 +566,7 @@ if(canvas.getContext){
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/c24675b4.html">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/43a71ae4.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/bear.jpeg">
@@ -581,7 +579,7 @@ if(canvas.getContext){
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          MySQL
+          MySQL索引
         </h1>
 
         <div class="post-meta-container">
@@ -591,16 +589,10 @@ if(canvas.getContext){
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2021-05-21 22:55:34" itemprop="dateCreated datePublished" datetime="2021-05-21T22:55:34+08:00">2021-05-21</time>
+      <time title="Created: 2021-06-02 16:50:40 / Modified: 16:53:29" itemprop="dateCreated datePublished" datetime="2021-06-02T16:50:40+08:00">2021-06-02</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-27 18:22:51" itemprop="dateModified" datetime="2021-05-27T18:22:51+08:00">2021-05-27</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -630,7 +622,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>284</span>
+      <span>2.1k</span>
     </span>
 </div>
 
@@ -641,19 +633,83 @@ if(canvas.getContext){
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="存储引擎"><a class="markdownIt-Anchor" href="#存储引擎"></a> 存储引擎</h4>
-<h5 id="innodb"><a class="markdownIt-Anchor" href="#innodb"></a> <code>InnoDB</code></h5>
-<p>在 <code>InnoDB</code> 中，表是根据主键顺序以索引的形式存放的，这种存储方式的表称为索引组织表。</p>
-<p>每一个索引在 <code>InnoDB</code> 里面对应一棵 B+ 树。</p>
-<p>索引类型包括主键索引和非主键索引：</p>
+        <p>索引的作用是提高查询效率。</p>
+<p>实现索引可以有多种方式，常见的有<strong>哈希表</strong>、<strong>有序数组</strong>和<strong>搜索树</strong>。</p>
 <ul>
-<li><strong>主键索引 - 也称聚簇索引</strong>，叶子节点存储存储的是整行数据。</li>
-<li><strong>非主键索引 - 也称普通索引、二级索引</strong>，叶子节点存储的是主键的值。</li>
+<li>
+<p>哈希表</p>
+<div class="note "><p>哈希表是一种存储键值对的数据结构，根据 <code>key</code> 可以在 <code>O(1)</code> 时间内找到对应的 <code>value</code>。</p>
+<p>哈希表在<strong>等值（单个）查询</strong>场景表现很好，但是因为哈希表不是有序的，因此在做<strong>区间查询</strong>时性能就很差。</p>
+</div>
+</li>
+<li>
+<p>有序数组</p>
+<div class="note "><p>有序数组在等值查询和区间查询场景中的性能都很优秀，但是如果有数据插入和删除就比较耗时了，因为可能需要移动很多数据。</p>
+</div>
+</li>
+<li>
+<p>搜索树</p>
+</li>
 </ul>
-<p>基于主键索引的查询通过查询主键索引树可以直接得到整行数据；</p>
-<p>而基于普通索引，得先查询普通索引树，得到主键的值，然后根据主键的值去查询主键索引树才能得到想要的数据，这个过称为<strong>回表</strong>。</p>
-<p>显然，基于普通索引的查询比基于主键索引的查询需要多扫描一颗索引树，因此建议尽量通过主键查询。</p>
-
+<p>在 <code>MySQL</code> 中，<mark class="label primary">索引是在存储引擎层实现的</mark>，因此不同的存储引擎可能有不一样的索引实现。</p>
+<span id="more"></span>
+<h4 id="b树"><a class="markdownIt-Anchor" href="#b树"></a> B+树</h4>
+<h4 id="覆盖索引"><a class="markdownIt-Anchor" href="#覆盖索引"></a> 覆盖索引</h4>
+<p>假如有这样一条查询语句：<code>select * from T where k between 3 and 5;</code> 并且为 <code>k</code> 建立了索引。</p>
+<p>因为要查全字段，所以在 <code>k</code> 索引树上查完，得到主键值后，要根据主键值回到主键索引树上去查全字段数据，这个过程称为回表。</p>
+<p>而如果查询语句是：<code>select ID from T where k between 3 and 5;</code> <code>ID</code> 是主键。</p>
+<p>此时 <code>k</code> 索引树可以直接提供查询结果，就不需要回表了。在这个查询中，索引 <code>k</code> 已经覆盖了查询请求，称为覆盖索引。</p>
+<p>虽然维护索引需要额外开销，但是基于覆盖索引的特性，有时我们需要为查询频率较高的字段建立联合索引，以期让这个联合索引覆盖查询请求，减少回表的次数，提高查询效率。</p>
+<h4 id="最左前缀原则"><a class="markdownIt-Anchor" href="#最左前缀原则"></a> 最左前缀原则</h4>
+<p>假如有一个组合索引（<code>a, b</code>），索引项会先根据 <code>a</code> 排序，再根据 <code>b</code> 排序。</p>
+<p>这时如果只根据 <code>a</code> 来查询数据，可以用上这个索引；</p>
+<p>如果 <code>a</code> 是个字符串，比如 <code>name</code>，那类似 <code>select name like ‘张%’</code> 这样的查询也可以用上 （<code>name, b</code>）这个索引。</p>
+<p>也就是说，只要满足索引的最左前缀原则就可以用上一个组合索引。这个最左前缀可以是组合索引的前 <code>N</code> 个字段，也可以是字符串索引的前 <code>N</code> 个字符。</p>
+<p><strong>组合索引如何安排字段顺序</strong></p>
+<ul>
+<li>
+<p><strong>复用能力</strong> - 因为有最左前缀原则，有了组合索引（<code>a, b</code>），就不用为 <code>a</code> 单独建立索引了。也就说，应该优先考虑可以减少一个索引的字段顺序。</p>
+</li>
+<li>
+<p><strong>空间</strong> - 如果既有联合查询，又有基于 <code>a</code> 和 <code>b</code> 各自的查询，基于 <code>b</code> 的查询是无法使用联合索引 （<code>a, b</code>）的，不得不为 <code>b</code> 另建一个索引。这时就需要考虑空间因素，如果字段 <code>a</code> 比 <code>b</code> 大，就应该考虑建立索引</p>
+<p>（<code>a, b</code>）和 <code>b</code>，否则，就建立索引（<code>b, a</code>）和 <code>a</code>。</p>
+</li>
+</ul>
+<h4 id="索引下推"><a class="markdownIt-Anchor" href="#索引下推"></a> 索引下推</h4>
+<p>有一张 <code>user</code> 表，建表语句如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create table user (</span><br><span class="line">ID int primary key,</span><br><span class="line">name char(20) not null,</span><br><span class="line">age int not null,</span><br><span class="line">ismale char(1) not null default 1,</span><br><span class="line">index k(name, age)</span><br><span class="line">) engine&#x3D;InnoDB;</span><br></pre></td></tr></table></figure>
+<p>除了主键索引，还有一个组合索引（<code>name, age</code>）。</p>
+<p>现有查询语句：<code>select * from user where name like ‘张%’ and age=10 and ismale=1;</code></p>
+<p>在 <code>MySQL 5.6</code> 之前，根据最左前缀原则，在找到以“张”开头的数据后，需要逐个回表，到主键索引树上找到对应的数据行，再比较后面字段值。</p>
+<p>而 <code>MySQL 5.6</code> 开始，引入了<strong>索引下推</strong>，找到以“张”开头的数据后，并不是直接回表，而是会再根据组合索引中包含的字段再判断，过滤掉不符合条件的记录，减少回表次数。</p>
+<h4 id="索引失效"><a class="markdownIt-Anchor" href="#索引失效"></a> 索引失效</h4>
+<ul>
+<li>在索引列上有计算、函数、类型转换，会使索引失效进而扫描全表</li>
+<li>组合索引中对某列进行范围查找，会使该列右边的列不能使用</li>
+<li>使用不等于（<code>!= or &lt;&gt;</code>）会使索引失效</li>
+<li>组合索引中对某列进行模糊匹配，会使该列右边的列不能使用</li>
+</ul>
+<h4 id="重建索引"><a class="markdownIt-Anchor" href="#重建索引"></a> 重建索引</h4>
+<p>索引可能因为删除，或者页分裂等原因，导致数据页有空洞，重建索引的过程会创建一个新的索引，把数据按顺序插入，这样页面的利用率最高，也就是索引更紧凑、更省空间。</p>
+<ul>
+<li>重建普通索引</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table T drop index k;</span><br><span class="line">alter table T add index(k);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重建主键索引</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table T engine&#x3D;InnoDB;</span><br></pre></td></tr></table></figure>
+<h4 id="问题"><a class="markdownIt-Anchor" href="#问题"></a> 问题</h4>
+<p>有这样一个建表语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE &#96;t&#96; (</span><br><span class="line">  &#96;a&#96; int(11) NOT NULL,</span><br><span class="line">  &#96;b&#96; int(11) NOT NULL,</span><br><span class="line">  &#96;c&#96; int(11) NOT NULL,</span><br><span class="line">  PRIMARY KEY (&#96;a&#96;,&#96;b&#96;),</span><br><span class="line">  KEY &#96;c&#96; (&#96;c&#96;),</span><br><span class="line">  KEY &#96;ca&#96; (&#96;c&#96;,&#96;a&#96;),</span><br><span class="line">  KEY &#96;cb&#96; (&#96;c&#96;,&#96;b&#96;)</span><br><span class="line">) ENGINE&#x3D;InnoDB;</span><br></pre></td></tr></table></figure>
+<p>请问 <code>ca</code> 和 <code>cb</code> 这两个索引是否有必要。</p>
+<div class="note "><p>主键（聚簇）索引先根据 <code>a</code> 排序，再根据 <code>b</code> 排序，<code>c</code> 无序；</p>
+<p>普通索引 <code>c</code> 根据 <code>c</code> 排序，叶子节点记录主键 (<code>a</code>, <code>b</code>)；</p>
+<p>组合索引 <code>ca</code> 先根据 <code>c</code> 排序，再根据 <code>a</code> 排序，叶子节点记录 <code>b</code>，事实上这跟索引 <code>c</code> 完全一样；</p>
+<p>组合索引 <code>cb</code> 先根据 <code>c</code> 排序，再根据 <code>b</code> 排序，叶子节点记录 <code>a</code>，和索引 <code>c</code> 不一样；</p>
+<p>所以所以 <code>ca</code> 可以删除，<code>cb</code> 需要保留。</p>
+<p>而如果主键索引是 (<code>b</code>, <code>a</code>)，那需要保留的就是 <code>ca</code>。</p>
+</div>
     </div>
 
     
@@ -663,10 +719,7 @@ if(canvas.getContext){
   <div class="popular-posts-header">Related Posts</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/fb61c3a5.html" rel="bookmark">MySQL的事务隔离</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/d940f18d.html" rel="bookmark">MySQL锁</a></div>
+      <div class="popular-posts-title"><a href="/archives/2b2295bb.html" rel="bookmark">InnoDB</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/e272e39a.html" rel="bookmark">SQL语法</a></div>
@@ -675,7 +728,10 @@ if(canvas.getContext){
       <div class="popular-posts-title"><a href="/archives/351e2939.html" rel="bookmark">数据库系统原理</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/cf5bf327.html" rel="bookmark">SQL更新语句的执行流程</a></div>
+      <div class="popular-posts-title"><a href="/archives/fb61c3a5.html" rel="bookmark">MySQL的事务隔离</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/d940f18d.html" rel="bookmark">MySQL锁</a></div>
     </li>
   </ul>
 
@@ -690,7 +746,7 @@ if(canvas.getContext){
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="http://time_wait.gitee.io/archives/c24675b4.html" title="MySQL">http://time_wait.gitee.io/archives/c24675b4.html</a>
+      <a href="http://time_wait.gitee.io/archives/43a71ae4.html" title="MySQL索引">http://time_wait.gitee.io/archives/43a71ae4.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -702,21 +758,19 @@ if(canvas.getContext){
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
               <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
               <a href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag"><i class="fa fa-tag"></i> 索引</a>
-              <a href="/tags/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" rel="tag"><i class="fa fa-tag"></i> 存储引擎</a>
-              <a href="/tags/InnoDB/" rel="tag"><i class="fa fa-tag"></i> InnoDB</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/archives/46bf65ac.html" rel="prev" title="并发基础">
-                  <i class="fa fa-chevron-left"></i> 并发基础
+                <a href="/archives/8acb1976.html" rel="prev" title="状态模式">
+                  <i class="fa fa-chevron-left"></i> 状态模式
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/archives/340249a9.html" rel="next" title="数组">
-                  数组 <i class="fa fa-chevron-right"></i>
+                <a href="/archives/2b2295bb.html" rel="next" title="InnoDB">
+                  InnoDB <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
