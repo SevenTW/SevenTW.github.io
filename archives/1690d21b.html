@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lin2-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lin2-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CLobster+Two:300,300italic,400,400italic,700,700italic%7CEB+Garamond:300,300italic,400,400italic,700,700italic%7CMeta+-+Meta:300,300italic,400,400italic,700,700italic%7CRoboto+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"time_wait.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.3.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="函数式编程：通过合并现有代码来生成新功能而不是从头开始编写所有内容，我们可以更快地获得更可靠的代码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数式编程">
+<meta property="og:url" content="http://time_wait.gitee.io/archives/1690d21b.html">
+<meta property="og:site_name" content="Time_Wait">
+<meta property="og:description" content="函数式编程：通过合并现有代码来生成新功能而不是从头开始编写所有内容，我们可以更快地获得更可靠的代码。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-03T09:16:40.000Z">
+<meta property="article:modified_time" content="2021-06-03T15:54:16.860Z">
+<meta property="article:author" content="Time_Wait">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="函数式编程">
+<meta property="article:tag" content="Lambda表达式">
+<meta property="article:tag" content="方法引用">
+<meta property="article:tag" content="函数式接口">
+<meta property="article:tag" content="高阶函数">
+<meta property="article:tag" content="闭包">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://time_wait.gitee.io/archives/1690d21b.html">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>函数式编程 | Time_Wait</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Time_Wait</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text"> Lambda 表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text"> 方法引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text"> 函数式接口</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Time_Wait"
+      src="/images/bear.jpeg">
+  <p class="site-author-name" itemprop="name">Time_Wait</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">81</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">151</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+<script type="text/javascript">
+     var alltags = document.getElementsByClassName('tag-cloud-tags');
+     var tags = alltags[0].getElementsByTagName('a');
+     for (var i = tags.length - 1; i >= 0; i--) {
+       var r=Math.floor(Math.random()*75+130);
+       var g=Math.floor(Math.random()*75+100);
+       var b=Math.floor(Math.random()*75+80);
+       tags[i].style.background = "rgb("+r+","+g+","+b+")";
+     }
+</script>
+
+<style>
+  .tag-cloud-tags{
+    /*font-family: Helvetica, Tahoma, Arial;*/
+    /*font-weight: 100;*/
+    text-align: center;
+    counter-reset: tags;
+  }
+  .tag-cloud-tags a{
+    border-radius: 6px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin: 8px 5px 0px 0px;
+  }
+  .tag-cloud-tags a:before{
+    content: "🔖";
+  }
+
+  .tag-cloud-tags a:hover{
+     box-shadow: 0px 5px 15px 0px rgba(0,0,0,.4);
+     transform: scale(1.1);
+     /*box-shadow: 10px 10px 15px 2px rgba(0,0,0,.12), 0 0 6px 0 rgba(104, 104, 105, 0.1);*/
+     transition-duration: 0.15s;
+  }
+</style>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/1690d21b.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/bear.jpeg">
+      <meta itemprop="name" content="Time_Wait">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Time_Wait">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          函数式编程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-06-03 17:16:40 / Modified: 23:54:16" itemprop="dateCreated datePublished" datetime="2021-06-03T17:16:40+08:00">2021-06-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">函数式编程</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>7.6k</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>函数式编程：通过合并现有代码来生成新功能而不是从头开始编写所有内容，我们可以更快地获得更可靠的代码。</p>
+<span id="more"></span>
+<p>OO（object oriented，面向对象）是抽象数据，FP（functional programming，函数式编程）是抽象行为。</p>
+<p>纯粹的函数式语言在安全性方面更进一步。它强加了额外的约束，即所有数据必须是不可变的：设置一次，永不改变。<mark><strong>将值传递给函数，该函数然后生成新值但从不修改自身外部的任何东西（包括其参数或该函数范围之外的元素）</strong></mark>。</p>
+<p>更好的是，“不可变对象和无副作用”范式解决了并发编程中最基本和最棘手的问题之一（当程序的某些部分同时在多个处理器上运行时）。这是可变共享状态的问题，这意味着代码的不同部分（在不同的处理器上运行）可以尝试同时修改同一块内存（谁赢了？没人知道）。<strong>如果函数永远不会修改现有值但只生成新值，则不会对内存产生争用，这是纯函数式语言的定义。</strong> 因此，经常提出纯函数式语言作为并行编程的解决方案（还有其他可行的解决方案）。</p>
+<p>需要提醒大家的是，函数式语言背后有很多动机，这意味着描述它们可能会有些混淆。它通常取决于各种观点：<strong>“并行编程”，“代码可靠性”和“代码创建和库复用”</strong>。</p>
+<p>通常，传递给方法的数据不同，结果不同。如果我们希望方法在调用时行为不同，该怎么做呢？结论是：只要能将代码传递给方法，我们就可以控制该方法的行为。此前，我们通过在方法中创建包含所需行为的对象，然后将该对象传递给我们想要控制的方法来完成此操作。</p>
+<p>一个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// functional/Strategize.java</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数式接口</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">  <span class="function">String <span class="title">approach</span><span class="params">(String msg)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Soft</span> <span class="keyword">implements</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">approach</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> msg.toLowerCase() + <span class="string">&quot;?&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Unrelated</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> String <span class="title">twice</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> msg + <span class="string">&quot; &quot;</span> + msg;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Strategize</span> </span>&#123;</span><br><span class="line">  Strategy strategy;</span><br><span class="line">  String msg;</span><br><span class="line">  Strategize(String msg) &#123;</span><br><span class="line">    strategy = <span class="keyword">new</span> Soft(); <span class="comment">// [1] 创建包含所需行为的对象</span></span><br><span class="line">    <span class="keyword">this</span>.msg = msg;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">communicate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(strategy.approach(msg));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">changeStrategy</span><span class="params">(Strategy strategy)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.strategy = strategy;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Strategy[] strategies = &#123; </span><br><span class="line">      <span class="keyword">new</span> Strategy() &#123; <span class="comment">// [2] 匿名内部类</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">approach</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> msg.toUpperCase() + <span class="string">&quot;!&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      msg -&gt; msg.substring(<span class="number">0</span>, <span class="number">5</span>), <span class="comment">// [3] Lambda 表达式</span></span><br><span class="line">      Unrelated::twice <span class="comment">// [4] 方法引用</span></span><br><span class="line">    &#125;;</span><br><span class="line">    Strategize s = <span class="keyword">new</span> Strategize(<span class="string">&quot;Hello there&quot;</span>);</span><br><span class="line">    s.communicate();</span><br><span class="line">    <span class="keyword">for</span>(Strategy newStrategy : strategies) &#123;</span><br><span class="line">      s.changeStrategy(newStrategy); <span class="comment">// [5]</span></span><br><span class="line">      s.communicate(); <span class="comment">// [6]</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出：</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * hello there?</span></span><br><span class="line"><span class="comment"> * HELLO THERE!</span></span><br><span class="line"><span class="comment"> * Hello</span></span><br><span class="line"><span class="comment"> * Hello there Hello there</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<h4 id="lambda-表达式"><a class="markdownIt-Anchor" href="#lambda-表达式"></a> Lambda 表达式</h4>
+<p><mark>基本语法</mark>：<code>参数 -&gt; 方法体</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(params) -&gt; expression; </span><br><span class="line">(params) -&gt; statement;</span><br><span class="line">(params) -&gt; &#123;statements&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong>[1]</strong> 当只用一个参数，可以不需要括号 <code>()</code>。 然而，这是一个特例。</p>
+</li>
+<li>
+<p><strong>[2]</strong> 正常情况使用括号 <code>()</code> 包裹参数。 为了保持一致性，也可以使用括号 <code>()</code> 包裹单个参数，虽然这种情况并不常见。</p>
+</li>
+<li>
+<p><strong>[3]</strong> 如果没有参数，则必须使用括号 <code>()</code> 表示空参数列表。</p>
+</li>
+<li>
+<p><strong>[4]</strong> 对于多个参数，将参数列表放在括号 <code>()</code> 中。</p>
+<p>到目前为止，所有 Lambda 表达式方法体都是单行。 该表达式的结果自动成为 Lambda 表达式的返回值，在此处使用 <strong>return</strong> 关键字是非法的。 这是 Lambda 表达式缩写用于描述功能的语法的另一种方式。</p>
+</li>
+<li>
+<p><strong>[5]</strong> 如果在 Lambda 表达式中确实需要多行，则必须将这些行放在花括号中。 在这种情况下，就需要使用 <strong>return</strong>。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LambdaDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 静态内部类</span></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ILike2</span> <span class="keyword">implements</span> <span class="title">Like</span> </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;I like lambda2&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Like like = <span class="keyword">new</span> ILike1();</span><br><span class="line">        like.f();</span><br><span class="line"></span><br><span class="line">        like = <span class="keyword">new</span> ILike2();</span><br><span class="line">        like.f();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 局部内部类</span></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">ILike3</span> <span class="keyword">implements</span> <span class="title">Like</span> </span>&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;I like lambda3&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        like = <span class="keyword">new</span> ILike3();</span><br><span class="line">        like.f();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4. 匿名内部类</span></span><br><span class="line">        like = <span class="keyword">new</span> Like() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;I like lambda4&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        like.f();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5. 用 lambda 简化</span></span><br><span class="line">        like = () -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;I like lambda5&quot;</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">        like.f();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个函数式接口</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Like</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 外部类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ILike1</span> <span class="keyword">implements</span> <span class="title">Like</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Overrid</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;I like lambda1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="方法引用"><a class="markdownIt-Anchor" href="#方法引用"></a> 方法引用</h4>
+<p><mark>基本语法</mark>：<code>类名/对象名::方法名</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Callable</span> </span>&#123; <span class="comment">// [1]</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">call</span><span class="params">(String s)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Describe</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">(String msg)</span> </span>&#123; <span class="comment">// [2]</span></span><br><span class="line">    System.out.println(msg);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodReferences</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">(String name)</span> </span>&#123; <span class="comment">// [3]</span></span><br><span class="line">    System.out.println(<span class="string">&quot;Hello, &quot;</span> + name);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Description</span> </span>&#123;</span><br><span class="line">    String about;</span><br><span class="line">    Description(String desc) &#123; about = desc; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">help</span><span class="params">(String msg)</span> </span>&#123; <span class="comment">// [4]</span></span><br><span class="line">      System.out.println(about + <span class="string">&quot; &quot;</span> + msg);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Helper</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">assist</span><span class="params">(String msg)</span> </span>&#123; <span class="comment">// [5]</span></span><br><span class="line">      System.out.println(msg);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Describe d = <span class="keyword">new</span> Describe();</span><br><span class="line">    Callable c = d::show; <span class="comment">// [6]</span></span><br><span class="line">    c.call(<span class="string">&quot;call()&quot;</span>); <span class="comment">// [7]</span></span><br><span class="line"></span><br><span class="line">    c = MethodReferences::hello; <span class="comment">// [8]</span></span><br><span class="line">    c.call(<span class="string">&quot;Bob&quot;</span>);</span><br><span class="line"></span><br><span class="line">    c = <span class="keyword">new</span> Description(<span class="string">&quot;valuable&quot;</span>)::help; <span class="comment">// [9]</span></span><br><span class="line">    c.call(<span class="string">&quot;information&quot;</span>);</span><br><span class="line"></span><br><span class="line">    c = Helper::assist; <span class="comment">// [10]</span></span><br><span class="line">    c.call(<span class="string">&quot;Help!&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出：</span></span><br><span class="line"><span class="comment"> * call()</span></span><br><span class="line"><span class="comment"> * Hello, Bob</span></span><br><span class="line"><span class="comment"> * valuable information</span></span><br><span class="line"><span class="comment"> * Help!</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<h4 id="函数式接口"><a class="markdownIt-Anchor" href="#函数式接口"></a> 函数式接口</h4>
+<p>每个函数式接口只包含一个抽象方法，称为函数式方法。</p>
+<p>如果将<strong>方法引用</strong>或 <strong>Lambda 表达式</strong>赋值给函数式接口（类型需要匹配），Java 会适配你的赋值到目标接口。 <strong>编译器会自动包装方法引用或 Lambda 表达式到实现目标接口的类的实例中。</strong></p>
+<p>在使用函数接口时，名称无关紧要——只要参数类型和返回类型相同。 Java 会将你的方法映射到接口方法。 要调用方法，可以调用接口的函数式方法名（在本例中为 <code>accept()</code>），而不是你的方法名。</p>
+<p>基于 Lambda 表达式的所有不同 <strong>Function</strong> 变体的示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// functional/FunctionVariants.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.function.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> </span>&#123;</span><br><span class="line">  Foo f;</span><br><span class="line">  Bar(Foo f) &#123; <span class="keyword">this</span>.f = f; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IBaz</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i;</span><br><span class="line">  IBaz(<span class="keyword">int</span> i) &#123;</span><br><span class="line">    <span class="keyword">this</span>.i = i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LBaz</span> </span>&#123;</span><br><span class="line">  <span class="keyword">long</span> l;</span><br><span class="line">  LBaz(<span class="keyword">long</span> l) &#123;</span><br><span class="line">    <span class="keyword">this</span>.l = l;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DBaz</span> </span>&#123;</span><br><span class="line">  <span class="keyword">double</span> d;</span><br><span class="line">  DBaz(<span class="keyword">double</span> d) &#123;</span><br><span class="line">    <span class="keyword">this</span>.d = d;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FunctionVariants</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> Function&lt;Foo,Bar&gt; f1 = f -&gt; <span class="keyword">new</span> Bar(f);</span><br><span class="line">  <span class="keyword">static</span> IntFunction&lt;IBaz&gt; f2 = i -&gt; <span class="keyword">new</span> IBaz(i);</span><br><span class="line">  <span class="keyword">static</span> LongFunction&lt;LBaz&gt; f3 = l -&gt; <span class="keyword">new</span> LBaz(l);</span><br><span class="line">  <span class="keyword">static</span> DoubleFunction&lt;DBaz&gt; f4 = d -&gt; <span class="keyword">new</span> DBaz(d);</span><br><span class="line">  <span class="keyword">static</span> ToIntFunction&lt;IBaz&gt; f5 = ib -&gt; ib.i;</span><br><span class="line">  <span class="keyword">static</span> ToLongFunction&lt;LBaz&gt; f6 = lb -&gt; lb.l;</span><br><span class="line">  <span class="keyword">static</span> ToDoubleFunction&lt;DBaz&gt; f7 = db -&gt; db.d;</span><br><span class="line">  <span class="keyword">static</span> IntToLongFunction f8 = i -&gt; i;</span><br><span class="line">  <span class="keyword">static</span> IntToDoubleFunction f9 = i -&gt; i;</span><br><span class="line">  <span class="keyword">static</span> LongToIntFunction f10 = l -&gt; (<span class="keyword">int</span>)l;</span><br><span class="line">  <span class="keyword">static</span> LongToDoubleFunction f11 = l -&gt; l;</span><br><span class="line">  <span class="keyword">static</span> DoubleToIntFunction f12 = d -&gt; (<span class="keyword">int</span>)d;</span><br><span class="line">  <span class="keyword">static</span> DoubleToLongFunction f13 = d -&gt; (<span class="keyword">long</span>)d;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Bar b = f1.apply(<span class="keyword">new</span> Foo());</span><br><span class="line">    IBaz ib = f2.apply(<span class="number">11</span>);</span><br><span class="line">    LBaz lb = f3.apply(<span class="number">11</span>);</span><br><span class="line">    DBaz db = f4.apply(<span class="number">11</span>);</span><br><span class="line">    <span class="keyword">int</span> i = f5.applyAsInt(ib);</span><br><span class="line">    <span class="keyword">long</span> l = f6.applyAsLong(lb);</span><br><span class="line">    <span class="keyword">double</span> d = f7.applyAsDouble(db);</span><br><span class="line">    l = f8.applyAsLong(<span class="number">12</span>);</span><br><span class="line">    d = f9.applyAsDouble(<span class="number">12</span>);</span><br><span class="line">    i = f10.applyAsInt(<span class="number">12</span>);</span><br><span class="line">    d = f11.applyAsDouble(<span class="number">12</span>);</span><br><span class="line">    i = f12.applyAsInt(<span class="number">13.0</span>);</span><br><span class="line">    l = f13.applyAsLong(<span class="number">13.0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将方法引用应用于基于类的函数式接口:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// functional/ClassFunctionals.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">import</span> java.util.function.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AA</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BB</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CC</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassFunctionals</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> AA <span class="title">f1</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> AA(); &#125;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">f2</span><span class="params">(AA aa1, AA aa2)</span> </span>&#123; <span class="keyword">return</span> <span class="number">1</span>; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f3</span><span class="params">(AA aa)</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f4</span><span class="params">(AA aa, BB bb)</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> CC <span class="title">f5</span><span class="params">(AA aa)</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> CC(); &#125;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> CC <span class="title">f6</span><span class="params">(AA aa, BB bb)</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> CC(); &#125;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">f7</span><span class="params">(AA aa)</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">true</span>; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">f8</span><span class="params">(AA aa, BB bb)</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">true</span>; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> AA <span class="title">f9</span><span class="params">(AA aa)</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> AA(); &#125;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> AA <span class="title">f10</span><span class="params">(AA aa1, AA aa2)</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> AA(); &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Supplier&lt;AA&gt; s = ClassFunctionals::f1;</span><br><span class="line">    s.get();</span><br><span class="line">    Comparator&lt;AA&gt; c = ClassFunctionals::f2;</span><br><span class="line">    c.compare(<span class="keyword">new</span> AA(), <span class="keyword">new</span> AA());</span><br><span class="line">    Consumer&lt;AA&gt; cons = ClassFunctionals::f3;</span><br><span class="line">    cons.accept(<span class="keyword">new</span> AA());</span><br><span class="line">    BiConsumer&lt;AA,BB&gt; bicons = ClassFunctionals::f4;</span><br><span class="line">    bicons.accept(<span class="keyword">new</span> AA(), <span class="keyword">new</span> BB());</span><br><span class="line">    Function&lt;AA,CC&gt; f = ClassFunctionals::f5;</span><br><span class="line">    CC cc = f.apply(<span class="keyword">new</span> AA());</span><br><span class="line">    BiFunction&lt;AA,BB,CC&gt; bif = ClassFunctionals::f6;</span><br><span class="line">    cc = bif.apply(<span class="keyword">new</span> AA(), <span class="keyword">new</span> BB());</span><br><span class="line">    Predicate&lt;AA&gt; p = ClassFunctionals::f7;</span><br><span class="line">    <span class="keyword">boolean</span> result = p.test(<span class="keyword">new</span> AA());</span><br><span class="line">    BiPredicate&lt;AA,BB&gt; bip = ClassFunctionals::f8;</span><br><span class="line">    result = bip.test(<span class="keyword">new</span> AA(), <span class="keyword">new</span> BB());</span><br><span class="line">    UnaryOperator&lt;AA&gt; uo = ClassFunctionals::f9;</span><br><span class="line">    AA aa = uo.apply(<span class="keyword">new</span> AA());</span><br><span class="line">    BinaryOperator&lt;AA&gt; bo = ClassFunctionals::f10;</span><br><span class="line">    aa = bo.apply(<span class="keyword">new</span> AA(), <span class="keyword">new</span> AA());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>java.util.functional</code> 中的接口是有限的，可以自定义多参数函数式接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TriFunction</span>&lt;<span class="title">T</span>, <span class="title">U</span>, <span class="title">V</span>, <span class="title">R</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function">R <span class="title">apply</span><span class="params">(T t, U u, V v)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TriFunctionTest</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">long</span> l, <span class="keyword">double</span> d)</span> </span>&#123; <span class="keyword">return</span> <span class="number">99</span>; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    TriFunction&lt;Integer, Long, Double, Integer&gt; tf = TriFunctionTest::f; <span class="comment">// 函数引用</span></span><br><span class="line">    tf = (i, l, d) -&gt; <span class="number">12</span>; <span class="comment">// lambda 表达式</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Time_Wait
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="http://time_wait.gitee.io/archives/1690d21b.html" title="函数式编程">http://time_wait.gitee.io/archives/1690d21b.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+              <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 函数式编程</a>
+              <a href="/tags/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> Lambda表达式</a>
+              <a href="/tags/%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/" rel="tag"><i class="fa fa-tag"></i> 方法引用</a>
+              <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3/" rel="tag"><i class="fa fa-tag"></i> 函数式接口</a>
+              <a href="/tags/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 高阶函数</a>
+              <a href="/tags/%E9%97%AD%E5%8C%85/" rel="tag"><i class="fa fa-tag"></i> 闭包</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/archives/b32c9fde.html" rel="prev" title="Explain">
+                  <i class="fa fa-chevron-left"></i> Explain
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/archives/599b70c0.html" rel="next" title="CSS基础">
+                  CSS基础 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Time_Wait</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:27</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div><div class="footer-custom">
+Website source code <span class="exturl theme-link" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG8tbmV4dC9oZXhvLW5leHQuZ2l0aHViLmlv">here</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+  <script>
+    NProgress.configure({
+      showSpinner: true
+    });
+    NProgress.start();
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') {
+        NProgress.inc(0.8);
+      }
+      if (document.readyState === 'complete') {
+        NProgress.done();
+      }
+    });
+    document.addEventListener('pjax:send', () => {
+      NProgress.start();
+    });
+    document.addEventListener('pjax:success', () => {
+      NProgress.done();
+    });
+  </script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+
+</body>
+</html>
