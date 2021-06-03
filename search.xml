@@ -916,6 +916,7 @@
 <p>一个事务只能读取已提交事务所做的修改。</p>
 <h5 id="可重复读repeatable-read"><a class="markdownIt-Anchor" href="#可重复读repeatable-read"></a> 可重复读（Repeatable Read）</h5>
 <p>一个事务执行过程中多次读取同一数据得到的结果是一样的。</p>
+<p><code>MySQL</code> 默认采用的事务隔离级别。</p>
 <h5 id="串行化serializable"><a class="markdownIt-Anchor" href="#串行化serializable"></a> 串行化（Serializable）</h5>
 <p>事务串行化执行。</p>
 <p>隔离级别能解决的并发一致性问题：</p>
@@ -955,7 +956,66 @@
 </tr>
 </tbody>
 </table>
-<h4 id="多版本并发控制"><a class="markdownIt-Anchor" href="#多版本并发控制"></a> 多版本并发控制</h4>
+<p><code>MySQL</code> 使用<mark class="label primary">锁</mark> 和 <mark class="label primary">多版本并发控制(`MVCC`)</mark> 来实现<mark class="label info">提交读</mark>和<mark class="label info">可重复读</mark>这两个隔离级别。</p>
+<h4 id="关系型数据库设计理论"><a class="markdownIt-Anchor" href="#关系型数据库设计理论"></a> 关系型数据库设计理论</h4>
+<h5 id="函数依赖"><a class="markdownIt-Anchor" href="#函数依赖"></a> 函数依赖</h5>
+<p>记 <code>A-&gt;B</code> 表示 <code>A</code> 函数决定 <code>B</code>，或者说 <code>B</code> 函数依赖于 <code>A</code>。</p>
+<p>对于 <code>A-&gt;B</code>，如果能找到 <code>A</code> 的真子集 <code>A’</code>，使得 <code>A'-&gt; B</code>，那么 <code>A-&gt;B</code> 就是<mark class="label primary">部分函数依赖</mark>，否则就是<mark class="label info">完全函数依赖</mark>。</p>
+<p>对于 <code>A-&gt;B，B-&gt;C</code>，则 <code>A-&gt;C</code> 是一个传递函数依赖。</p>
+<p>如果 <code>&#123;A1，A2，... ，An&#125;</code> 是关系的一个或多个属性的集合，该集合函数决定了关系的其它所有属性并且是最小的，那么该集合就称为<mark class="label primary">键码</mark>。</p>
+<h4 id="异常"><a class="markdownIt-Anchor" href="#异常"></a> 异常</h4>
+<p>现有一个学生课程关系，如图：</p>
+<img data-src="/archives/351e2939/%E5%AD%A6%E7%94%9F%E8%AF%BE%E7%A8%8B%E8%A1%A8.png" alt="学生课程表" style="zoom:50%;">
+<p>这个关系的其中一个函数依赖是：<code>&#123;Sno, Cname&#125; -&gt; &#123;Sname, Sdept, Mname, Grade&#125;</code>。</p>
+<p>也就是说，确定学生和课程之后，就能确定其它信息。</p>
+<p>并且 <code>&#123;Sno, Cname&#125;</code> 是最小的，所以  <code>&#123;Sno, Cname&#125;</code> 也是键码。</p>
+<p>不符合范式的关系，会产生很多异常，主要有以下四种异常：</p>
+<ul>
+<li>冗余数据：例如 <code>学生-2</code> 出现了两次。</li>
+<li>修改异常：修改了一个记录中的信息，但是另一个记录中相同的信息却没有被修改。</li>
+<li>删除异常：删除一个信息，那么也会丢失其它信息。例如删除了 <code>课程-1</code> 需要删除第一行和第三行，那么 <code>学生-1</code> 的信息就会丢失。</li>
+<li>插入异常：例如想要插入一个学生的信息，如果这个学生还没选课，那么就无法插入。</li>
+</ul>
+<h5 id="范式"><a class="markdownIt-Anchor" href="#范式"></a> 范式</h5>
+<p>范式理论是为了解决以上提到四种异常。</p>
+<p>高级别范式的依赖于低级别的范式，<code>1NF</code> 是最低级别的范式。</p>
+<h5 id="第一范式1nf"><a class="markdownIt-Anchor" href="#第一范式1nf"></a> 第一范式（<code>1NF</code>）</h5>
+<p>属性不可分。</p>
+<h5 id="第二范式2nf"><a class="markdownIt-Anchor" href="#第二范式2nf"></a> 第二范式（<code>2NF</code>）</h5>
+<p>每个非主属性完全函数依赖于键码。</p>
+<p>可以通过分解来满足。</p>
+<p>分解前：</p>
+<img data-src="/archives/351e2939/%E5%AD%A6%E7%94%9F%E8%AF%BE%E7%A8%8B%E8%A1%A8.png" alt="学生课程表" style="zoom:50%;">
+<p>键码为 <code>&#123;Sno, Cname&#125;</code> ，其他函数依赖有：</p>
+<ul>
+<li><code>&#123;Sno&#125; -&gt; &#123;Sname, Sdept&#125;</code></li>
+<li><code>&#123;Sdept&#125; -&gt; &#123;Mname&#125;</code></li>
+<li><code>&#123;Sno, Cname&#125; -&gt; &#123;Grade&#125;</code></li>
+</ul>
+<p>只有 <code>Grade</code> 是完全依赖于键码 <code>&#123;Sno, Cname&#125;</code> 的，<code>Sname, Sdept, Mname</code> 要么部分依赖于键码，要么不依赖于键码，因此可以对这几个属性进行拆分。</p>
+<p>分解后：</p>
+<p>关系-1</p>
+<img data-src="/archives/351e2939/%E5%85%B3%E7%B3%BB-1.png" alt="关系-1" style="zoom:50%;">
+<p>包含完全依赖：</p>
+<ul>
+<li><code>&#123;Sno&#125; -&gt; &#123;Sname, Sdept&#125;</code></li>
+<li><code>&#123;Sdept&#125; -&gt; &#123;Mname&#125;</code></li>
+</ul>
+<p>关系-2</p>
+<img data-src="/archives/351e2939/%E5%85%B3%E7%B3%BB-2.png" alt="关系-2" style="zoom:50%;">
+<p>包含完全依赖：</p>
+<ul>
+<li><code>&#123;Sno, Cname&#125; -&gt; &#123;Grade&#125;</code></li>
+</ul>
+<h5 id="第三范式3nf"><a class="markdownIt-Anchor" href="#第三范式3nf"></a> 第三范式（<code>3NF</code>）</h5>
+<p>非主属性不传递函数依赖于键码。</p>
+<p>上面的关系-1中存在以下传递函数依赖：<code>&#123;Sno&#125; -&gt; &#123;Sdept&#125; -&gt; &#123;Mname&#125;</code>。</p>
+<p>可以再分解：</p>
+<p>关系-11</p>
+<img data-src="/archives/351e2939/%E5%85%B3%E7%B3%BB-11.png" alt="关系-11" style="zoom:50%;">
+<p>关系-12</p>
+<img data-src="/archives/351e2939/%E5%85%B3%E7%B3%BB-12.png" alt="关系-12" style="zoom:50%;">
+<h4 id="er-图"><a class="markdownIt-Anchor" href="#er-图"></a> <code>ER</code> 图</h4>
 ]]></content>
       <categories>
         <category>数据库</category>
@@ -963,10 +1023,14 @@
       </categories>
       <tags>
         <tag>数据库</tag>
+        <tag>系统原理</tag>
         <tag>事务</tag>
+        <tag>ACID</tag>
         <tag>并发一致性</tag>
+        <tag>锁</tag>
         <tag>隔离级别</tag>
-        <tag>多版本并发控制</tag>
+        <tag>函数依赖</tag>
+        <tag>范式</tag>
       </tags>
   </entry>
   <entry>
@@ -1051,6 +1115,69 @@
       </categories>
       <tags>
         <tag>二分查找</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二叉查找树、AVL树、红黑树、B树和B+树</title>
+    <url>/archives/f3d84fed.html</url>
+    <content><![CDATA[<h4 id="二叉查找树"><a class="markdownIt-Anchor" href="#二叉查找树"></a> 二叉查找树</h4>
+<span id="more"></span>
+<h4 id="平衡二叉查找avl树"><a class="markdownIt-Anchor" href="#平衡二叉查找avl树"></a> 平衡二叉查找（<code>AVL</code>）树</h4>
+<h4 id="红黑树"><a class="markdownIt-Anchor" href="#红黑树"></a> 红黑树</h4>
+<h4 id="b树"><a class="markdownIt-Anchor" href="#b树"></a> B树</h4>
+<p>B-Tree是满足下列条件的数据结构：</p>
+<ul>
+<li>
+<p>d为大于1的一个正整数，称为B-Tree的度。</p>
+</li>
+<li>
+<p>h为一个正整数，称为B-Tree的高度。</p>
+</li>
+<li>
+<p>每个非叶子节点由n-1个key和n个指针组成，其中d&lt;=n&lt;=2d。</p>
+</li>
+<li>
+<p>每个叶子节点最少包含一个key和两个指针，最多包含2d-1个key和2d个指针，叶节点的指针均为null 。</p>
+</li>
+<li>
+<p>所有叶节点具有相同的深度，等于树高h。</p>
+</li>
+<li>
+<p>key和指针互相间隔，节点两端是指针。</p>
+</li>
+<li>
+<p>一个节点中的key从左到右非递减排列。</p>
+</li>
+</ul>
+<h4 id="b树-2"><a class="markdownIt-Anchor" href="#b树-2"></a> B+树</h4>
+<h4 id="红黑树与b树的比较"><a class="markdownIt-Anchor" href="#红黑树与b树的比较"></a> 红黑树与B树的比较</h4>
+<p>一般来说，索引本身也很大，不可能全部存储在内存中，因此索引往往以文件的形式存储的磁盘上。</p>
+<p>这样的话，索引查找过程中就要产生磁盘 <code>IO</code> 消耗，相对于内存存取，<code>IO</code> 存取的消耗要高几个数量级，所以评价一个数据结构作为索引的优劣最重要的指标就是在查找过程中磁盘 <code>IO</code> 操作次数的渐进复杂度。换句话说，索引的结构组织要尽量减少查找过程中磁盘 <code>IO</code> 的存取次数。</p>
+<h4 id="b树与b树的比较"><a class="markdownIt-Anchor" href="#b树与b树的比较"></a> B树与B+树的比较</h4>
+<p>数据库为什么使用B+树而不是B树：</p>
+<ul>
+<li>B+树同时支持随机检索和顺序检索；B树只适合随机检索，不支持范围持续。</li>
+<li>B+树空间利用率更高，树的高度更低，可减少磁盘读写次数。</li>
+<li>B+树的查询效率更加稳定。B树搜索有可能会在非叶子结点结束，越靠近根节点的记录查找时间越短。而在B+树中，任何关键字的查找都必须从根节点到叶节点，所有关键字的查找路径长度相同，因此任何查询效率稳定。</li>
+<li>B+树的叶子节点包含所有关键字，并以有序的链表结构存储，增删效率更高。</li>
+</ul>
+<h4 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h4>
+<ul>
+<li><a href="http://blog.codinglabs.org/articles/theory-of-mysql-index.html">MySQL索引的数据结构和算法原理</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据结构&amp;算法</category>
+        <category>树</category>
+      </categories>
+      <tags>
+        <tag>数据结构&amp;算法</tag>
+        <tag>树</tag>
+        <tag>二叉查找树</tag>
+        <tag>AVL树</tag>
+        <tag>红黑树</tag>
+        <tag>B树</tag>
+        <tag>B+树</tag>
       </tags>
   </entry>
   <entry>
@@ -1328,55 +1455,6 @@
       </tags>
   </entry>
   <entry>
-    <title>树</title>
-    <url>/archives/7b216a3b.html</url>
-    <content><![CDATA[<h4 id="二叉树先序-中序和后序遍历"><a class="markdownIt-Anchor" href="#二叉树先序-中序和后序遍历"></a> 二叉树先序、中序和后序遍历</h4>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[][] threeOrders(TreeNode root) &#123;</span><br><span class="line">    <span class="keyword">int</span>[][] res = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>][getSize(root)];</span><br><span class="line">    order(res, root);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">order</span><span class="params">(<span class="keyword">int</span>[][] res, TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    res[<span class="number">0</span>][i++] = root.val;</span><br><span class="line"></span><br><span class="line">    order(res, root.left);</span><br><span class="line"></span><br><span class="line">    res[<span class="number">1</span>][j++] = root.val;</span><br><span class="line"></span><br><span class="line">    order(res, root.right);</span><br><span class="line"></span><br><span class="line">    res[<span class="number">2</span>][k++] = root.val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSize</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> + getSize(root.left) + getSize(root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<h4 id="二叉树中和为某一值的路径"><a class="markdownIt-Anchor" href="#二叉树中和为某一值的路径"></a> 二叉树中和为某一值的路径</h4>
-<div class="note "><p>输入一颗二叉树的根节点和一个整数，按字典序打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。</p>
-</div>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; paths = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">ArrayList&lt;Integer&gt; path = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; FindPath(TreeNode root, <span class="keyword">int</span> target) &#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> paths;</span><br><span class="line"></span><br><span class="line">    path.add(root.val);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span> &amp;&amp; root.val == target) &#123;</span><br><span class="line">        paths.add(<span class="keyword">new</span> ArrayList&lt;&gt;(path));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    FindPath(root.left, target - root.val);</span><br><span class="line">    FindPath(root.right, target - root.val);</span><br><span class="line"></span><br><span class="line">    path.remove(path.size() - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> paths;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="二叉树的下一节点"><a class="markdownIt-Anchor" href="#二叉树的下一节点"></a> 二叉树的下一节点</h4>
-<div class="note "><p>给定一个二叉树其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的next指针。</p>
-</div>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeLinkNode <span class="title">GetNext</span><span class="params">(TreeLinkNode pNode)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (pNode == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pNode.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">        pNode = pNode.right;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (pNode.left != <span class="keyword">null</span>) pNode = pNode.left;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> pNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (pNode.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (pNode.next.left == pNode) <span class="keyword">return</span> pNode.next;</span><br><span class="line"></span><br><span class="line">        pNode = pNode.next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="二叉搜索树的第-k-小节点"><a class="markdownIt-Anchor" href="#二叉搜索树的第-k-小节点"></a> 二叉搜索树的第 k 小节点</h4>
-<div class="note "><p>给定一棵二叉搜索树，请找出其中的第 k 小的结点。</p>
-</div>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">TreeNode <span class="title">KthNode</span><span class="params">(TreeNode pRoot, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (pRoot == <span class="keyword">null</span> || k &lt; <span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    ArrayList&lt;TreeNode&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (pRoot != <span class="keyword">null</span> || !list.isEmpty()) &#123;</span><br><span class="line">        <span class="keyword">while</span> (pRoot != <span class="keyword">null</span>) &#123;</span><br><span class="line">            list.add(<span class="number">0</span>, pRoot);</span><br><span class="line">            pRoot = pRoot.left;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!list.isEmpty()) &#123;</span><br><span class="line">            TreeNode node = list.get(<span class="number">0</span>);</span><br><span class="line">            list.remove(<span class="number">0</span>);</span><br><span class="line">            cnt ++;</span><br><span class="line">            <span class="keyword">if</span> (cnt == k) <span class="keyword">return</span> node;</span><br><span class="line">            pRoot = node.right;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="二叉树的所有路径和"><a class="markdownIt-Anchor" href="#二叉树的所有路径和"></a> 二叉树的所有路径和</h4>
-<div class="note "><p>给定一个仅包含数字 0−9 的二叉树，每一条从根节点到叶子节点的路径都可以用一个数字表示。例如根节点到叶子节点的一条路径是 1→2→3，那么这条路径就用 123 来代替。找出根节点到叶子节点的所有路径表示的数字之和。</p>
-</div>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumNumbers2</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    dfs(root, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode root, <span class="keyword">int</span> curSum)</span> </span>&#123;</span><br><span class="line">    curSum += root.val;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) sum += curSum;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.left != <span class="keyword">null</span>) dfs(root.left, curSum * <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.right != <span class="keyword">null</span>) dfs(root.right, curSum * <span class="number">10</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="二叉树的最大路径和"><a class="markdownIt-Anchor" href="#二叉树的最大路径和"></a> 二叉树的最大路径和</h4>
-<div class="note "><p>给定一个二叉树，请计算节点值之和最大的路径的节点值之和是多少。这个路径的开始节点和结束节点可以是二叉树中的任意节点。</p>
-</div>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> maxSum = Integer.MIN_VALUE;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    getPathSum(root);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> maxSum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">        maxSum = Math.max(maxSum, root.val);</span><br><span class="line">        <span class="keyword">return</span> root.val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> left = getPathSum(root.left);</span><br><span class="line">    <span class="keyword">int</span> right = getPathSum(root.right);</span><br><span class="line"></span><br><span class="line">    maxSum = Math.max(maxSum, root.val);</span><br><span class="line">    maxSum = Math.max(maxSum, left + root.val);</span><br><span class="line">    maxSum = Math.max(maxSum, right + root.val);</span><br><span class="line">    maxSum = Math.max(maxSum, left + right + root.val);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 把当前子树能得到的最大 pathSum 返回</span></span><br><span class="line">    <span class="keyword">return</span> Math.max(root.val, Math.max(left + root.val, right + root.val));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="二叉搜索树中两个错误的节点"><a class="markdownIt-Anchor" href="#二叉搜索树中两个错误的节点"></a> 二叉搜索树中两个错误的节点</h4>
-<div class="note "><p>一棵二叉树原本是搜索二叉树，但是其中有两个节点调换了位置，使得这棵二叉树不再是搜索二叉树，请按升序输出这两个错误节点的值。(每个节点的值各不相同)</p>
-</div>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> val = Integer.MIN_VALUE;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] findError(TreeNode root) &#123;</span><br><span class="line">    dfs(root);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    dfs(root.left);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.val &lt; val) &#123;</span><br><span class="line">        res[<span class="number">0</span>] = root.val;</span><br><span class="line">        res[<span class="number">1</span>] = val;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        val = root.val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dfs(root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="二叉树是否为满二叉树"><a class="markdownIt-Anchor" href="#二叉树是否为满二叉树"></a> 二叉树是否为满二叉树</h4>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isFullBinaryTree</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    ArrayList&lt;TreeNode&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    list.add(root);</span><br><span class="line"></span><br><span class="line">    TreeNode lastNode = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span> (list.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        TreeNode node = list.get(<span class="number">0</span>);</span><br><span class="line">        list.remove(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (node == lastNode &amp;&amp; list.size() &gt; <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (node.left == <span class="keyword">null</span>) &#123; <span class="comment">// 左节点为空</span></span><br><span class="line">            <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>; <span class="comment">// 右节点不为空，返回 false</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 左节点不为空</span></span><br><span class="line">            list.add(node.left);</span><br><span class="line">            <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) &#123; </span><br><span class="line">                list.add(node.right);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// node 的右节点为空，其左节点就应该是完全二叉树的最后一个节点</span></span><br><span class="line">                lastNode = node.left;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="树的直径"><a class="markdownIt-Anchor" href="#树的直径"></a> 树的直径</h4>
-<div class="note "><p>给定一棵树，求出这棵树的直径，即树上最远两点的距离。包含n个结点，n-1条边的连通图称为树。</p>
-</div>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Interval</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> start;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> end;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Interval</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        start = <span class="number">0</span>; end = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Interval</span><span class="params">(<span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.start = start;</span><br><span class="line">        <span class="keyword">this</span>.end = end;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> max = Integer.MIN_VALUE;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> n, Interval[] Tree_edge, <span class="keyword">int</span>[] Edge_value)</span> </span>&#123;</span><br><span class="line">    List&lt;<span class="keyword">int</span>[]&gt;[] map = <span class="keyword">new</span> ArrayList[n];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        map[i] = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        map[Tree_edge[i].start].add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;Tree_edge[i].end, Edge_value[i]&#125;);</span><br><span class="line">        map[Tree_edge[i].end].add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;Tree_edge[i].start, Edge_value[i]&#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dfs(map, <span class="number">0</span>, <span class="keyword">new</span> <span class="keyword">boolean</span>[n]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dfs</span><span class="params">(List&lt;<span class="keyword">int</span>[]&gt;[] map, <span class="keyword">int</span> pos, <span class="keyword">boolean</span>[] visit)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> right = <span class="number">0</span>;</span><br><span class="line">    visit[pos] = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span>[] num : map[pos]) &#123;</span><br><span class="line">        <span class="keyword">int</span> children = num[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> weight = num[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (visit[children]) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        weight += dfs(map, children, visit);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (weight &gt; left) &#123;</span><br><span class="line">            right = left;</span><br><span class="line">            left = weight;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (weight &gt; right)</span><br><span class="line">            right = weight;</span><br><span class="line"></span><br><span class="line">        max = Math.max(left + right, max);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Math.max(left, right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="最低公共祖先"><a class="markdownIt-Anchor" href="#最低公共祖先"></a> 最低公共祖先</h4>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode root, <span class="keyword">int</span> o1, <span class="keyword">int</span> o2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.val == o1) <span class="keyword">return</span> o1;</span><br><span class="line">    <span class="keyword">if</span> (root.val == o2) <span class="keyword">return</span> o2;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((findChild(root.left, o1) &amp;&amp; findChild(root.right, o2)) || (findChild(root.left, o2) &amp;&amp; findChild(root.right, o1))) <span class="keyword">return</span> root.val;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> lowestCommonAncestor(root.left, o1, o2) != -<span class="number">1</span> ? lowestCommonAncestor(root.left, o1, o2) : lowestCommonAncestor(root.right, o1, o2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">findChild</span><span class="params">(TreeNode root, <span class="keyword">int</span> o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.val == o) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> findChild2(root.left, o) || findChild2(root.right, o);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="打印二叉树的右视图"><a class="markdownIt-Anchor" href="#打印二叉树的右视图"></a> 打印二叉树的右视图</h4>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">rightViewNumbers</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">    ArrayList&lt;TreeNode&gt; oddLevel = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    ArrayList&lt;TreeNode&gt; evenLevel = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    oddLevel.add(root);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (oddLevel.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        TreeNode node = oddLevel.get(<span class="number">0</span>);</span><br><span class="line">        oddLevel.remove(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (oddLevel.size() == <span class="number">0</span>) res.add(node.val);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (node.left != <span class="keyword">null</span>) evenLevel.add(node.left);</span><br><span class="line">        <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) evenLevel.add(node.right);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (oddLevel.size() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (evenLevel.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                node = evenLevel.get(<span class="number">0</span>);</span><br><span class="line">                evenLevel.remove(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (evenLevel.size() == <span class="number">0</span>) res.add(node.val);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (node.left != <span class="keyword">null</span>) oddLevel.add(node.left);</span><br><span class="line">                <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) oddLevel.add(node.right);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>数据结构&amp;算法</category>
-        <category>树</category>
-      </categories>
-      <tags>
-        <tag>树</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>数组</title>
     <url>/archives/340249a9.html</url>
     <content><![CDATA[<h3 id="数组和树"><a class="markdownIt-Anchor" href="#数组和树"></a> 数组和树</h3>
@@ -1471,6 +1549,55 @@
       <tags>
         <tag>数据结构&amp;算法</tag>
         <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>树</title>
+    <url>/archives/7b216a3b.html</url>
+    <content><![CDATA[<h4 id="二叉树先序-中序和后序遍历"><a class="markdownIt-Anchor" href="#二叉树先序-中序和后序遍历"></a> 二叉树先序、中序和后序遍历</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[][] threeOrders(TreeNode root) &#123;</span><br><span class="line">    <span class="keyword">int</span>[][] res = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>][getSize(root)];</span><br><span class="line">    order(res, root);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">order</span><span class="params">(<span class="keyword">int</span>[][] res, TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    res[<span class="number">0</span>][i++] = root.val;</span><br><span class="line"></span><br><span class="line">    order(res, root.left);</span><br><span class="line"></span><br><span class="line">    res[<span class="number">1</span>][j++] = root.val;</span><br><span class="line"></span><br><span class="line">    order(res, root.right);</span><br><span class="line"></span><br><span class="line">    res[<span class="number">2</span>][k++] = root.val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSize</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> + getSize(root.left) + getSize(root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h4 id="二叉树中和为某一值的路径"><a class="markdownIt-Anchor" href="#二叉树中和为某一值的路径"></a> 二叉树中和为某一值的路径</h4>
+<div class="note "><p>输入一颗二叉树的根节点和一个整数，按字典序打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; paths = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">ArrayList&lt;Integer&gt; path = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; FindPath(TreeNode root, <span class="keyword">int</span> target) &#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> paths;</span><br><span class="line"></span><br><span class="line">    path.add(root.val);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span> &amp;&amp; root.val == target) &#123;</span><br><span class="line">        paths.add(<span class="keyword">new</span> ArrayList&lt;&gt;(path));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    FindPath(root.left, target - root.val);</span><br><span class="line">    FindPath(root.right, target - root.val);</span><br><span class="line"></span><br><span class="line">    path.remove(path.size() - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> paths;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="二叉树的下一节点"><a class="markdownIt-Anchor" href="#二叉树的下一节点"></a> 二叉树的下一节点</h4>
+<div class="note "><p>给定一个二叉树其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的next指针。</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeLinkNode <span class="title">GetNext</span><span class="params">(TreeLinkNode pNode)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (pNode == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pNode.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">        pNode = pNode.right;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (pNode.left != <span class="keyword">null</span>) pNode = pNode.left;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> pNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (pNode.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (pNode.next.left == pNode) <span class="keyword">return</span> pNode.next;</span><br><span class="line"></span><br><span class="line">        pNode = pNode.next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="二叉搜索树的第-k-小节点"><a class="markdownIt-Anchor" href="#二叉搜索树的第-k-小节点"></a> 二叉搜索树的第 k 小节点</h4>
+<div class="note "><p>给定一棵二叉搜索树，请找出其中的第 k 小的结点。</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">TreeNode <span class="title">KthNode</span><span class="params">(TreeNode pRoot, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (pRoot == <span class="keyword">null</span> || k &lt; <span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    ArrayList&lt;TreeNode&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (pRoot != <span class="keyword">null</span> || !list.isEmpty()) &#123;</span><br><span class="line">        <span class="keyword">while</span> (pRoot != <span class="keyword">null</span>) &#123;</span><br><span class="line">            list.add(<span class="number">0</span>, pRoot);</span><br><span class="line">            pRoot = pRoot.left;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!list.isEmpty()) &#123;</span><br><span class="line">            TreeNode node = list.get(<span class="number">0</span>);</span><br><span class="line">            list.remove(<span class="number">0</span>);</span><br><span class="line">            cnt ++;</span><br><span class="line">            <span class="keyword">if</span> (cnt == k) <span class="keyword">return</span> node;</span><br><span class="line">            pRoot = node.right;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="二叉树的所有路径和"><a class="markdownIt-Anchor" href="#二叉树的所有路径和"></a> 二叉树的所有路径和</h4>
+<div class="note "><p>给定一个仅包含数字 0−9 的二叉树，每一条从根节点到叶子节点的路径都可以用一个数字表示。例如根节点到叶子节点的一条路径是 1→2→3，那么这条路径就用 123 来代替。找出根节点到叶子节点的所有路径表示的数字之和。</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumNumbers2</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    dfs(root, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode root, <span class="keyword">int</span> curSum)</span> </span>&#123;</span><br><span class="line">    curSum += root.val;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) sum += curSum;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.left != <span class="keyword">null</span>) dfs(root.left, curSum * <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.right != <span class="keyword">null</span>) dfs(root.right, curSum * <span class="number">10</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="二叉树的最大路径和"><a class="markdownIt-Anchor" href="#二叉树的最大路径和"></a> 二叉树的最大路径和</h4>
+<div class="note "><p>给定一个二叉树，请计算节点值之和最大的路径的节点值之和是多少。这个路径的开始节点和结束节点可以是二叉树中的任意节点。</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> maxSum = Integer.MIN_VALUE;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    getPathSum(root);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> maxSum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">        maxSum = Math.max(maxSum, root.val);</span><br><span class="line">        <span class="keyword">return</span> root.val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> left = getPathSum(root.left);</span><br><span class="line">    <span class="keyword">int</span> right = getPathSum(root.right);</span><br><span class="line"></span><br><span class="line">    maxSum = Math.max(maxSum, root.val);</span><br><span class="line">    maxSum = Math.max(maxSum, left + root.val);</span><br><span class="line">    maxSum = Math.max(maxSum, right + root.val);</span><br><span class="line">    maxSum = Math.max(maxSum, left + right + root.val);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 把当前子树能得到的最大 pathSum 返回</span></span><br><span class="line">    <span class="keyword">return</span> Math.max(root.val, Math.max(left + root.val, right + root.val));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="二叉搜索树中两个错误的节点"><a class="markdownIt-Anchor" href="#二叉搜索树中两个错误的节点"></a> 二叉搜索树中两个错误的节点</h4>
+<div class="note "><p>一棵二叉树原本是搜索二叉树，但是其中有两个节点调换了位置，使得这棵二叉树不再是搜索二叉树，请按升序输出这两个错误节点的值。(每个节点的值各不相同)</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> val = Integer.MIN_VALUE;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] findError(TreeNode root) &#123;</span><br><span class="line">    dfs(root);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    dfs(root.left);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.val &lt; val) &#123;</span><br><span class="line">        res[<span class="number">0</span>] = root.val;</span><br><span class="line">        res[<span class="number">1</span>] = val;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        val = root.val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dfs(root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="二叉树是否为满二叉树"><a class="markdownIt-Anchor" href="#二叉树是否为满二叉树"></a> 二叉树是否为满二叉树</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isFullBinaryTree</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    ArrayList&lt;TreeNode&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    list.add(root);</span><br><span class="line"></span><br><span class="line">    TreeNode lastNode = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span> (list.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        TreeNode node = list.get(<span class="number">0</span>);</span><br><span class="line">        list.remove(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (node == lastNode &amp;&amp; list.size() &gt; <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (node.left == <span class="keyword">null</span>) &#123; <span class="comment">// 左节点为空</span></span><br><span class="line">            <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>; <span class="comment">// 右节点不为空，返回 false</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 左节点不为空</span></span><br><span class="line">            list.add(node.left);</span><br><span class="line">            <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) &#123; </span><br><span class="line">                list.add(node.right);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// node 的右节点为空，其左节点就应该是完全二叉树的最后一个节点</span></span><br><span class="line">                lastNode = node.left;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="树的直径"><a class="markdownIt-Anchor" href="#树的直径"></a> 树的直径</h4>
+<div class="note "><p>给定一棵树，求出这棵树的直径，即树上最远两点的距离。包含n个结点，n-1条边的连通图称为树。</p>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Interval</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> start;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> end;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Interval</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        start = <span class="number">0</span>; end = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Interval</span><span class="params">(<span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.start = start;</span><br><span class="line">        <span class="keyword">this</span>.end = end;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> max = Integer.MIN_VALUE;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> n, Interval[] Tree_edge, <span class="keyword">int</span>[] Edge_value)</span> </span>&#123;</span><br><span class="line">    List&lt;<span class="keyword">int</span>[]&gt;[] map = <span class="keyword">new</span> ArrayList[n];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        map[i] = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        map[Tree_edge[i].start].add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;Tree_edge[i].end, Edge_value[i]&#125;);</span><br><span class="line">        map[Tree_edge[i].end].add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;Tree_edge[i].start, Edge_value[i]&#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dfs(map, <span class="number">0</span>, <span class="keyword">new</span> <span class="keyword">boolean</span>[n]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dfs</span><span class="params">(List&lt;<span class="keyword">int</span>[]&gt;[] map, <span class="keyword">int</span> pos, <span class="keyword">boolean</span>[] visit)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> right = <span class="number">0</span>;</span><br><span class="line">    visit[pos] = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span>[] num : map[pos]) &#123;</span><br><span class="line">        <span class="keyword">int</span> children = num[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> weight = num[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (visit[children]) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        weight += dfs(map, children, visit);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (weight &gt; left) &#123;</span><br><span class="line">            right = left;</span><br><span class="line">            left = weight;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (weight &gt; right)</span><br><span class="line">            right = weight;</span><br><span class="line"></span><br><span class="line">        max = Math.max(left + right, max);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Math.max(left, right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="最低公共祖先"><a class="markdownIt-Anchor" href="#最低公共祖先"></a> 最低公共祖先</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode root, <span class="keyword">int</span> o1, <span class="keyword">int</span> o2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.val == o1) <span class="keyword">return</span> o1;</span><br><span class="line">    <span class="keyword">if</span> (root.val == o2) <span class="keyword">return</span> o2;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((findChild(root.left, o1) &amp;&amp; findChild(root.right, o2)) || (findChild(root.left, o2) &amp;&amp; findChild(root.right, o1))) <span class="keyword">return</span> root.val;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> lowestCommonAncestor(root.left, o1, o2) != -<span class="number">1</span> ? lowestCommonAncestor(root.left, o1, o2) : lowestCommonAncestor(root.right, o1, o2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">findChild</span><span class="params">(TreeNode root, <span class="keyword">int</span> o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root.val == o) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> findChild2(root.left, o) || findChild2(root.right, o);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="打印二叉树的右视图"><a class="markdownIt-Anchor" href="#打印二叉树的右视图"></a> 打印二叉树的右视图</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">rightViewNumbers</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">    ArrayList&lt;TreeNode&gt; oddLevel = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    ArrayList&lt;TreeNode&gt; evenLevel = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    oddLevel.add(root);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (oddLevel.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        TreeNode node = oddLevel.get(<span class="number">0</span>);</span><br><span class="line">        oddLevel.remove(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (oddLevel.size() == <span class="number">0</span>) res.add(node.val);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (node.left != <span class="keyword">null</span>) evenLevel.add(node.left);</span><br><span class="line">        <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) evenLevel.add(node.right);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (oddLevel.size() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (evenLevel.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                node = evenLevel.get(<span class="number">0</span>);</span><br><span class="line">                evenLevel.remove(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (evenLevel.size() == <span class="number">0</span>) res.add(node.val);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (node.left != <span class="keyword">null</span>) oddLevel.add(node.left);</span><br><span class="line">                <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) oddLevel.add(node.right);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>数据结构&amp;算法</category>
+        <category>树</category>
+      </categories>
+      <tags>
+        <tag>树</tag>
       </tags>
   </entry>
   <entry>
@@ -2741,84 +2868,6 @@ due to be held in September but were postponed for a year, <mark class="label pr
       </tags>
   </entry>
   <entry>
-    <title>UDP和TCP</title>
-    <url>/archives/c18409ab.html</url>
-    <content><![CDATA[<h4 id="udp"><a class="markdownIt-Anchor" href="#udp"></a> <code>UDP</code></h4>
-<h5 id="udp-特点"><a class="markdownIt-Anchor" href="#udp-特点"></a> <code>UDP</code> 特点</h5>
-<p>用户数据报协议（<code>User Datagram Protocol</code>，<code>UDP</code>）的特点：</p>
-<ul>
-<li>无连接</li>
-<li>尽最大可能交付</li>
-<li>没有拥塞控制</li>
-<li>面向报文（对于应用程序传下来的报文不合并也不拆分，只是添加 <code>UDP</code> 首部）</li>
-<li>支持一对一、一对多、多对一和多对多的交互通信</li>
-</ul>
-<span id="more"></span>
-<h5 id="udp-首部"><a class="markdownIt-Anchor" href="#udp-首部"></a> <code>UDP</code> 首部</h5>
-<img data-src="/archives/c18409ab/UDP%E9%A6%96%E9%83%A8.png" alt="UDP首部" style="zoom:60%;">
-<h4 id="tcp"><a class="markdownIt-Anchor" href="#tcp"></a> <code>TCP</code></h4>
-<h5 id="tcp-特点"><a class="markdownIt-Anchor" href="#tcp-特点"></a> <code>TCP</code> 特点</h5>
-<ul>
-<li>传输控制协议（<code>Transmission Control Protocol</code>，<code>TCP</code>）的特点：</li>
-<li>面向连接</li>
-<li>提供可靠交付</li>
-<li>有流量控制和拥塞控制，</li>
-<li>提供全双工通信</li>
-<li>面向字节流（把应用层传下来的报文看成字节流，把字节流组织成大小不等的数据块）</li>
-<li>每一条 <code>TCP</code> 连接只能是点对点的（一对一）。</li>
-</ul>
-<h5 id="tcp-首部"><a class="markdownIt-Anchor" href="#tcp-首部"></a> <code>TCP</code> 首部</h5>
-<img data-src="/archives/c18409ab/TCP%E9%A6%96%E9%83%A8.png" alt="TCP首部" style="zoom:50%;">
-<ul>
-<li>序号 - 用于对报文段进行编号</li>
-<li>确认号 - 期望收到的下一个报文段的编号</li>
-<li><code>ACK</code> -</li>
-<li><code>SYN</code> -</li>
-<li><code>FIN</code> -</li>
-<li>窗口 -</li>
-</ul>
-<h4 id="tcp-三次握手"><a class="markdownIt-Anchor" href="#tcp-三次握手"></a> <code>TCP</code> 三次握手</h4>
-<img data-src="/archives/c18409ab/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="TCP三次握手" style="zoom:60%;">
-<p>三次握手过程：</p>
-<ul>
-<li>服务器 <code>B</code> 处于监听状态，等待连接请求</li>
-<li>客户端 <code>A</code> 向 <code>B</code> 发起一个连接请求，选择一个初始序号 x</li>
-<li><code>B</code> 收到连接请求后，向 <code>A</code> 发送确认报文，确认号为 x + 1，同时也选择一个初始号 y</li>
-<li><code>A</code> 收到 <code>B</code> 的确认报文后，再次向 <code>B</code> 发送确认报文</li>
-<li><code>B</code> 收到确认，连接真正建立</li>
-</ul>
-<p>为什么需要三次握手：</p>
-<p>第三次握手是为了过滤掉失效的连接请求。</p>
-<p>如果不进行三次握手，服务器每收到一个连接请求就建立一个连接。但是会有这样的情况，客户端第一发送连接请求，由于网络拥塞，迟迟没有收到服务器的确认报文，在等待一段时间后，重新发起了一个连接请求，并很快收到了应答。此时服务器端建立了两个连接，但是对于客户端来说，服务端为其第一次请求建立的连接是无效的，白白浪费了资源。</p>
-<p>而如果有三次握手，服务端并不是在收到连接请求后就建立一个连接，而是要等客服端对此次连接再进行确认才会真正建立一个连接。向上面所说那种情况，客户端收到第一次连接请求的确认报文后会忽略，不再向服务端发出确认，服务端也就不会建立这个连接。</p>
-<h4 id="tcp-四次挥手"><a class="markdownIt-Anchor" href="#tcp-四次挥手"></a> <code>TCP</code> 四次挥手</h4>
-<img data-src="/archives/c18409ab/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="TCP四次挥手" style="zoom:67%;">
-<p>四次挥手过程：</p>
-<ul>
-<li><code>A</code> 向 <code>B</code> 发送连接释放报文</li>
-<li><code>B</code> 收到后向 <code>A</code> 发送确认报文，此时连接处于半关闭状态，<code>B</code> 可以向 <code>A</code> 继续发送数据</li>
-<li>当 <code>B</code> 数据发送完毕，向 <code>A</code> 发送连接释放报文</li>
-<li><code>A</code> 收到后向 <code>B</code> 发送确认报文，<code>A</code> 进入 <code>TIME_WAIT</code> 状态，等待 <code>2MSL</code>（最大报文存活时间）后释放连接</li>
-<li><code>B</code> 收到 <code>A</code> 的确认后释放连接</li>
-</ul>
-<p>为什么要有一个 <code>TIME_WAIT</code> 状态：</p>
-<ul>
-<li>如果 <code>B</code> 没有在 <code>2MSL</code> 时间内收到 <code>A</code> 的确认，可以重新向 <code>A</code> 发送释放连接报文。</li>
-<li>等待 <code>2MSL</code> 时间可以让此次连接的所有报文从网络中消失，如果新的请求 <code>IP</code> 和端口如果和此次一样，不会造成旧连接的报文出现在新连接中。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>网络</tag>
-        <tag>TCP</tag>
-        <tag>UDP</tag>
-        <tag>三次握手</tag>
-        <tag>四次挥手</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Racing ahead</title>
     <url>/archives/5ee67121.html</url>
     <content><![CDATA[<center><b>One firm. One year. One billion shots or more. Can India’s Serum Institute do it?</b></center>
@@ -2961,6 +3010,223 @@ advertising campaign could hope to.</p>
       </tags>
   </entry>
   <entry>
+    <title>UDP和TCP</title>
+    <url>/archives/c18409ab.html</url>
+    <content><![CDATA[<h4 id="udp"><a class="markdownIt-Anchor" href="#udp"></a> <code>UDP</code></h4>
+<h5 id="udp-特点"><a class="markdownIt-Anchor" href="#udp-特点"></a> <code>UDP</code> 特点</h5>
+<p>用户数据报协议（<code>User Datagram Protocol</code>，<code>UDP</code>）的特点：</p>
+<ul>
+<li>无连接</li>
+<li>尽最大可能交付</li>
+<li>没有拥塞控制</li>
+<li>面向报文（对于应用程序传下来的报文不合并也不拆分，只是添加 <code>UDP</code> 首部）</li>
+<li>支持一对一、一对多、多对一和多对多的交互通信</li>
+</ul>
+<span id="more"></span>
+<h5 id="udp-首部"><a class="markdownIt-Anchor" href="#udp-首部"></a> <code>UDP</code> 首部</h5>
+<img data-src="/archives/c18409ab/UDP%E9%A6%96%E9%83%A8.png" alt="UDP首部" style="zoom:60%;">
+<h4 id="tcp"><a class="markdownIt-Anchor" href="#tcp"></a> <code>TCP</code></h4>
+<h5 id="tcp-特点"><a class="markdownIt-Anchor" href="#tcp-特点"></a> <code>TCP</code> 特点</h5>
+<ul>
+<li>传输控制协议（<code>Transmission Control Protocol</code>，<code>TCP</code>）的特点：</li>
+<li>面向连接</li>
+<li>提供可靠交付</li>
+<li>有流量控制和拥塞控制，</li>
+<li>提供全双工通信</li>
+<li>面向字节流（把应用层传下来的报文看成字节流，把字节流组织成大小不等的数据块）</li>
+<li>每一条 <code>TCP</code> 连接只能是点对点的（一对一）。</li>
+</ul>
+<h5 id="tcp-首部"><a class="markdownIt-Anchor" href="#tcp-首部"></a> <code>TCP</code> 首部</h5>
+<img data-src="/archives/c18409ab/TCP%E9%A6%96%E9%83%A8.png" alt="TCP首部" style="zoom:50%;">
+<ul>
+<li>序号 - 用于对报文段进行编号</li>
+<li>确认号 - 期望收到的下一个报文段的编号</li>
+<li><code>ACK</code> -</li>
+<li><code>SYN</code> -</li>
+<li><code>FIN</code> -</li>
+<li>窗口 -</li>
+</ul>
+<h4 id="tcp-三次握手"><a class="markdownIt-Anchor" href="#tcp-三次握手"></a> <code>TCP</code> 三次握手</h4>
+<img data-src="/archives/c18409ab/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="TCP三次握手" style="zoom:60%;">
+<p>三次握手过程：</p>
+<ul>
+<li>服务器 <code>B</code> 处于监听状态，等待连接请求</li>
+<li>客户端 <code>A</code> 向 <code>B</code> 发起一个连接请求，选择一个初始序号 x</li>
+<li><code>B</code> 收到连接请求后，向 <code>A</code> 发送确认报文，确认号为 x + 1，同时也选择一个初始号 y</li>
+<li><code>A</code> 收到 <code>B</code> 的确认报文后，再次向 <code>B</code> 发送确认报文</li>
+<li><code>B</code> 收到确认，连接真正建立</li>
+</ul>
+<p>为什么需要三次握手：</p>
+<p>第三次握手是为了过滤掉失效的连接请求。</p>
+<p>如果不进行三次握手，服务器每收到一个连接请求就建立一个连接。但是会有这样的情况，客户端第一发送连接请求，由于网络拥塞，迟迟没有收到服务器的确认报文，在等待一段时间后，重新发起了一个连接请求，并很快收到了应答。此时服务器端建立了两个连接，但是对于客户端来说，服务端为其第一次请求建立的连接是无效的，白白浪费了资源。</p>
+<p>而如果有三次握手，服务端并不是在收到连接请求后就建立一个连接，而是要等客服端对此次连接再进行确认才会真正建立一个连接。向上面所说那种情况，客户端收到第一次连接请求的确认报文后会忽略，不再向服务端发出确认，服务端也就不会建立这个连接。</p>
+<h4 id="tcp-四次挥手"><a class="markdownIt-Anchor" href="#tcp-四次挥手"></a> <code>TCP</code> 四次挥手</h4>
+<img data-src="/archives/c18409ab/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="TCP四次挥手" style="zoom:67%;">
+<p>四次挥手过程：</p>
+<ul>
+<li><code>A</code> 向 <code>B</code> 发送连接释放报文</li>
+<li><code>B</code> 收到后向 <code>A</code> 发送确认报文，此时连接处于半关闭状态，<code>B</code> 可以向 <code>A</code> 继续发送数据</li>
+<li>当 <code>B</code> 数据发送完毕，向 <code>A</code> 发送连接释放报文</li>
+<li><code>A</code> 收到后向 <code>B</code> 发送确认报文，<code>A</code> 进入 <code>TIME_WAIT</code> 状态，等待 <code>2MSL</code>（最大报文存活时间）后释放连接</li>
+<li><code>B</code> 收到 <code>A</code> 的确认后释放连接</li>
+</ul>
+<p>为什么要有一个 <code>TIME_WAIT</code> 状态：</p>
+<ul>
+<li>如果 <code>B</code> 没有在 <code>2MSL</code> 时间内收到 <code>A</code> 的确认，可以重新向 <code>A</code> 发送释放连接报文。</li>
+<li>等待 <code>2MSL</code> 时间可以让此次连接的所有报文从网络中消失，如果新的请求 <code>IP</code> 和端口如果和此次一样，不会造成旧连接的报文出现在新连接中。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+        <tag>TCP</tag>
+        <tag>UDP</tag>
+        <tag>三次握手</tag>
+        <tag>四次挥手</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Explain</title>
+    <url>/archives/b32c9fde.html</url>
+    <content><![CDATA[<h4 id="安装测试数据库"><a class="markdownIt-Anchor" href="#安装测试数据库"></a> 安装测试数据库</h4>
+<ol>
+<li>克隆 <code>test_db.git</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:datacharmer/test_db.git</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>去到 <code>test_db</code> 目录，并安装 <code>employees</code> 数据库</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># p 后跟数据库秘密</span></span><br><span class="line">mysql -uroot -p -t &lt; employees.sql</span><br></pre></td></tr></table></figure>
+<h4 id="explain-输出"><a class="markdownIt-Anchor" href="#explain-输出"></a> <code>Explain</code> 输出</h4>
+<p>执行 <code>explain select * from employees where emp_no='10001';</code> 输出：</p>
+<p><img data-src="/archives/b32c9fde/Explain%E7%9A%84%E8%BE%93%E5%87%BA.png" alt="Explain输出"></p>
+<p>下图来自 <code>MySQL</code> 官方参考手册：</p>
+<img data-src="/archives/b32c9fde/Explain%20Column.png" alt="Explain Column" style="zoom:50%;">
+<p>比较重要的字段：</p>
+<h5 id="select_type"><a class="markdownIt-Anchor" href="#select_type"></a> <code>select_type</code></h5>
+<p><img data-src="/archives/b32c9fde/select_type.png" alt="select_type"></p>
+<p>最常见的查询类型就是 <code>SIMPLE</code>，如 <code>explain select * from employees where emp_no='10001';</code></p>
+<p>如果是 <code>union</code> 查询，如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">explain </span><br><span class="line">select * from employees where emp_no between &#39;10001&#39; and &#39;10005&#39;</span><br><span class="line">union</span><br><span class="line">select * from employees where emp_no between &#39;10006&#39; and &#39;10010&#39;;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<p><img data-src="/archives/b32c9fde/union_select.png" alt="union查询"></p>
+<h5 id="type"><a class="markdownIt-Anchor" href="#type"></a> <code>type</code></h5>
+<p>The <code>type</code> column of <a href="https://dev.mysql.com/doc/refman/8.0/en/explain.html"><code>EXPLAIN</code></a> output describes how tables are joined.</p>
+<p>The following list describes the join types, ordered from the best type to the worst:</p>
+<h6 id="system"><a class="markdownIt-Anchor" href="#system"></a> <code>system</code></h6>
+<p>表中只有一条数据。这个类型是特殊的 <code>const</code> 类型。</p>
+<h6 id="const"><a class="markdownIt-Anchor" href="#const"></a> <code>const</code></h6>
+<p>针对主键或唯一索引的等值查询扫描， 最多只返回一行数据。</p>
+<p><code>const</code> 查询速度非常快, 因为它仅仅读取一次即可。</p>
+<h6 id="eq_ref"><a class="markdownIt-Anchor" href="#eq_ref"></a> <code>eq_ref</code></h6>
+<p>One row is read from this table for each combination of rows from the previous tables.</p>
+<p>It is used when all parts of an index are used by the join and the index is a <code>PRIMARY KEY</code> or <code>UNIQUE NOT NULL</code> index.</p>
+<p>假设有两张表：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">create table &#96;user_info&#96; (</span><br><span class="line">    &#96;id&#96; bigint(20) not null auto_increment,</span><br><span class="line">    &#96;name&#96; varchar(50) not null default &#39;&#39;,</span><br><span class="line">    &#96;age&#96; int(11) default null,</span><br><span class="line">    primary key (&#96;id&#96;),</span><br><span class="line">    key name_idx (&#96;name&#96;)</span><br><span class="line">) engine &#x3D; InnoDB, charset &#x3D; utf8;</span><br><span class="line"></span><br><span class="line">create table &#96;order_info&#96; (</span><br><span class="line">    &#96;id&#96; bigint(20) not null auto_increment,</span><br><span class="line">    &#96;user_id&#96; bigint(20) default null,</span><br><span class="line">    &#96;product_name&#96; varchar(50) not null default &#39;&#39;,</span><br><span class="line">    &#96;productor&#96; varchar(30) default null,</span><br><span class="line">    primary key (&#96;id&#96;),</span><br><span class="line">    key &#96;user_product_detail_index&#96; (&#96;user_id&#96;, &#96;product_name&#96;, &#96;productor&#96;)</span><br><span class="line">) engine &#x3D; InnoDB, charset &#x3D; utf8;</span><br></pre></td></tr></table></figure>
+<p>查询语句</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">explain select * from user_info, order_info where user_info.id &#x3D; order_info.user_id;</span><br></pre></td></tr></table></figure>
+<p>执行计划为：</p>
+<center><img data-src="/archives/b32c9fde/eq_ref.png" alt="eq_ref" style="zoom:50%;"><img data-src="/archives/b32c9fde/eq_ref%E7%BB%AD.png" alt="eq_ref续" style="zoom:35%;"></center>
+<h6 id="ref"><a class="markdownIt-Anchor" href="#ref"></a> <code>ref</code></h6>
+<p>All rows with matching index values are read from this table for each combination of rows from the previous tables. <a href="https://dev.mysql.com/doc/refman/8.0/en/explain-output.html#jointype_ref"><code>ref</code></a> is used if the join uses only a leftmost prefix of the key or if the key is not a <code>PRIMARY KEY</code> or <code>UNIQUE</code> index (in other words, if the join cannot select a single row based on the key value). If the key that is used matches only a few rows, this is a good join type.</p>
+<p>此类型通常出现在多表的 join 查询, 针对于非唯一或非主键索引, 或者是使用了 <code>最左前缀</code> 规则索引的查询.</p>
+<h6 id="range"><a class="markdownIt-Anchor" href="#range"></a> <code>range</code></h6>
+<p>表示使用索引范围查询, 通过索引字段范围获取表中部分数据记录. 这个类型通常出现在<code>=, &lt;&gt;, &gt;, &gt;=, &lt;, &lt;=, IS NULL, &lt;=&gt;, BETWEEN, IN()</code> 操作中.</p>
+<p>当 <code>type</code> 是 <code>range</code> 时, 那么 <code>EXPLAIN</code> 输出的 <code>ref</code> 字段为 <code>NULL</code>, 并且 <code>key_len</code> 字段是此次查询中使用到的索引的最长的那个.</p>
+<p>如查询语句</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">explain select * from employees.employees where emp_no between &#39;10001&#39; and &#39;10010&#39;;</span><br></pre></td></tr></table></figure>
+<p>执行计划为 ：</p>
+<center><img data-src="/archives/b32c9fde/range.png" alt="range" style="zoom:50%;"><img data-src="/archives/b32c9fde/range%E7%BB%AD.png" alt="range续" style="zoom:40%;"></center>
+<h6 id="index"><a class="markdownIt-Anchor" href="#index"></a> <code>index</code></h6>
+<p>The <code>index</code> join type is the same as <a href="https://dev.mysql.com/doc/refman/8.0/en/explain-output.html#jointype_all"><code>ALL</code></a>, except that the index tree is scanned. This occurs two ways:</p>
+<ul>
+<li>If the index is a covering index for the queries and can be used to satisfy all data required from the table, only the index tree is scanned. In this case, the <code>Extra</code> column says <code>Using index</code>. An index-only scan usually is faster than <a href="https://dev.mysql.com/doc/refman/8.0/en/explain-output.html#jointype_all"><code>ALL</code></a> because the size of the index usually is smaller than the table data.</li>
+<li>A full table scan is performed using reads from the index to look up data rows in index order. <code>Uses index</code> does not appear in the <code>Extra</code> column.</li>
+</ul>
+<p>如查询语句</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">explain select dept_no from employees.dept_manager;</span><br></pre></td></tr></table></figure>
+<p>的执行计划为：</p>
+<center><img data-src="/archives/b32c9fde/index.png" alt="index" style="zoom:50%;"><img data-src="/archives/b32c9fde/index%E7%BB%AD.png" alt="index续" style="zoom:40%;"></center>
+<h6 id="all"><a class="markdownIt-Anchor" href="#all"></a> <code>all</code></h6>
+<p>全表扫描。</p>
+<p>如查询语句</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">explain select * from employees.employees where first_name like &#39;G%&#39;;</span><br></pre></td></tr></table></figure>
+<p>的执行计划为：</p>
+<center><img data-src="/archives/b32c9fde/all.png" alt="all" style="zoom:50%;"><img data-src="/archives/b32c9fde/all%E7%BB%AD.png" alt="all续" style="zoom:40%;"></center>
+<h5 id="possible_keys"><a class="markdownIt-Anchor" href="#possible_keys"></a> <code>possible_keys</code></h5>
+<p><code>MySQL</code> 在查询时，可能用到的索引。</p>
+<h5 id="key"><a class="markdownIt-Anchor" href="#key"></a> <code>key</code></h5>
+<p><code>MySQL</code> 在查询时，真正用到的索引。</p>
+<h5 id="key_len"><a class="markdownIt-Anchor" href="#key_len"></a> <code>key_len</code></h5>
+<p>表示查询优化器使用了索引的字节数。</p>
+<p>这个字段可以评估组合索引是否完全被使用，或只有最左部分字段被使用到。</p>
+<p><code>key_len</code> 的计算规则如下:</p>
+<ul>
+<li>字符串
+<ul>
+<li><code>char(n)</code>: <code>n</code> 字节长度。</li>
+<li><code>varchar(n)</code>: 如果是 <code>utf8</code> 编码, 则是 <code>3n + 2</code> 字节；如果是 <code>utf8mb4</code> 编码，则是 <code>4n + 2</code> 字节。</li>
+</ul>
+</li>
+<li>数值类型:
+<ul>
+<li><code>TINYINT</code>: 1 字节</li>
+<li><code>SMALLINT</code>: 2 字节</li>
+<li><code>MEDIUMINT</code>: 3 字节</li>
+<li><code>INT</code>: 4  字节</li>
+<li><code>BIGINT</code>: 8字节</li>
+</ul>
+</li>
+<li>时间类型
+<ul>
+<li><code>DATE</code>: 3 字节</li>
+<li><code>TIMESTAMP</code>: 4 字节</li>
+<li><code>DATETIME</code>: 8 字节</li>
+</ul>
+</li>
+<li>字段属性: <code>NULL</code> 属性占用一个字节。 如果一个字段是 <code>NOT NULL</code> 的，则没有此属性.</li>
+</ul>
+<p>如对表</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">create table &#96;order_info&#96; (</span><br><span class="line">    &#96;id&#96; bigint(20) not null auto_increment,</span><br><span class="line">    &#96;user_id&#96; bigint(20) default null,</span><br><span class="line">    &#96;product_name&#96; varchar(50) not null default &#39;&#39;,</span><br><span class="line">    &#96;productor&#96; varchar(30) default null,</span><br><span class="line">    primary key (&#96;id&#96;),</span><br><span class="line">    key &#96;user_product_detail_index&#96; (&#96;user_id&#96;, &#96;product_name&#96;, &#96;productor&#96;)</span><br><span class="line">) engine &#x3D; InnoDB, charset &#x3D; utf8;</span><br></pre></td></tr></table></figure>
+<p>进行如下查询</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">explain </span><br><span class="line">select * from order_info where user_id &lt; 3 and product_name &#x3D; &#39;p1&#39; and productor &#x3D; &#39;WHH&#39;;</span><br></pre></td></tr></table></figure>
+<p>执行计划为：</p>
+<center><img data-src="/archives/b32c9fde/key_len.png" alt="key_len" style="zoom:50%;"><img data-src="/archives/b32c9fde/key_len%E7%BB%AD.png" alt="key_len续" style="zoom:39%;"></center>
+<p>从结果中可以看出，因为 <code>where</code> 子句中使用了范围查询，根据<mark class="label primary">最左前缀原则</mark>，只会使用联合索引的第一个字段，也就是 <code>user_id</code>。</p>
+<p>而 <code>user_id</code> 是 <code>bigint</code> 类型，占 8 个字节；字段可以为 <code>null</code>，占 1 个字节；所以 <code>key_len</code> 为 9 个字节。</p>
+<h5 id="ref-2"><a class="markdownIt-Anchor" href="#ref-2"></a> <code>ref</code></h5>
+<p>The <code>ref</code> column shows which columns or constants are compared to the index named in the <code>key</code> column to select rows from the table.</p>
+<p>If the value is <code>func</code>, the value used is the result of some function. To see which function, use <a href="https://dev.mysql.com/doc/refman/8.0/en/show-warnings.html"><code>SHOW WARNINGS</code></a> following <a href="https://dev.mysql.com/doc/refman/8.0/en/explain.html"><code>EXPLAIN</code></a> to see the extended <a href="https://dev.mysql.com/doc/refman/8.0/en/explain.html"><code>EXPLAIN</code></a> output. The function might actually be an operator such as an arithmetic operator.</p>
+<h5 id="rows"><a class="markdownIt-Anchor" href="#rows"></a> <code>rows</code></h5>
+<p>估计的需要扫描读取的行数。</p>
+<h5 id="filtered"><a class="markdownIt-Anchor" href="#filtered"></a> <code>filtered</code></h5>
+<p>The <code>filtered</code> column indicates an estimated percentage of table rows that are filtered by the table condition. The maximum value is 100, which means no filtering of rows occurred. Values decreasing from 100 indicate increasing amounts of filtering. <code>rows</code> shows the estimated number of rows examined and <code>rows</code> × <code>filtered</code> shows the number of rows that are joined with the following table. For example, if <code>rows</code> is 1000 and <code>filtered</code> is 50.00 (50%), the number of rows to be joined with the following table is 1000 × 50% = 500.</p>
+<h5 id="extra"><a class="markdownIt-Anchor" href="#extra"></a> <code>extra</code></h5>
+<p>常见的有 <code>Using where</code>、<code>Using index</code> 等。</p>
+<p>如果查询语句有 <code>order by</code> 子句，且子句中的字段没有建索引，<code>extra</code> 会出现 <code>Using filesort</code>。显然，查询时需要排序临时排序会严重影响性能，需要优化。</p>
+<h4 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h4>
+<ul>
+<li>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/explain-output.html">EXPLAIN Output Format</a></p>
+</li>
+<li>
+<p><a href="https://segmentfault.com/a/1190000008131735">Explain 使用分析</a></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>MySQL</tag>
+        <tag>Explain</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>InnoDB</title>
     <url>/archives/2b2295bb.html</url>
     <content><![CDATA[<p>在 <code>InnoDB</code> 中，表是根据主键顺序以索引的形式存放的，这种存储方式的表称为索引组织表。</p>
@@ -2968,11 +3234,14 @@ advertising campaign could hope to.</p>
 <p>索引类型包括主键索引和非主键索引：</p>
 <ul>
 <li><strong>主键索引 - 也称聚簇索引</strong>，叶子节点存储存储的是整行数据。</li>
-<li><strong>非主键索引 - 也称普通索引、二级索引</strong>，叶子节点存储的是主键的值。</li>
+<li><strong>非主键索引 - 也称辅助索引、普通索引、二级索引</strong>，叶子节点存储的是主键的值。</li>
 </ul>
 <p>基于主键索引的查询通过查询主键索引树可以直接得到整行数据；</p>
 <p>而基于普通索引，得先查询普通索引树，得到主键的值，然后根据主键的值去查询主键索引树才能得到想要的数据，这个过称为<strong>回表</strong>。</p>
 <p>显然，基于普通索引的查询比基于主键索引的查询需要多扫描一颗索引树，因此建议尽量通过主键查询。</p>
+<span id="more"></span>
+<h4 id="innodb-四大特性"><a class="markdownIt-Anchor" href="#innodb-四大特性"></a> <code>InnoDB</code> 四大特性</h4>
+<h4 id="与-myisam-的区别"><a class="markdownIt-Anchor" href="#与-myisam-的区别"></a> 与 <code>MyISAM</code> 的区别</h4>
 ]]></content>
       <categories>
         <category>数据库</category>
@@ -2983,6 +3252,55 @@ advertising campaign could hope to.</p>
         <tag>MySQL</tag>
         <tag>存储引擎</tag>
         <tag>InnoDB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL分库分表</title>
+    <url>/archives/5ea8028d.html</url>
+    <content><![CDATA[<h4 id="分表"><a class="markdownIt-Anchor" href="#分表"></a> 分表</h4>
+<h5 id="水平切分"><a class="markdownIt-Anchor" href="#水平切分"></a> 水平切分</h5>
+<p>水平切分又称为 <code>Sharding</code>，它是将同一个表中的记录拆分到多个结构相同的表中。</p>
+<p>当一个表的数据不断增多时，<code>Sharding</code> 是必然的选择，它可以将数据分布到集群的不同节点上，从而缓存单个数据库的压力。</p>
+<img data-src="/archives/5ea8028d/%E6%B0%B4%E5%B9%B3%E5%88%87%E5%88%86.png" alt="水平切分" style="zoom:50%;">
+<span id="more"></span>
+<h5 id="垂直切分"><a class="markdownIt-Anchor" href="#垂直切分"></a> 垂直切分</h5>
+<p>垂直切分是将一张表按列切分成多个表，通常是按照列的关系密集程度进行切分，也可以利用垂直切分将经常被使用的列和不经常被使用的列切分到不同的表中。</p>
+<p>在数据库的层面使用垂直切分将按数据库中表的密集程度部署到不同的库中，例如将原来的电商数据库垂直切分成商品数据库、用户数据库等。</p>
+<img data-src="/archives/5ea8028d/%E5%9E%82%E7%9B%B4%E5%88%87%E5%88%86.png" alt="垂直切分" style="zoom:50%;">
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>MySQL</tag>
+        <tag>水平切分</tag>
+        <tag>sharding</tag>
+        <tag>垂直切分</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL备份</title>
+    <url>/archives/8255276b.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>MySQL复制</title>
+    <url>/archives/8f931180.html</url>
+    <content><![CDATA[<h4 id="主从复制"><a class="markdownIt-Anchor" href="#主从复制"></a> 主从复制</h4>
+<span id="more"></span>
+<h4 id="读写分离"><a class="markdownIt-Anchor" href="#读写分离"></a> 读写分离</h4>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>MySQL</tag>
+        <tag>主从复制</tag>
+        <tag>读写分离</tag>
       </tags>
   </entry>
   <entry>
@@ -3039,27 +3357,74 @@ advertising campaign could hope to.</p>
   <entry>
     <title>MySQL索引</title>
     <url>/archives/43a71ae4.html</url>
-    <content><![CDATA[<p>索引的作用是提高查询效率。</p>
-<p>实现索引可以有多种方式，常见的有<strong>哈希表</strong>、<strong>有序数组</strong>和<strong>搜索树</strong>。</p>
+    <content><![CDATA[<p><code>MySQL</code> 官方对索引的定义为：索引（<code>Index</code>）是帮助 <code>MySQL</code> 高效获取数据的数据结构。</p>
+<p>在 <code>MySQL</code> 中，<mark class="label primary">索引是在存储引擎层实现的</mark>，因此不同的存储引擎可能有不一样的索引实现。</p>
+<p>实现索引可以有多种方式，常用的有<strong>哈希表</strong>、<strong>B+树</strong>。</p>
 <ul>
 <li>
 <p>哈希表</p>
-<div class="note "><p>哈希表是一种存储键值对的数据结构，根据 <code>key</code> 可以在 <code>O(1)</code> 时间内找到对应的 <code>value</code>。</p>
-<p>哈希表在<strong>等值（单个）查询</strong>场景表现很好，但是因为哈希表不是有序的，因此在做<strong>区间查询</strong>时性能就很差。</p>
-</div>
+<p>哈希表是一种存储键值对的数据结构，根据 <code>key</code> 可以在 <code>O(1)</code> 时间内找到对应的 <code>value</code>。</p>
+<p>哈希表在<mark class="label primary">等值（单个）查询</mark>时表现很好，但是因为哈希表不是有序的，因此在做<mark class="label primary">区间查询</mark>时性能就很差。</p>
 </li>
 <li>
-<p>有序数组</p>
-<div class="note "><p>有序数组在等值查询和区间查询场景中的性能都很优秀，但是如果有数据插入和删除就比较耗时了，因为可能需要移动很多数据。</p>
-</div>
-</li>
-<li>
-<p>搜索树</p>
+<p><a href="/archives/f3d84fed.html">B+树</a></p>
+<p>B+树的的所有叶节点是排序的，天然支持范围。</p>
 </li>
 </ul>
-<p>在 <code>MySQL</code> 中，<mark class="label primary">索引是在存储引擎层实现的</mark>，因此不同的存储引擎可能有不一样的索引实现。</p>
 <span id="more"></span>
-<h4 id="b树"><a class="markdownIt-Anchor" href="#b树"></a> B+树</h4>
+<p>哈希表索引和B+树索引的比较：</p>
+<ul>
+<li>哈希索引不支持索引排序；</li>
+<li>哈希索引不支持模糊查询；</li>
+<li>哈希索引虽然在等值查询上较快，但是性能不稳定（考虑到哈希碰撞）；而B+树的查询效率比较稳定，对于所有的查询都是从根节点到叶子节点，且树的高度较低。</li>
+</ul>
+<h4 id="索引原理"><a class="markdownIt-Anchor" href="#索引原理"></a> 索引原理</h4>
+<h5 id="磁盘-io-与预读"><a class="markdownIt-Anchor" href="#磁盘-io-与预读"></a> 磁盘 <code>IO</code> 与预读</h5>
+<h5 id="索引的数据结构b树"><a class="markdownIt-Anchor" href="#索引的数据结构b树"></a> 索引的数据结构：B+树</h5>
+<h4 id="建立索引的原则"><a class="markdownIt-Anchor" href="#建立索引的原则"></a> 建立索引的原则</h4>
+<ul>
+<li>
+<p>为频繁查询的字段建立索引</p>
+</li>
+<li>
+<p>为外键字段建立索引</p>
+</li>
+<li>
+<p>最左前缀匹配原则，<code>mysql</code> 会一直向右匹配直到遇到范围查询 <code>(&gt;、&lt;、between、like)</code> 就停止匹配。比如 <code>a = 1 and b = 2 and c &gt; 3 and d = 4</code> 如果建立 <code>(a,b,c,d)</code> 顺序的索引，<code>d</code> 是用不到索引的，如果建立 <code>(a,b,d,c)</code> 的索引则都可以用到，<code>a,b,d</code> 的顺序可以任意调整。</p>
+</li>
+<li>
+<p><code>=</code> 和 <code>in</code> 可以乱序，比如 <code>a = 1 and b = 2 and c = 3</code> 建立 <code>(a,b,c)</code> 索引可以任意顺序，<code>mysql</code> 的查询优化器会帮你优化成索引可以识别的形式。</p>
+</li>
+<li>
+<p>选择区分度高的列作为索引，区分度的公式是 <code>count(distinct col)/count(*)</code>，表示字段不重复的比例，比例越大我们扫描的记录数越少。</p>
+</li>
+<li>
+<p>索引列不能参与计算，比如 <code>from_unixtime(create_time) = ’2014-05-29’</code> 就不能使用到索引。</p>
+<p>原因很简单，B+树中存的都是数据表中的字段值，但进行检索时，需要把所有元素都应用函数才能比较，显然成本太大。所以语句应该写成 <code>create_time = unix_timestamp(’2014-05-29’)</code>。</p>
+</li>
+<li>
+<p>尽量扩展索引，不要新建索引。比如表中已经有 <code>a</code> 的索引，现在要加 <code>(a,b)</code> 的索引，那么只需要修改原来的索引即可。</p>
+</li>
+<li>
+<p>更新频繁的字段不要建立索引。</p>
+</li>
+<li>
+<p>数据类型为 <code>text、image</code> 和 <code>bit</code> 的字段不要建立索引。</p>
+</li>
+</ul>
+<h4 id="索引类型"><a class="markdownIt-Anchor" href="#索引类型"></a> 索引类型</h4>
+<h5 id="主键索引"><a class="markdownIt-Anchor" href="#主键索引"></a> 主键索引</h5>
+<p>主键包含的列不允许重复，不允许为 <code>NULL</code>，一个表只能有一个主键。</p>
+<p>可以通过 <code>alter table table_name add primary key (column);</code> 创建主键索引。</p>
+<h5 id="唯一索引"><a class="markdownIt-Anchor" href="#唯一索引"></a> 唯一索引</h5>
+<p>数据列不允许重复，允许为 <code>NULL</code> 值，一个表允许多个列创建唯一索引。</p>
+<p>可以通过 <code>alter table table_name add unique (column);</code> 创建唯一索引，唯一索引可以包含多列。</p>
+<h5 id="普通索引"><a class="markdownIt-Anchor" href="#普通索引"></a> 普通索引</h5>
+<p>基本的索引类型，没有唯一性的限制，允许为 <code>NULL</code> 值。</p>
+<p>可以通过 <code>alter table table_name add index index_name (column);</code> 创建唯一索引，唯一索引可以包含多列。</p>
+<h5 id="全文索引"><a class="markdownIt-Anchor" href="#全文索引"></a> 全文索引</h5>
+<p>目前搜索引擎使用的一种关键技术。</p>
+<p>可以通过 <code>alter table table_name add fulltext (column);</code> 创建全文索引。</p>
 <h4 id="覆盖索引"><a class="markdownIt-Anchor" href="#覆盖索引"></a> 覆盖索引</h4>
 <p>假如有这样一条查询语句：<code>select * from T where k between 3 and 5;</code> 并且为 <code>k</code> 建立了索引。</p>
 <p>因为要查全字段，所以在 <code>k</code> 索引树上查完，得到主键值后，要根据主键值回到主键索引树上去查全字段数据，这个过程称为回表。</p>
@@ -3067,10 +3432,12 @@ advertising campaign could hope to.</p>
 <p>此时 <code>k</code> 索引树可以直接提供查询结果，就不需要回表了。在这个查询中，索引 <code>k</code> 已经覆盖了查询请求，称为覆盖索引。</p>
 <p>虽然维护索引需要额外开销，但是基于覆盖索引的特性，有时我们需要为查询频率较高的字段建立联合索引，以期让这个联合索引覆盖查询请求，减少回表的次数，提高查询效率。</p>
 <h4 id="最左前缀原则"><a class="markdownIt-Anchor" href="#最左前缀原则"></a> 最左前缀原则</h4>
-<p>假如有一个组合索引（<code>a, b</code>），索引项会先根据 <code>a</code> 排序，再根据 <code>b</code> 排序。</p>
-<p>这时如果只根据 <code>a</code> 来查询数据，可以用上这个索引；</p>
-<p>如果 <code>a</code> 是个字符串，比如 <code>name</code>，那类似 <code>select name like ‘张%’</code> 这样的查询也可以用上 （<code>name, b</code>）这个索引。</p>
-<p>也就是说，只要满足索引的最左前缀原则就可以用上一个组合索引。这个最左前缀可以是组合索引的前 <code>N</code> 个字段，也可以是字符串索引的前 <code>N</code> 个字符。</p>
+<p><code>mysql</code> 会一直向右匹配直到遇到范围查询（<code>&gt;、&lt;、between、like</code> 等）就停止匹配。</p>
+<p>比如 <code>a = 1 and b = 2 and c &gt; 3 and d = 4</code>， 如果建立的索引是 <code>(a,b,c,d)</code>，<code>d</code> 是用不到索引的；如果建立的索引是 <code>(a,b,d,c)</code>， 则都可以用到。</p>
+<hr>
+<p>版权声明：本文为CSDN博主「ThinkWon」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>
+原文链接：<a href="https://blog.csdn.net/ThinkWon/article/details/104778621">https://blog.csdn.net/ThinkWon/article/details/104778621</a></p>
+<mark class="label primary">最左前缀可以是组合索引的前 `N` 个字段，也可以是字符串索引的前 `N` 个字符</mark>。
 <p><strong>组合索引如何安排字段顺序</strong></p>
 <ul>
 <li>
@@ -3115,15 +3482,28 @@ advertising campaign could hope to.</p>
 <p>组合索引 <code>cb</code> 先根据 <code>c</code> 排序，再根据 <code>b</code> 排序，叶子节点记录 <code>a</code>，和索引 <code>c</code> 不一样；</p>
 <p>所以所以 <code>ca</code> 可以删除，<code>cb</code> 需要保留。</p>
 <p>而如果主键索引是 (<code>b</code>, <code>a</code>)，那需要保留的就是 <code>ca</code>。</p>
-</div>]]></content>
+</div>
+<h4 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h4>
+<ul>
+<li>
+<p><a href="http://blog.codinglabs.org/articles/theory-of-mysql-index.html">MySQL索引背后的数据结构及算法原理</a></p>
+</li>
+<li>
+<p><a href="https://tech.meituan.com/2014/06/30/mysql-index.html">MySQL索引原理及慢查询优化</a></p>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>数据库</category>
         <category>MySQL</category>
       </categories>
       <tags>
         <tag>数据库</tag>
+        <tag>B+树</tag>
         <tag>MySQL</tag>
         <tag>索引</tag>
+        <tag>最左前缀原则</tag>
+        <tag>覆盖索引</tag>
       </tags>
   </entry>
   <entry>
@@ -3232,10 +3612,21 @@ advertising campaign could hope to.</p>
 </li>
 <li>
 <p><code>redo log</code> 是物理日志，记录物理页做了什么改动；</p>
-<p><code>binlog</code> 是逻辑日志，有两种模式：</p>
+<p><code>binlog</code> 是逻辑日志，有三种模式：</p>
 <ul>
-<li><code>statement</code> 模式 - 记录 <code>sql</code> 语句</li>
-<li><code>row</code> 模式 - 记录更新前和更新后的行数据</li>
+<li>
+<p><code>statement</code> 模式 - 记录 <code>sql</code> 语句。</p>
+<p>不需要记录每一行的变化，减少了 <code>binlog</code> 日志内容，减少了<code>IO</code>，提高了性能。由于 <code>sql</code> 的执行是有上下文的，因此在保存的时候需要保存相关的信息，同时还有一些使用了函数之类的语句无法被记录复制。</p>
+</li>
+<li>
+<p><code>row</code> 模式 - 记录更新前和更新后的行数据。</p>
+<p>需要记录每一行的变化，会产生大量的日志内容。</p>
+</li>
+<li>
+<p><code>mixed</code> 模式 - 前两种模式的结合。</p>
+<p>遇到表结构变更的时候就会以 <code>statement</code> 模式来记录；</p>
+<p><code>update</code> 或者 <code>delete</code> 等修改数据的语句以 <code>row</code> 模式来记录。</p>
+</li>
 </ul>
 </li>
 <li>
@@ -3356,11 +3747,71 @@ advertising campaign could hope to.</p>
       </tags>
   </entry>
   <entry>
+    <title>SQL语句的执行顺序</title>
+    <url>/archives/4ae1c7ab.html</url>
+    <content><![CDATA[<p>建表语句：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DROP TABLE IF EXISTS student;</span><br><span class="line">CREATE TABLE &#96;student&#96; (</span><br><span class="line">  &#96;id&#96; INT(5) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  &#96;name&#96; VARCHAR(10) DEFAULT NULL,</span><br><span class="line">  &#96;subject&#96; VARCHAR(10) DEFAULT NULL,</span><br><span class="line">  &#96;score&#96; DOUBLE(4,1) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (&#96;id&#96;)</span><br><span class="line">) ENGINE&#x3D;INNODB AUTO_INCREMENT&#x3D;40 DEFAULT CHARSET&#x3D;utf8;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>插入数据：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;aom&#39;,&#39;语文&#39;,88);</span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;aom&#39;,&#39;数学&#39;,99);</span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;aom&#39;,&#39;外语&#39;,55);</span><br><span class="line"> </span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;jack&#39;,&#39;语文&#39;,67);</span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;jack&#39;,&#39;数学&#39;,44);</span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;jack&#39;,&#39;外语&#39;,55);</span><br><span class="line"> </span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;susan&#39;,&#39;语文&#39;,56);</span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;susan&#39;,&#39;数学&#39;,35);</span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;susan&#39;,&#39;外语&#39;,77);</span><br><span class="line"> </span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;alice&#39;,&#39;语文&#39;,88);</span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;alice&#39;,&#39;数学&#39;,77);</span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;alice&#39;,&#39;外语&#39;,100);</span><br><span class="line"> </span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;rajo&#39;,&#39;语文&#39;,33);</span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;rajo&#39;,&#39;数学&#39;,55);</span><br><span class="line">INSERT INTO student(&#96;name&#96;,&#96;subject&#96;,score) VALUES(&#39;rajo&#39;,&#39;外语&#39;,55);</span><br></pre></td></tr></table></figure>
+<p>现在我们来看一下一条 <code>sql</code> 语句的执行顺序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT &#96;name&#96;, COUNT(&#96;name&#96;) AS num </span><br><span class="line">FROM student </span><br><span class="line">WHERE grade &lt; 60 </span><br><span class="line">GROUP BY &#96;name&#96; </span><br><span class="line">HAVING num &gt;&#x3D; 2 </span><br><span class="line">ORDER BY num DESC,&#96;name&#96; ASC </span><br><span class="line">LIMIT 0,2;</span><br></pre></td></tr></table></figure>
+<h4 id="from-子句"><a class="markdownIt-Anchor" href="#from-子句"></a> <code>from</code> 子句</h4>
+<ol>
+<li>首先执行的是 <code>from</code> 子句，将表文件加载到内存中。</li>
+</ol>
+<h4 id="where-子句"><a class="markdownIt-Anchor" href="#where-子句"></a> <code>where</code> 子句</h4>
+<ol start="2">
+<li>然后执行的是 <code>where</code> 子句，根据条件进行过滤，为符合条件的行生成一张临时表。</li>
+</ol>
+<h4 id="group-by-子句"><a class="markdownIt-Anchor" href="#group-by-子句"></a> <code>group by</code> 子句</h4>
+<ol start="3">
+<li>
+<p><code>group by</code> 子句会根据字段将临时表进行拆分，为每个字段值再生成一张临时表。</p>
+<p>此时会生成一张临时表，包含字段 <code>name</code> 和 <code>num</code>。</p>
+</li>
+</ol>
+<h4 id="having-子句"><a class="markdownIt-Anchor" href="#having-子句"></a> <code>having</code> 子句</h4>
+<ol start="4">
+<li><code>having</code> 子句对第 3 步生成的临时表再次进行过滤，去掉不符合条件的行。</li>
+</ol>
+<h4 id="order-by-子句"><a class="markdownIt-Anchor" href="#order-by-子句"></a> <code>order by</code> 子句</h4>
+<ol start="5">
+<li>对第 4 步生成的临时表进行排序。</li>
+</ol>
+<h4 id="limit-子句"><a class="markdownIt-Anchor" href="#limit-子句"></a> <code>limit</code> 子句</h4>
+<ol start="6">
+<li>返回限定行数。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL语法</title>
     <url>/archives/e272e39a.html</url>
-    <content><![CDATA[<h4 id="注释"><a class="markdownIt-Anchor" href="#注释"></a> 注释</h4>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 注释1</span><br><span class="line">SELECT *</span><br><span class="line">FROM mytable; -- 注释2</span><br><span class="line">&#x2F;** </span><br><span class="line"> * 注释3</span><br><span class="line"> *&#x2F;</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h4 id="sql-语句分类"><a class="markdownIt-Anchor" href="#sql-语句分类"></a> <code>SQL</code> 语句分类</h4>
+<h5 id="ddl"><a class="markdownIt-Anchor" href="#ddl"></a> <code>DDL</code></h5>
+<p>数据定义语言（<code>Data Ddefinition Language, DDL</code>）：<code>CREATE，DROP，ALTER</code>。</p>
+<p>操作表结构、视图和索引。</p>
+<h5 id="dql"><a class="markdownIt-Anchor" href="#dql"></a> <code>DQL</code></h5>
+<p>数据查询语言（<code>Data Query Language, DQL</code>）：<code>SELECT</code>。</p>
+<p>查询数据。</p>
+<h5 id="dml"><a class="markdownIt-Anchor" href="#dml"></a> <code>DML</code></h5>
+<p>数据操纵语言（<code>Data Manipulation Language, DML</code>）：<code>INSERT，UPDATE，DELETE</code>。</p>
+<p>操作数据。</p>
+<h5 id="dcl"><a class="markdownIt-Anchor" href="#dcl"></a> <code>DCL</code></h5>
+<p>数据控制功能（<code>Data Control Language, DCL</code>）：<code>GRANT，REVOKE，COMMIT，ROLLBACK</code>。</p>
+<p>权限控制。</p>
 <span id="more"></span>
+<h4 id="注释"><a class="markdownIt-Anchor" href="#注释"></a> 注释</h4>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 注释1</span><br><span class="line">SELECT *</span><br><span class="line">FROM mytable; -- 注释2</span><br><span class="line">&#x2F;** </span><br><span class="line"> * 注释3</span><br><span class="line"> *&#x2F;</span><br></pre></td></tr></table></figure>
 <h4 id="数据库"><a class="markdownIt-Anchor" href="#数据库"></a> 数据库</h4>
 <ul>
 <li>创建</li>
@@ -3392,6 +3843,18 @@ advertising campaign could hope to.</p>
 <li>删除列</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alter table table_name drop column column_name;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>添加索引</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 添加主键索引</span><br><span class="line">alter table table_name add primary key(&#96;col&#96;);</span><br><span class="line"></span><br><span class="line">-- 添加唯一索引</span><br><span class="line">alter table table_name add unique(&#96;col&#96;);</span><br><span class="line"></span><br><span class="line">-- 添加普通索引</span><br><span class="line">alter table table_name add index index_name(&#96;col&#96;);</span><br><span class="line"></span><br><span class="line">-- 添加组合索引</span><br><span class="line">alter table table_name add index index_name(&#96;col1&#96;, &#96;col2&#96;);</span><br></pre></td></tr></table></figure>
+<p>也可以用 <code>create</code> 添加普通索引和唯一索引，<code>create</code> 方式不能添加主键索引。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 添加普通索引</span><br><span class="line">create index index_name on table_name(&#96;col&#96;);</span><br><span class="line"></span><br><span class="line">-- 添加唯一索引</span><br><span class="line">create unique index index_name on table_name(&#96;col&#96;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除索引</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 删除主键索引</span><br><span class="line">alter table table_name drop primary key ;</span><br><span class="line"></span><br><span class="line">-- 删除普通索引</span><br><span class="line">alter table table_name drop index index_name ;</span><br></pre></td></tr></table></figure>
+<p>也可以用 <code>drop</code> 来删除索引</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">drop index index_name on table_name ;</span><br></pre></td></tr></table></figure>
 <h4 id="数据"><a class="markdownIt-Anchor" href="#数据"></a> 数据</h4>
 <h5 id="插入"><a class="markdownIt-Anchor" href="#插入"></a> 插入</h5>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 普通插入</span><br><span class="line">insert into table_name(col1, col2) values(val1, val2);</span><br><span class="line"></span><br><span class="line"># 插入检索出来的数据</span><br><span class="line">insert into table1(col1, col2)</span><br><span class="line">select col1, col2 from table2;</span><br><span class="line"></span><br><span class="line"># 将一个表的内容插入到一个新表</span><br><span class="line">create table new_table as</span><br><span class="line">select * from old_table;</span><br></pre></td></tr></table></figure>
@@ -3475,13 +3938,13 @@ advertising campaign could hope to.</p>
 <p>左外连接是在两表进行自然连接，保留左表所有行，右表相应字段填充 <code>null</code>。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from table1 left join table2 on table1.col&#x3D;table2.col</span><br></pre></td></tr></table></figure>
 <ul>
-<li>右外连接 - <code>left (outer) join</code></li>
+<li>右外连接 - <code>right (outer) join</code></li>
 </ul>
 <p>右外连接是在两表进行自然连接，保留右表所有行，左表相应字段填充 <code>null</code>。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from table1 right join table2 on table1.col&#x3D;table2.col</span><br></pre></td></tr></table></figure>
 <ul>
 <li>
-<p>全外连接 - <code>left (outer) join</code></p>
+<p>全外连接 -  <code>full (outer) join</code></p>
 <p><code>MySQL</code> 不支持全外连接。</p>
 </li>
 </ul>
@@ -3490,7 +3953,7 @@ advertising campaign could hope to.</p>
 <p><strong>每个查询必须包含相同的列、表达式和聚集函数。</strong></p>
 <p>只能包含一个 <code>order by</code> 子句，并且必须位于语句的最后。</p>
 <h4 id="函数"><a class="markdownIt-Anchor" href="#函数"></a> 函数</h4>
-<p>数值计算</p>
+<h5 id="数值计算函数"><a class="markdownIt-Anchor" href="#数值计算函数"></a> 数值计算函数</h5>
 <ul>
 <li>
 <p><code>count()</code> - 返回某列的行数</p>
@@ -3508,7 +3971,7 @@ advertising campaign could hope to.</p>
 <p><code>min()</code> - 返回某列最小值</p>
 </li>
 </ul>
-<p>文本处理</p>
+<h5 id="文本处理函数"><a class="markdownIt-Anchor" href="#文本处理函数"></a> 文本处理函数</h5>
 <ul>
 <li><code>left()</code></li>
 <li><code>right()</code></li>
@@ -3518,7 +3981,7 @@ advertising campaign could hope to.</p>
 <li><code>upper()</code> - 将字符串转为大写字母</li>
 <li><code>length()</code> - 字符串长度</li>
 </ul>
-<p>日期和时间</p>
+<h5 id="日期和时间函数"><a class="markdownIt-Anchor" href="#日期和时间函数"></a> 日期和时间函数</h5>
 <p>日期格式：<code>YYYY-MM-DD</code></p>
 <p>时间格式：<code>HH:&lt;zero-width space&gt;MM:SS</code></p>
 <ul>
@@ -3606,6 +4069,81 @@ advertising campaign could hope to.</p>
       </tags>
   </entry>
   <entry>
+    <title>where子句优化</title>
+    <url>/archives/6bc79672.html</url>
+    <content><![CDATA[<ol>
+<li>应考虑在 <code>where</code> 及 <code>order by</code> 涉及的列上建立索引，以避免全表扫描。</li>
+<li>避免在 <code>where</code> 子句中对字段进行 <code>null</code> 值判断，否则将导致全表扫描。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 全表扫描</span><br><span class="line">select id from t where num is null;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>避免在 <code>where</code> 子句中使用 <code>!=</code> 或 <code>&lt;&gt;</code> 操作符，否则将导致全表扫描。</li>
+</ol>
+<span id="more"></span>
+<ol start="4">
+<li>避免在 <code>where</code> 子句中使用 <code>or</code> 来连接条件，否则将导致全表扫描。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 全表扫描</span><br><span class="line">select id from t where num&#x3D;10 or num&#x3D;20;</span><br><span class="line"></span><br><span class="line">-- 可以这样查询：</span><br><span class="line">select id from t where num&#x3D;10 union all select id from t where num&#x3D;20;</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>避免在 <code>where</code> 子句中使用 <code>in</code> 和 <code>not in</code> ，否则会导致全表扫描。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 全表扫描</span><br><span class="line">select id from t where num in(1,2,3) </span><br><span class="line"></span><br><span class="line">-- 对于连续的数值，能用 between 就不要用 in</span><br><span class="line">select id from t where num between 1 and 3</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>模糊查询也会导致全表扫描</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 全表扫描</span><br><span class="line">select id from t where name like &#39;%李%&#39;;</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>避免在 <code>where</code> 子句中对字段进行算术操作，否则会导致全表扫描。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 全面扫描</span><br><span class="line">select id from t where num&#x2F;2&#x3D;100</span><br><span class="line"></span><br><span class="line">-- 应改为</span><br><span class="line">select id from t where num&#x3D;100*2</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>避免在 <code>where</code> 子句中对字段进行函数操作，否则会导致全表扫描。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 全表扫描</span><br><span class="line">select id from t where substring(name,1,3)&#x3D;&#39;abc&#39;;</span><br><span class="line"></span><br><span class="line">-- name以abc开头的id应改为:</span><br><span class="line">select id from t where name like &#39;abc%&#39;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>MySQL</tag>
+        <tag>where子句优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>工厂方法模式</title>
+    <url>/archives/48598499.html</url>
+    <content><![CDATA[<div class="note "><p>定义了一个创建对象的接口，但由子类决定要实例化哪个类。工厂方法把实例化操作推迟到子类。</p>
+</div>
+<span id="more"></span>
+<img data-src="/archives/48598499/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F.png" alt="工厂方法模式" style="zoom:50%;">
+<h4 id="简单实现"><a class="markdownIt-Anchor" href="#简单实现"></a> 简单实现</h4>
+<h5 id="product"><a class="markdownIt-Anchor" href="#product"></a> <code>Product</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Product</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="concreteproduct"><a class="markdownIt-Anchor" href="#concreteproduct"></a> <code>ConcreteProduct</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProductA</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProductB</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProductC</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="factory"><a class="markdownIt-Anchor" href="#factory"></a> <code>Factory</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Product product = factoryMethod();</span><br><span class="line">        <span class="comment">// do something with the product</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="concretefactory"><a class="markdownIt-Anchor" href="#concretefactory"></a> <code>ConcreteFactory</code></h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactoryA</span> <span class="keyword">extends</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProductA();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactoryB</span> <span class="keyword">extends</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProductB();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactoryC</span> <span class="keyword">extends</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProductC();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="jdk-中的应用"><a class="markdownIt-Anchor" href="#jdk-中的应用"></a> <code>JDK</code> 中的应用</h4>
+<ul>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Calendar.html#getInstance--">java.util.Calendar</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>创建型</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>创建型模式</tag>
+        <tag>工厂方法模式</tag>
+        <tag>Factory Method</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>单例模式</title>
     <url>/archives/f1601c3e.html</url>
     <content><![CDATA[<div class="note "><p>单例模式确保一个类只有一个实例，并提供该实例的全局访问点。</p>
@@ -3670,38 +4208,6 @@ advertising campaign could hope to.</p>
         <tag>设计模式</tag>
         <tag>创建型模式</tag>
         <tag>单例模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>工厂方法模式</title>
-    <url>/archives/48598499.html</url>
-    <content><![CDATA[<div class="note "><p>定义了一个创建对象的接口，但由子类决定要实例化哪个类。工厂方法把实例化操作推迟到子类。</p>
-</div>
-<span id="more"></span>
-<img data-src="/archives/48598499/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F.png" alt="工厂方法模式" style="zoom:50%;">
-<h4 id="简单实现"><a class="markdownIt-Anchor" href="#简单实现"></a> 简单实现</h4>
-<h5 id="product"><a class="markdownIt-Anchor" href="#product"></a> <code>Product</code></h5>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Product</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="concreteproduct"><a class="markdownIt-Anchor" href="#concreteproduct"></a> <code>ConcreteProduct</code></h5>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProductA</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProductB</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProductC</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="factory"><a class="markdownIt-Anchor" href="#factory"></a> <code>Factory</code></h5>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Product product = factoryMethod();</span><br><span class="line">        <span class="comment">// do something with the product</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="concretefactory"><a class="markdownIt-Anchor" href="#concretefactory"></a> <code>ConcreteFactory</code></h5>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactoryA</span> <span class="keyword">extends</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProductA();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactoryB</span> <span class="keyword">extends</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProductB();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactoryC</span> <span class="keyword">extends</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProductC();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="jdk-中的应用"><a class="markdownIt-Anchor" href="#jdk-中的应用"></a> <code>JDK</code> 中的应用</h4>
-<ul>
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Calendar.html#getInstance--">java.util.Calendar</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>设计模式</category>
-        <category>创建型</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
-        <tag>创建型模式</tag>
-        <tag>工厂方法模式</tag>
-        <tag>Factory Method</tag>
       </tags>
   </entry>
   <entry>
