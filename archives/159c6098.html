@@ -35,10 +35,11 @@
 <meta property="og:description" content="Java 中的并发队列分为阻塞队列和非阻塞队列：  非阻塞队列：ConcurrentLinkedQueue，利用 CAS 保证多线程安全。 阻塞队列：主要是 BlockingQueue 的实现类  ArrayBlockingQueue LinkedBlockingQueue PriorityBlockingQueue SynchronousQueue DelayQueue LinkedTransf">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-28T09:14:58.000Z">
-<meta property="article:modified_time" content="2021-05-28T14:08:30.144Z">
+<meta property="article:modified_time" content="2021-06-07T09:58:09.782Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="并发">
 <meta property="article:tag" content="并发容器">
+<meta property="article:tag" content="线程池">
 <meta property="article:tag" content="阻塞队列">
 <meta name="twitter:card" content="summary">
 
@@ -222,7 +223,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">154</span>
+        <span class="site-state-item-count">156</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -589,10 +590,16 @@ if(canvas.getContext){
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-05-28 17:14:58 / Modified: 22:08:30" itemprop="dateCreated datePublished" datetime="2021-05-28T17:14:58+08:00">2021-05-28</time>
+      <time title="Created: 2021-05-28 17:14:58" itemprop="dateCreated datePublished" datetime="2021-05-28T17:14:58+08:00">2021-05-28</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-07 17:58:09" itemprop="dateModified" datetime="2021-06-07T17:58:09+08:00">2021-06-07</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -708,16 +715,16 @@ if(canvas.getContext){
       <div class="popular-posts-title"><a href="/archives/818b85a1.html" rel="bookmark">并发容器</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/dfdb52be.html" rel="bookmark">AQS</a></div>
+      <div class="popular-posts-title"><a href="/archives/de7c53fe.html" rel="bookmark">线程池</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/969d9481.html" rel="bookmark">CAS</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/91e798bc.html" rel="bookmark">Java内存模型</a></div>
+      <div class="popular-posts-title"><a href="/archives/dfdb52be.html" rel="bookmark">AQS</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/151f44ae.html" rel="bookmark">ThreadLocal</a></div>
+      <div class="popular-posts-title"><a href="/archives/91e798bc.html" rel="bookmark">Java内存模型</a></div>
     </li>
   </ul>
 
@@ -743,6 +750,7 @@ if(canvas.getContext){
           <div class="post-tags">
               <a href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag"><i class="fa fa-tag"></i> 并发</a>
               <a href="/tags/%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fa fa-tag"></i> 并发容器</a>
+              <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" rel="tag"><i class="fa fa-tag"></i> 线程池</a>
               <a href="/tags/%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/" rel="tag"><i class="fa fa-tag"></i> 阻塞队列</a>
           </div>
 
@@ -811,7 +819,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:44</span>
+    <span title="Reading time total">4:45</span>
   </span>
 </div>
 <div class="busuanzi-count">

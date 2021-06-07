@@ -36,7 +36,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://time_wait.gitee.io/archives/91e798bc/%E5%86%85%E5%AD%98%E9%97%B4%E4%BA%A4%E4%BA%92%E6%93%8D%E4%BD%9C.png">
 <meta property="article:published_time" content="2021-05-30T01:09:21.000Z">
-<meta property="article:modified_time" content="2021-06-02T01:06:41.308Z">
+<meta property="article:modified_time" content="2021-06-07T09:23:38.413Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="并发">
 <meta property="article:tag" content="Java内存模型">
@@ -194,7 +194,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E5%86%85%E5%AD%98%E4%B8%8E%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%98"><span class="nav-number">1.</span> <span class="nav-text"> 主内存与工作内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E9%97%B4%E7%9A%84%E4%BA%A4%E4%BA%92%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text"> 内存间的交互操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92"><span class="nav-number">3.</span> <span class="nav-text"> 指令重排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text"> 三大特性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="nav-number">4.1.</span> <span class="nav-text"> 原子性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="nav-number">4.2.</span> <span class="nav-text"> 可见性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F%E6%80%A7"><span class="nav-number">4.3.</span> <span class="nav-text"> 有序性</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#happens-before"><span class="nav-number">5.</span> <span class="nav-text"> happens-before</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text"> volatile 实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#volatile-%E7%9A%84%E5%86%85%E5%AD%98%E8%AF%AD%E4%B9%89"><span class="nav-number">6.1.</span> <span class="nav-text"> volatile 的内存语义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#volatile-%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">6.2.</span> <span class="nav-text"> volatile 的实现</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text"> 参考资料</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E5%86%85%E5%AD%98%E4%B8%8E%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%98"><span class="nav-number">1.</span> <span class="nav-text"> 主内存与工作内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E9%97%B4%E7%9A%84%E4%BA%A4%E4%BA%92%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text"> 内存间的交互操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92"><span class="nav-number">3.</span> <span class="nav-text"> 指令重排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text"> 三大特性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="nav-number">4.1.</span> <span class="nav-text"> 原子性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="nav-number">4.2.</span> <span class="nav-text"> 可见性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F%E6%80%A7"><span class="nav-number">4.3.</span> <span class="nav-text"> 有序性</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#happens-before"><span class="nav-number">5.</span> <span class="nav-text"> happens-before</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile"><span class="nav-number">6.</span> <span class="nav-text"> volatile</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#volatile-%E7%9A%84%E5%86%85%E5%AD%98%E8%AF%AD%E4%B9%89"><span class="nav-number">6.1.</span> <span class="nav-text"> volatile 的内存语义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#volatile-%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">6.2.</span> <span class="nav-text"> volatile 的实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#volatile-%E4%B8%8E-synchronized-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">6.3.</span> <span class="nav-text"> volatile 与 synchronized 的区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text"> 参考资料</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -223,7 +223,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">154</span>
+        <span class="site-state-item-count">156</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -598,7 +598,7 @@ if(canvas.getContext){
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-02 09:06:41" itemprop="dateModified" datetime="2021-06-02T09:06:41+08:00">2021-06-02</time>
+        <time title="Modified: 2021-06-07 17:23:38" itemprop="dateModified" datetime="2021-06-07T17:23:38+08:00">2021-06-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -625,7 +625,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>2.7k</span>
+      <span>2.9k</span>
     </span>
 </div>
 
@@ -704,7 +704,7 @@ if(canvas.getContext){
 <p>传递性原则 - 如果操作 <code>A</code> 先行发生于操作 <code>B</code>，<code>B</code> 先行发生于 <code>C</code>，那么 <code>A</code> 先行发生于 <code>C</code>。</p>
 </li>
 </ul>
-<h4 id="volatile-实现原理"><a class="markdownIt-Anchor" href="#volatile-实现原理"></a> <code>volatile</code> 实现原理</h4>
+<h4 id="volatile"><a class="markdownIt-Anchor" href="#volatile"></a> <code>volatile</code></h4>
 <p><code>volatile</code> 可以保证线程可见性且提供了一定的有序性，但是无法保证原子性。</p>
 <p>在 <code>JVM</code> 底层，<code>volatile</code> 是采用<mark class="label primary">内存屏障</mark>来实现的。</p>
 <p>在执行程序时为了提高性能，编译器和处理器通常会对指令做重排序：</p>
@@ -801,6 +801,12 @@ if(canvas.getContext){
 <p><code>LoadLoad</code> 屏障和 <code>LoadStore</code> 屏障保证<code>规则 1</code>；</p>
 <p><code>StoreStore</code> 屏障<code>保证规则 2</code>；</p>
 <p><code>StoreLoad</code> 屏障保证<code>规则 3</code>。</p>
+<h5 id="volatile-与-synchronized-的区别"><a class="markdownIt-Anchor" href="#volatile-与-synchronized-的区别"></a> <code>volatile</code> 与 <code>synchronized</code> 的区别</h5>
+<ul>
+<li><code>volatile</code> 只能作用于变量，使用范围较小；<code>synchronized</code> 可以用在变量、方法、类、同步代码块等，使用范围比较广。</li>
+<li><code>volatile</code> 只能保证可见性和有序性，不能保证原子性；而可见性、有序性、原子性 <code>synchronized</code> 都可以保证。</li>
+<li><code>volatile</code> 不会造成线程阻塞；<code>synchronized</code> 可能会造成线程阻塞。</li>
+</ul>
 <h4 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h4>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://tech.meituan.com/2014/09/23/java-memory-reordering.html">Java 内存访问重排序</a></li>
@@ -815,10 +821,10 @@ if(canvas.getContext){
   <div class="popular-posts-header">Related Posts</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/dfdb52be.html" rel="bookmark">AQS</a></div>
+      <div class="popular-posts-title"><a href="/archives/969d9481.html" rel="bookmark">CAS</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/969d9481.html" rel="bookmark">CAS</a></div>
+      <div class="popular-posts-title"><a href="/archives/dfdb52be.html" rel="bookmark">AQS</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/151f44ae.html" rel="bookmark">ThreadLocal</a></div>
@@ -920,7 +926,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:44</span>
+    <span title="Reading time total">4:45</span>
   </span>
 </div>
 <div class="busuanzi-count">
