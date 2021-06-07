@@ -201,20 +201,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-count">83</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">168</span>
+        <span class="site-state-item-count">170</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -548,6 +548,202 @@ if(canvas.getContext){
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/fe29e710.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/bear.jpeg">
+      <meta itemprop="name" content="Time_Wait">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Time_Wait">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/archives/fe29e710.html" class="post-title-link" itemprop="url">Redis基础</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-06-07 22:36:10 / Modified: 23:22:13" itemprop="dateCreated datePublished" datetime="2021-06-07T22:36:10+08:00">2021-06-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>3.7k</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="redis-概述"><a class="markdownIt-Anchor" href="#redis-概述"></a> <code>Redis</code> 概述</h4>
+<p><code>Redis</code> 是速度非常快的非关系型（<code>NoSQL</code>）内存键值数据库，可以存储键和五种不同类型的值之间的映射。</p>
+<mark class="label primary">键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。</mark>
+<p><code>Redis</code> 支持很多特性，例如将内存中的数据持久化到硬盘中，使用复制来扩展读性能，使用分片来扩展写性能。</p>
+<h4 id="数据类型"><a class="markdownIt-Anchor" href="#数据类型"></a> 数据类型</h4>
+<h5 id="string"><a class="markdownIt-Anchor" href="#string"></a> <code>STRING</code></h5>
+<p><code>STRING</code> 可以存储字符串、整数或者浮点数。</p>
+<p>支持的操作：</p>
+<ul>
+<li>对整个字符串或者字符串的一部分执行操作</li>
+<li>对整数和浮点数执行自增或者自减操作</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">set</span> hello world</span><br><span class="line">OK</span><br><span class="line">&gt; get hello</span><br><span class="line"><span class="string">&quot;world&quot;</span></span><br><span class="line">&gt; del hello</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; get hello</span><br><span class="line">(nil)</span><br></pre></td></tr></table></figure>
+<h5 id="list"><a class="markdownIt-Anchor" href="#list"></a> <code>LIST</code></h5>
+<p>列表，支持的操作：</p>
+<ul>
+<li>从两端压入或者弹出元素。</li>
+<li>对单个或者多个元素进行修剪。</li>
+<li>只保留一个范围内的元素。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&gt; rpush list-key item</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; rpush list-key item2</span><br><span class="line">(<span class="built_in">integer</span>) 2</span><br><span class="line">&gt; rpush list-key item</span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line"></span><br><span class="line">&gt; lrange list-key 0 -1</span><br><span class="line">1) <span class="string">&quot;item&quot;</span></span><br><span class="line">2) <span class="string">&quot;item2&quot;</span></span><br><span class="line">3) <span class="string">&quot;item&quot;</span></span><br><span class="line"></span><br><span class="line">&gt; lindex list-key 1</span><br><span class="line"><span class="string">&quot;item2&quot;</span></span><br><span class="line"></span><br><span class="line">&gt; lpop list-key</span><br><span class="line"><span class="string">&quot;item&quot;</span></span><br><span class="line"></span><br><span class="line">&gt; lrange list-key 0 -1</span><br><span class="line">1) <span class="string">&quot;item2&quot;</span></span><br><span class="line">2) <span class="string">&quot;item&quot;</span></span><br></pre></td></tr></table></figure>
+<h5 id="hash"><a class="markdownIt-Anchor" href="#hash"></a> <code>HASH</code></h5>
+<p>无序散列表，支持的操作：</p>
+<ul>
+<li>
+<p>添加、获取、移除单个键值对</p>
+</li>
+<li>
+<p>获取所有键值对</p>
+</li>
+<li>
+<p>检查某个键是否存在</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&gt; hset hash-key key1 value1</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; hset hash-key key2 value2</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; hset hash-key key1 value1</span><br><span class="line">(integer) 0</span><br><span class="line"></span><br><span class="line">&gt; hgetall hash-key</span><br><span class="line">1) &quot;key1&quot;</span><br><span class="line">2) &quot;value1&quot;</span><br><span class="line">3) &quot;key2&quot;</span><br><span class="line">4) &quot;value2&quot;</span><br><span class="line"></span><br><span class="line">&gt; hdel hash-key key2</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; hdel hash-key key2</span><br><span class="line">(integer) 0</span><br><span class="line"></span><br><span class="line">&gt; hget hash-key key1</span><br><span class="line">&quot;value1&quot;</span><br><span class="line"></span><br><span class="line">&gt; hgetall hash-key</span><br><span class="line">1) &quot;key1&quot;</span><br><span class="line">2) &quot;value1&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="set"><a class="markdownIt-Anchor" href="#set"></a> <code>SET</code></h5>
+<p>无序集合，支持的操作：</p>
+<ul>
+<li>添加、获取、移除单个元素</li>
+<li>检查一个元素是否存在于集合中</li>
+<li>计算交集、并集、差集</li>
+<li>从集合里面随机获取元素</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&gt; sadd set-key item</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; sadd set-key item2</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; sadd set-key item3</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; sadd set-key item</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line"></span><br><span class="line">&gt; smembers set-key</span><br><span class="line">1) <span class="string">&quot;item&quot;</span></span><br><span class="line">2) <span class="string">&quot;item2&quot;</span></span><br><span class="line">3) <span class="string">&quot;item3&quot;</span></span><br><span class="line"></span><br><span class="line">&gt; sismember set-key item4</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">&gt; sismember set-key item</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line"></span><br><span class="line">&gt; srem set-key item2</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; srem set-key item2</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line"></span><br><span class="line">&gt; smembers set-key</span><br><span class="line">1) <span class="string">&quot;item&quot;</span></span><br><span class="line">2) <span class="string">&quot;item3&quot;</span></span><br></pre></td></tr></table></figure>
+<h5 id="zset"><a class="markdownIt-Anchor" href="#zset"></a> <code>ZSET</code></h5>
+<p>有序集合，支持的操作：</p>
+<ul>
+<li>添加、获取、删除元素</li>
+<li>根据分值范围或者成员来获取元素</li>
+<li>计算一个键的排名</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&gt; zadd zset-key 728 member1</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; zadd zset-key 982 member0</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; zadd zset-key 982 member0</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line"></span><br><span class="line">&gt; zrange zset-key 0 -1 withscores</span><br><span class="line">1) <span class="string">&quot;member1&quot;</span></span><br><span class="line">2) <span class="string">&quot;728&quot;</span></span><br><span class="line">3) <span class="string">&quot;member0&quot;</span></span><br><span class="line">4) <span class="string">&quot;982&quot;</span></span><br><span class="line"></span><br><span class="line">&gt; zrangebyscore zset-key 0 800 withscores</span><br><span class="line">1) <span class="string">&quot;member1&quot;</span></span><br><span class="line">2) <span class="string">&quot;728&quot;</span></span><br><span class="line"></span><br><span class="line">&gt; zrem zset-key member1</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; zrem zset-key member1</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line"></span><br><span class="line">&gt; zrange zset-key 0 -1 withscores</span><br><span class="line">1) <span class="string">&quot;member0&quot;</span></span><br><span class="line">2) <span class="string">&quot;982&quot;</span></span><br></pre></td></tr></table></figure>
+<h4 id="数据结构"><a class="markdownIt-Anchor" href="#数据结构"></a> 数据结构</h4>
+<h5 id="字典"><a class="markdownIt-Anchor" href="#字典"></a> 字典</h5>
+<p><code>dictht</code> 是一个散列表结构，使用拉链法解决哈希冲突。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* This is our hash table structure. Every dictionary has two of this as we</span></span><br><span class="line"><span class="comment"> * implement incremental rehashing, for the old to the new table. */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictht</span> &#123;</span></span><br><span class="line">    dictEntry **table;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> size;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> sizemask;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> used;</span><br><span class="line">&#125; dictht;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> &#123;</span></span><br><span class="line">    <span class="keyword">void</span> *key;</span><br><span class="line">    <span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">        <span class="keyword">void</span> *val;</span><br><span class="line">        <span class="keyword">uint64_t</span> u64;</span><br><span class="line">        <span class="keyword">int64_t</span> s64;</span><br><span class="line">        <span class="keyword">double</span> d;</span><br><span class="line">    &#125; v;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125; dictEntry;</span><br></pre></td></tr></table></figure>
+<p><code>Redis</code> 的字典 <code>dict</code> 中包含两个哈希表 <code>dictht</code>，这是为了方便进行 <code>rehash</code> 操作。</p>
+<p>在扩容时，将其中一个 <code>dictht</code> 上的键值对 <code>rehash</code> 到另一个 <code>dictht</code> 上面，完成之后释放空间并交换两个 <code>dictht</code> 的角色。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dict</span> &#123;</span></span><br><span class="line">    dictType *type;</span><br><span class="line">    <span class="keyword">void</span> *privdata;</span><br><span class="line">    dictht ht[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">long</span> rehashidx; <span class="comment">/* rehashing not in progress if rehashidx == -1 */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> iterators; <span class="comment">/* number of iterators currently running */</span></span><br><span class="line">&#125; dict;</span><br></pre></td></tr></table></figure>
+<p><code>rehash</code> 操作不是一次性完成，而是采用渐进方式，这是为了避免一次性执行过多的 <code>rehash</code> 操作给服务器带来过大的负担。</p>
+<p>渐进式 <code>rehash</code> 通过记录 <code>dict</code> 的 <code>rehashidx</code> 完成，它从 0 开始，每执行一次 <code>rehash</code> 都会递增。</p>
+<p>在 <code>rehash</code> 期间，每次对字典执行添加、删除、查找或者更新操作时，都会执行一次渐进式 <code>rehash</code>。</p>
+<h5 id="跳表"><a class="markdownIt-Anchor" href="#跳表"></a> 跳表</h5>
+<p>有序集合的底层实现之一。</p>
+<p>跳跃表是基于多指针有序链表实现的，可以看成多个有序链表。</p>
+<img data-src="/archives/fe29e710/%E8%B7%B3%E8%A1%A8.png" alt="跳表" style="zoom:50%;">
+<p>与红黑树等平衡树相比，跳跃表具有以下优点：</p>
+<ul>
+<li>插入速度非常快速，因为不需要进行旋转等操作来维护平衡性；</li>
+<li>更容易实现；</li>
+<li>支持无锁操作。</li>
+</ul>
+<h4 id="使用场景"><a class="markdownIt-Anchor" href="#使用场景"></a> 使用场景</h4>
+<h5 id="计数器"><a class="markdownIt-Anchor" href="#计数器"></a> 计数器</h5>
+<h5 id="缓存"><a class="markdownIt-Anchor" href="#缓存"></a> 缓存</h5>
+<h5 id="消息队列"><a class="markdownIt-Anchor" href="#消息队列"></a> 消息队列</h5>
+<h5 id="会话缓存"><a class="markdownIt-Anchor" href="#会话缓存"></a> 会话缓存</h5>
+<h5 id="分布式锁"><a class="markdownIt-Anchor" href="#分布式锁"></a> 分布式锁</h5>
+<h4 id="数据淘汰策略"><a class="markdownIt-Anchor" href="#数据淘汰策略"></a> 数据淘汰策略</h4>
+<h4 id="持久化"><a class="markdownIt-Anchor" href="#持久化"></a> 持久化</h4>
+<p><code>Redis</code> 是内存型数据库，为了保证数据在断电后不会丢失，需要将内存中的数据持久化到硬盘上。</p>
+<h5 id="rdb"><a class="markdownIt-Anchor" href="#rdb"></a> <code>RDB</code></h5>
+<p>将某个时间点的所有数据都存放到硬盘上。</p>
+<p>可以将快照复制到其它服务器从而创建具有相同数据的服务器副本。</p>
+<p>如果系统发生故障，将会丢失最后一次创建快照之后的数据。</p>
+<p>如果数据量很大，保存快照的时间会很长。</p>
+<h5 id="aof"><a class="markdownIt-Anchor" href="#aof"></a> <code>AOF</code></h5>
+<p>将写命令添加到 <code>AOF</code> 文件（<code>Append Only File</code>）的末尾。</p>
+<p>使用 <code>AOF</code> 持久化需要设置同步选项，从而确保写命令同步到磁盘文件上的时机。这是因为对文件进行写入并不会马上将内容同步到磁盘上，而是先存储到缓冲区，然后由操作系统决定什么时候同步到磁盘。有以下同步选项：</p>
+<ul>
+<li><code>always</code>：每个写命令都同步</li>
+<li><code>everysec</code>：每秒同步一次</li>
+<li><code>no</code>：让操作系统决定何时同步</li>
+</ul>
+<h4 id="缓存雪崩和缓存穿透问题"><a class="markdownIt-Anchor" href="#缓存雪崩和缓存穿透问题"></a> 缓存雪崩和缓存穿透问题</h4>
+<h4 id="与-memcached-的比较"><a class="markdownIt-Anchor" href="#与-memcached-的比较"></a> 与 <code>Memcached</code> 的比较</h4>
+<p>两者都是非关系型内存键值数据库，主要有以下不同：</p>
+<ul>
+<li>
+<p>数据类型：<code>Memcached</code> 仅支持字符串类型；<code>Redis</code> 支持五种不同的数据类型。</p>
+</li>
+<li>
+<p>数据持久化：<code>Memcached</code> 不支持持久化；<code>Redis</code> 支持两种持久化策略：<code>RDB</code> 快照和 <code>AOF</code> 日志。</p>
+</li>
+<li>
+<p>分布式：<code>Memcached</code> 不支持分布式，只能通过在客户端使用一致性哈希来实现分布式存储，这种方式在存储和查询时都需要先在客户端计算一次数据所在的节点；<code>Redis Cluster</code> 实现了分布式的支持。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1439,110 +1635,6 @@ if(canvas.getContext){
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/d2457c0e.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/bear.jpeg">
-      <meta itemprop="name" content="Time_Wait">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Time_Wait">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/d2457c0e.html" class="post-title-link" itemprop="url">MyBatis基础</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-06-03 20:35:48" itemprop="dateCreated datePublished" datetime="2021-06-03T20:35:48+08:00">2021-06-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-04 08:22:37" itemprop="dateModified" datetime="2021-06-04T08:22:37+08:00">2021-06-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/MyBatis/" itemprop="url" rel="index"><span itemprop="name">MyBatis</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>12k</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="mybatis-简介"><a class="markdownIt-Anchor" href="#mybatis-简介"></a> <code>MyBatis</code> 简介</h4>
-<ul>
-<li>一款优秀的<strong>持久层框架</strong>。</li>
-<li>支持自定义 SQL、存储过程以及高级映射。</li>
-<li>免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。</li>
-<li>可以通过简单的 XML 或注解来配置和映射原生类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/d2457c0e.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1589,7 +1681,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:51</span>
+    <span title="Reading time total">4:55</span>
   </span>
 </div>
 <div class="busuanzi-count">
