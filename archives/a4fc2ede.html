@@ -27,15 +27,20 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"time_wait.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.3.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
+<meta name="description" content="MVC 模式 MVC 是一种架构模式：  M(Model)：数据模型层，提供要展示的数据。 V(View)：展示数据。 C(Controller)：接收用户的请求，委托数据模型进行处理，将处理后的结果返回给视图，由视图负责展示。  其中一种 MVC 架构就是 JSP + servlet + JavaBean。  servlet 示例  新建 maven 工程，添加如下依赖  1234567891">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringMVC基础">
 <meta property="og:url" content="http://time_wait.gitee.io/archives/a4fc2ede.html">
 <meta property="og:site_name" content="Time_Wait">
+<meta property="og:description" content="MVC 模式 MVC 是一种架构模式：  M(Model)：数据模型层，提供要展示的数据。 V(View)：展示数据。 C(Controller)：接收用户的请求，委托数据模型进行处理，将处理后的结果返回给视图，由视图负责展示。  其中一种 MVC 架构就是 JSP + servlet + JavaBean。  servlet 示例  新建 maven 工程，添加如下依赖  1234567891">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://time_wait.gitee.io/archives/a4fc2ede/SpringMVC%E6%97%B6%E5%BA%8F%E5%9B%BE.png">
 <meta property="article:published_time" content="2021-06-04T03:30:56.000Z">
-<meta property="article:modified_time" content="2021-06-04T14:20:56.810Z">
+<meta property="article:modified_time" content="2021-06-04T23:36:42.876Z">
 <meta property="article:author" content="Time_Wait">
+<meta property="article:tag" content="SpringMVC">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://time_wait.gitee.io/archives/a4fc2ede/SpringMVC%E6%97%B6%E5%BA%8F%E5%9B%BE.png">
 
 
 <link rel="canonical" href="http://time_wait.gitee.io/archives/a4fc2ede.html">
@@ -175,7 +180,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -188,6 +193,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#mvc-%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text"> MVC 模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#servlet-%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text"> servlet 示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dispatcherservlet"><span class="nav-number">3.</span> <span class="nav-text"> DispatcherServlet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#springmvc-%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text"> SpringMVC 执行原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#springmvc-%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text"> SpringMVC 示例</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -210,13 +216,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">150</span>
+        <span class="site-state-item-count">157</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -583,9 +589,24 @@ if(canvas.getContext){
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-06-04 11:30:56 / Modified: 22:20:56" itemprop="dateCreated datePublished" datetime="2021-06-04T11:30:56+08:00">2021-06-04</time>
+      <time title="Created: 2021-06-04 11:30:56" itemprop="dateCreated datePublished" datetime="2021-06-04T11:30:56+08:00">2021-06-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-05 07:36:42" itemprop="dateModified" datetime="2021-06-05T07:36:42+08:00">2021-06-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/SpringMVC/" itemprop="url" rel="index"><span itemprop="name">SpringMVC</span></a>
+        </span>
     </span>
 
   
@@ -603,7 +624,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>0</span>
+      <span>2.6k</span>
     </span>
 </div>
 
@@ -614,7 +635,45 @@ if(canvas.getContext){
     
     
     <div class="post-body" itemprop="articleBody">
-        
+        <h4 id="mvc-模式"><a class="markdownIt-Anchor" href="#mvc-模式"></a> <code>MVC</code> 模式</h4>
+<p><code>MVC</code> 是一种架构模式：</p>
+<ul>
+<li><code>M(Model)</code>：数据模型层，提供要展示的数据。</li>
+<li><code>V(View)</code>：展示数据。</li>
+<li><code>C(Controller)</code>：接收用户的请求，委托数据模型进行处理，将处理后的结果返回给视图，由视图负责展示。</li>
+</ul>
+<p>其中一种 <code>MVC</code> 架构就是 <code>JSP + servlet + JavaBean</code>。</p>
+<h4 id="servlet-示例"><a class="markdownIt-Anchor" href="#servlet-示例"></a> <code>servlet</code> 示例</h4>
+<ul>
+<li>新建 <code>maven</code> 工程，添加如下依赖</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.13<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-webmvc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.2.8.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet.jsp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jsp-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jstl<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>删掉 <code>src</code> 目录，新建一个 <code>maven</code> 模块，并添加 <code>web app</code> 支持</li>
+</ul>
+<p>具体操作是：右键创建好的 <code>maven</code> 模块 -&gt; <code>Add Framework Support</code> -&gt; <code>web app</code></p>
+<ul>
+<li>在 <code>WEB-INF</code> 目录下新建一个 <code>jsp</code> 文件夹，新建 <code>hello.jsp</code></li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">$&#123;msg&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>编写 <code>servlet</code>，处理用户请求</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 获取参数</span></span><br><span class="line">        String method = req.getParameter(<span class="string">&quot;method&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (method.equals(<span class="string">&quot;add&quot;</span>)) &#123;</span><br><span class="line">            req.getSession().setAttribute(<span class="string">&quot;msg&quot;</span>, <span class="string">&quot;执行了 add 方法&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (method.equals(<span class="string">&quot;delete&quot;</span>)) &#123;</span><br><span class="line">            req.getSession().setAttribute(<span class="string">&quot;msg&quot;</span>, <span class="string">&quot;执行了 delete 方法&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用业务层</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 视图转发或重定向</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        doGet(req, resp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 <code>web.xml</code> 中注册 <code>HelloServlet</code></li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>HelloServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.tw.servlet.HelloServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>HelloServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/hello<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置 <code>tomcat</code>，并启动测试</li>
+</ul>
+<p>分别测试：<code>localhost:8080/hello?method=add</code> 和 <code>localhost:8080/hello?method=delete</code></p>
+<h4 id="dispatcherservlet"><a class="markdownIt-Anchor" href="#dispatcherservlet"></a> <code>DispatcherServlet</code></h4>
+<p><code>DispatcherServlet</code> 是 <code>SpringMVC</code> 的核心，作用是将用户的请求转发给不同的处理器，然后将处理结果转给视图解析器进行处理，最后将视图解析器的处理结果返回给用户。</p>
+<h4 id="springmvc-执行原理"><a class="markdownIt-Anchor" href="#springmvc-执行原理"></a> <code>SpringMVC</code> 执行原理</h4>
+<p><img data-src="/archives/a4fc2ede/SpringMVC%E6%97%B6%E5%BA%8F%E5%9B%BE.png" alt="SpringMVC时序图"></p>
+<h4 id="springmvc-示例"><a class="markdownIt-Anchor" href="#springmvc-示例"></a> <code>SpringMVC</code> 示例</h4>
+
     </div>
 
     
@@ -641,6 +700,9 @@ if(canvas.getContext){
 </ul>
 </div>
 
+          <div class="post-tags">
+              <a href="/tags/SpringMVC/" rel="tag"><i class="fa fa-tag"></i> SpringMVC</a>
+          </div>
 
         
 
@@ -651,6 +713,9 @@ if(canvas.getContext){
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/archives/bce68613.html" rel="next" title="MySQL基础">
+                  MySQL基础 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -704,7 +769,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:42</span>
+    <span title="Reading time total">4:44</span>
   </span>
 </div>
 <div class="busuanzi-count">

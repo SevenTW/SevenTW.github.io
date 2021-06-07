@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lin2-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lin2-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CLobster+Two:300,300italic,400,400italic,700,700italic%7CEB+Garamond:300,300italic,400,400italic,700,700italic%7CMeta+-+Meta:300,300italic,400,400italic,700,700italic%7CRoboto+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"time_wait.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.3.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="SQL 分类  DDL 数据定义语言（Data Ddefinition Language, DDL）：CREATE，DROP，ALTER。 操作表结构、视图和索引。  DQL 数据查询语言（Data Query Language, DQL）：SELECT。 查询数据。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL基础">
+<meta property="og:url" content="http://time_wait.gitee.io/archives/bce68613.html">
+<meta property="og:site_name" content="Time_Wait">
+<meta property="og:description" content="SQL 分类  DDL 数据定义语言（Data Ddefinition Language, DDL）：CREATE，DROP，ALTER。 操作表结构、视图和索引。  DQL 数据查询语言（Data Query Language, DQL）：SELECT。 查询数据。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-06T15:18:10.000Z">
+<meta property="article:modified_time" content="2021-06-07T00:44:58.753Z">
+<meta property="article:author" content="Time_Wait">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="MySQL数据类型">
+<meta property="article:tag" content="连接查询">
+<meta property="article:tag" content="查询语句的执行顺序">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://time_wait.gitee.io/archives/bce68613.html">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>MySQL基础 | Time_Wait</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Time_Wait</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#sql-%E5%88%86%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text"> SQL 分类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ddl"><span class="nav-number">1.1.</span> <span class="nav-text"> DDL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dql"><span class="nav-number">1.2.</span> <span class="nav-text"> DQL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dml"><span class="nav-number">1.3.</span> <span class="nav-text"> DML</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dcl"><span class="nav-number">1.4.</span> <span class="nav-text"> DCL</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text"> 数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B4%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text"> 整数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E5%92%8C%E5%AE%9A%E7%82%B9%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text"> 浮点数和定点数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">2.3.</span> <span class="nav-text"> 字符串</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E4%B8%8E%E6%97%B6%E9%97%B4"><span class="nav-number">2.4.</span> <span class="nav-text"> 日期与时间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E6%9C%AC"><span class="nav-number">2.5.</span> <span class="nav-text"> 文本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="nav-number">2.6.</span> <span class="nav-text"> 二进制</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text"> 数据库基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.1.</span> <span class="nav-text"> 创建数据库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.2.</span> <span class="nav-text"> 删除数据库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.3.</span> <span class="nav-text"> 使用数据库</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text"> 表基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA"><span class="nav-number">4.1.</span> <span class="nav-text"> 创建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-number">4.2.</span> <span class="nav-text"> 删除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9"><span class="nav-number">4.3.</span> <span class="nav-text"> 修改</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%90%8D"><span class="nav-number">4.3.1.</span> <span class="nav-text"> 修改表名</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5"><span class="nav-number">4.3.2.</span> <span class="nav-text"> 修改字段</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%AD%97%E6%AE%B5"><span class="nav-number">4.3.3.</span> <span class="nav-text"> 添加字段</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%AD%97%E6%AE%B5"><span class="nav-number">4.3.4.</span> <span class="nav-text"> 删除字段</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95"><span class="nav-number">4.4.</span> <span class="nav-text"> 索引</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%B4%A2%E5%BC%95"><span class="nav-number">4.4.1.</span> <span class="nav-text"> 添加索引</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95"><span class="nav-number">4.4.2.</span> <span class="nav-text"> 删除索引</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E7%BA%A6%E6%9D%9F"><span class="nav-number">5.</span> <span class="nav-text"> 表约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E6%95%B0%E6%8D%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text"> 表数据基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8F%92%E5%85%A5"><span class="nav-number">6.1.</span> <span class="nav-text"> 插入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A0%E9%99%A4-2"><span class="nav-number">6.2.</span> <span class="nav-text"> 删除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">6.3.</span> <span class="nav-text"> 更新</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2"><span class="nav-number">6.4.</span> <span class="nav-text"> 查询</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#distinct"><span class="nav-number">6.4.1.</span> <span class="nav-text"> distinct</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#limit"><span class="nav-number">6.4.2.</span> <span class="nav-text"> limit</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0"><span class="nav-number">7.</span> <span class="nav-text"> 聚合函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#count"><span class="nav-number">7.1.</span> <span class="nav-text"> count()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#max"><span class="nav-number">7.2.</span> <span class="nav-text"> max()</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#min"><span class="nav-number">7.2.1.</span> <span class="nav-text"> min()</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#sum"><span class="nav-number">7.2.2.</span> <span class="nav-text"> sum()</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#avg"><span class="nav-number">7.2.3.</span> <span class="nav-text"> avg()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="nav-number">8.</span> <span class="nav-text"> 条件查询</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#where"><span class="nav-number">8.1.</span> <span class="nav-text"> where</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#group-by"><span class="nav-number">8.2.</span> <span class="nav-text"> group by</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#order-by"><span class="nav-number">8.3.</span> <span class="nav-text"> order by</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E7%9A%84%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB"><span class="nav-number">9.</span> <span class="nav-text"> 表的关联关系</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%9A%E5%AF%B9%E4%B8%80"><span class="nav-number">9.1.</span> <span class="nav-text"> 多对一</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%9A%E5%AF%B9%E5%A4%9A"><span class="nav-number">9.2.</span> <span class="nav-text"> 多对多</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%80%E5%AF%B9%E4%B8%80"><span class="nav-number">9.3.</span> <span class="nav-text"> 一对一</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E8%A1%A8%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="nav-number">10.</span> <span class="nav-text"> 多表连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E8%BF%9E%E6%8E%A5"><span class="nav-number">10.1.</span> <span class="nav-text"> 交叉连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E8%BF%9E%E6%8E%A5"><span class="nav-number">10.2.</span> <span class="nav-text"> 内连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="nav-number">10.3.</span> <span class="nav-text"> 外连接</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B7%A6%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="nav-number">10.3.1.</span> <span class="nav-text"> 左外连接</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%B3%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="nav-number">10.3.2.</span> <span class="nav-text"> 右外连接</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%85%A8%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="nav-number">10.3.3.</span> <span class="nav-text"> 全外连接</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E7%84%B6%E8%BF%9E%E6%8E%A5"><span class="nav-number">10.4.</span> <span class="nav-text"> 自然连接</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">11.</span> <span class="nav-text"> 查询语句的执行顺序</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Time_Wait"
+      src="/images/bear.jpeg">
+  <p class="site-author-name" itemprop="name">Time_Wait</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">157</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+<script type="text/javascript">
+     var alltags = document.getElementsByClassName('tag-cloud-tags');
+     var tags = alltags[0].getElementsByTagName('a');
+     for (var i = tags.length - 1; i >= 0; i--) {
+       var r=Math.floor(Math.random()*75+130);
+       var g=Math.floor(Math.random()*75+100);
+       var b=Math.floor(Math.random()*75+80);
+       tags[i].style.background = "rgb("+r+","+g+","+b+")";
+     }
+</script>
+
+<style>
+  .tag-cloud-tags{
+    /*font-family: Helvetica, Tahoma, Arial;*/
+    /*font-weight: 100;*/
+    text-align: center;
+    counter-reset: tags;
+  }
+  .tag-cloud-tags a{
+    border-radius: 6px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin: 8px 5px 0px 0px;
+  }
+  .tag-cloud-tags a:before{
+    content: "🔖";
+  }
+
+  .tag-cloud-tags a:hover{
+     box-shadow: 0px 5px 15px 0px rgba(0,0,0,.4);
+     transform: scale(1.1);
+     /*box-shadow: 10px 10px 15px 2px rgba(0,0,0,.12), 0 0 6px 0 rgba(104, 104, 105, 0.1);*/
+     transition-duration: 0.15s;
+  }
+</style>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/bce68613.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/bear.jpeg">
+      <meta itemprop="name" content="Time_Wait">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Time_Wait">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL基础
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-06 23:18:10" itemprop="dateCreated datePublished" datetime="2021-06-06T23:18:10+08:00">2021-06-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-07 08:44:58" itemprop="dateModified" datetime="2021-06-07T08:44:58+08:00">2021-06-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>4.6k</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="sql-分类"><a class="markdownIt-Anchor" href="#sql-分类"></a> <code>SQL</code> 分类</h4>
+<h5 id="ddl"><a class="markdownIt-Anchor" href="#ddl"></a> <code>DDL</code></h5>
+<p>数据定义语言（<code>Data Ddefinition Language, DDL</code>）：<code>CREATE，DROP，ALTER</code>。</p>
+<p>操作表结构、视图和索引。</p>
+<h5 id="dql"><a class="markdownIt-Anchor" href="#dql"></a> <code>DQL</code></h5>
+<p>数据查询语言（<code>Data Query Language, DQL</code>）：<code>SELECT</code>。</p>
+<p>查询数据。</p>
+<span id="more"></span>
+<h5 id="dml"><a class="markdownIt-Anchor" href="#dml"></a> <code>DML</code></h5>
+<p>数据操纵语言（<code>Data Manipulation Language, DML</code>）：<code>INSERT，UPDATE，DELETE</code>。</p>
+<p>操作数据。</p>
+<h5 id="dcl"><a class="markdownIt-Anchor" href="#dcl"></a> <code>DCL</code></h5>
+<p>数据控制功能（<code>Data Control Language, DCL</code>）：<code>GRANT，REVOKE，COMMIT，ROLLBACK</code>。</p>
+<p>权限控制。</p>
+<h4 id="数据类型"><a class="markdownIt-Anchor" href="#数据类型"></a> 数据类型</h4>
+<h5 id="整数"><a class="markdownIt-Anchor" href="#整数"></a> 整数</h5>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>字节数</th>
+<th>无符号数取值范围</th>
+<th>有符号数取值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TINYINT</code></td>
+<td>1</td>
+<td>0~255</td>
+<td>-128~127</td>
+</tr>
+<tr>
+<td><code>SMALLINT</code></td>
+<td>2</td>
+<td>0~65535</td>
+<td>-32768~32767</td>
+</tr>
+<tr>
+<td><code>MEDIUMINT</code></td>
+<td>3</td>
+<td>0~16777215</td>
+<td>-8388608~8388607</td>
+</tr>
+<tr>
+<td><code>INT</code></td>
+<td>4</td>
+<td>0~4294967295</td>
+<td>-2147483648~ 2147483647</td>
+</tr>
+<tr>
+<td><code>BIGINT</code></td>
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="浮点数和定点数"><a class="markdownIt-Anchor" href="#浮点数和定点数"></a> 浮点数和定点数</h5>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>字节数</th>
+<th>无符号数取值范围</th>
+<th>有符号数取值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FLOAT</code></td>
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DOUBLE</code></td>
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DECIMAL(M,D)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="字符串"><a class="markdownIt-Anchor" href="#字符串"></a> 字符串</h5>
+<h5 id="日期与时间"><a class="markdownIt-Anchor" href="#日期与时间"></a> 日期与时间</h5>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>字节数</th>
+<th>取值范围</th>
+<th>格式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>YEAR</code></td>
+<td>1</td>
+<td></td>
+<td><code>YYYY</code></td>
+</tr>
+<tr>
+<td><code>DATE</code></td>
+<td>4</td>
+<td></td>
+<td><code>YYYY-MM-DD</code></td>
+</tr>
+<tr>
+<td><code>TIME</code></td>
+<td>3</td>
+<td></td>
+<td><code>HH:MM:SS</code></td>
+</tr>
+<tr>
+<td><code>DATETIME</code></td>
+<td>8</td>
+<td></td>
+<td><code>YYYY-MM-DD HH:MM:SS</code></td>
+</tr>
+<tr>
+<td><code>TIMESTAMP</code></td>
+<td>4</td>
+<td></td>
+<td><code>YYYY-MM-DD HH:MM:SS</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="文本"><a class="markdownIt-Anchor" href="#文本"></a> 文本</h5>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>存储范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TINYTEXT</code></td>
+<td>0~255字节</td>
+</tr>
+<tr>
+<td><code>TEXT</code></td>
+<td>0~65535字节</td>
+</tr>
+<tr>
+<td><code>MEDIUMTEXT</code></td>
+<td>0~16777215字节</td>
+</tr>
+<tr>
+<td><code>LONGTEXT</code></td>
+<td>0~4294967295字节</td>
+</tr>
+</tbody>
+</table>
+<h5 id="二进制"><a class="markdownIt-Anchor" href="#二进制"></a> 二进制</h5>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>存储范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TINYBLOB</code></td>
+<td>0~255字节</td>
+</tr>
+<tr>
+<td><code>BLOB</code></td>
+<td>0~65535字节</td>
+</tr>
+<tr>
+<td><code>MEDIUMBLOB</code></td>
+<td>0~16777215字节</td>
+</tr>
+<tr>
+<td><code>LONGBLOB</code></td>
+<td>0~4294967295字节</td>
+</tr>
+</tbody>
+</table>
+<h4 id="数据库基本操作"><a class="markdownIt-Anchor" href="#数据库基本操作"></a> 数据库基本操作</h4>
+<h5 id="创建数据库"><a class="markdownIt-Anchor" href="#创建数据库"></a> 创建数据库</h5>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database db_name;</span><br></pre></td></tr></table></figure>
+<h5 id="删除数据库"><a class="markdownIt-Anchor" href="#删除数据库"></a> 删除数据库</h5>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop database db_name;</span><br></pre></td></tr></table></figure>
+<h5 id="使用数据库"><a class="markdownIt-Anchor" href="#使用数据库"></a> 使用数据库</h5>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">use db_name;</span><br><span class="line"></span><br><span class="line">-- 查看当前使用的是哪个数据库</span><br><span class="line">select database();</span><br></pre></td></tr></table></figure>
+<h4 id="表基本操作"><a class="markdownIt-Anchor" href="#表基本操作"></a> 表基本操作</h4>
+<h5 id="创建"><a class="markdownIt-Anchor" href="#创建"></a> 创建</h5>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE &#96;table_name&#96; (</span><br><span class="line">  # int 类型，不为空，自增</span><br><span class="line">  &#96;id&#96; INT NOT NULL AUTO_INCREMENT,</span><br><span class="line">  # int 类型，不可为空，默认值为 1，不为空</span><br><span class="line">  &#96;col1&#96; INT NOT NULL DEFAULT 1,</span><br><span class="line">  # 变长字符串类型，最长为 45 个字符，可以为空</span><br><span class="line">  &#96;col2&#96; VARCHAR(45) NULL,</span><br><span class="line">  # 日期类型，可为空</span><br><span class="line">  &#96;col3&#96; DATE NULL,</span><br><span class="line">  # 设置主键为 id</span><br><span class="line">  PRIMARY KEY (&#96;id&#96;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h5 id="删除"><a class="markdownIt-Anchor" href="#删除"></a> 删除</h5>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop table table_name;</span><br></pre></td></tr></table></figure>
+<h5 id="修改"><a class="markdownIt-Anchor" href="#修改"></a> 修改</h5>
+<p>可以修改表名、字段、字段数据类型、索引等。</p>
+<h6 id="修改表名"><a class="markdownIt-Anchor" href="#修改表名"></a> 修改表名</h6>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table old_table_name rename new_table_name;</span><br></pre></td></tr></table></figure>
+<h6 id="修改字段"><a class="markdownIt-Anchor" href="#修改字段"></a> 修改字段</h6>
+<p>修改字段数据类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table table_name modify column column_name 数据类型;</span><br></pre></td></tr></table></figure>
+<p>修改字段名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table table_name change column old_column_name new_column_name;</span><br></pre></td></tr></table></figure>
+<h6 id="添加字段"><a class="markdownIt-Anchor" href="#添加字段"></a> 添加字段</h6>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table table_name add column_name 数据类型;</span><br></pre></td></tr></table></figure>
+<h6 id="删除字段"><a class="markdownIt-Anchor" href="#删除字段"></a> 删除字段</h6>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table table_name drop column column_name;</span><br></pre></td></tr></table></figure>
+<h5 id="索引"><a class="markdownIt-Anchor" href="#索引"></a> 索引</h5>
+<h6 id="添加索引"><a class="markdownIt-Anchor" href="#添加索引"></a> 添加索引</h6>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-- 添加主键索引</span><br><span class="line">alter table table_name add primary key(&#96;col&#96;);</span><br><span class="line"></span><br><span class="line">-- 添加唯一索引</span><br><span class="line">alter table table_name add unique(&#96;col&#96;);</span><br><span class="line">create unique index index_name on table_name(&#96;col&#96;);</span><br><span class="line"></span><br><span class="line">-- 添加普通索引</span><br><span class="line">alter table table_name add index index_name(&#96;col&#96;);</span><br><span class="line">create index index_name on table_name(&#96;col&#96;);</span><br></pre></td></tr></table></figure>
+<h6 id="删除索引"><a class="markdownIt-Anchor" href="#删除索引"></a> 删除索引</h6>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-- 删除主键索引</span><br><span class="line">alter table table_name drop primary key ;</span><br><span class="line"></span><br><span class="line">-- 删除普通索引</span><br><span class="line">alter table table_name drop index index_name ;</span><br><span class="line">drop index index_name on table_name ;</span><br></pre></td></tr></table></figure>
+<h4 id="表约束"><a class="markdownIt-Anchor" href="#表约束"></a> 表约束</h4>
+<ul>
+<li>主键约束</li>
+<li>唯一性约束</li>
+<li>外键约束</li>
+</ul>
+<p>创建外键方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 在建表时语法如下：</span><br><span class="line">constraint 外键名 foreign key (从表外键字段) references 主表 (主键字段)</span><br><span class="line"></span><br><span class="line">-- 建表后添加外键语法如下：</span><br><span class="line">alter table 从表名 add constraint 外键名 foreign key (从表外键字段) references 主表 (主键字段);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>非空约束</li>
+<li>默认值约束</li>
+</ul>
+<h4 id="表数据基本操作"><a class="markdownIt-Anchor" href="#表数据基本操作"></a> 表数据基本操作</h4>
+<h5 id="插入"><a class="markdownIt-Anchor" href="#插入"></a> 插入</h5>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into table_name(col1, col2) values(val1, val2);</span><br></pre></td></tr></table></figure>
+<h5 id="删除-2"><a class="markdownIt-Anchor" href="#删除-2"></a> 删除</h5>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">delete from table_name where id &#x3D; 1;</span><br><span class="line"></span><br><span class="line"># 删除所有行</span><br><span class="line">delete from table_name;</span><br><span class="line"></span><br><span class="line"># 清空表</span><br><span class="line">truncate table table_name;</span><br></pre></td></tr></table></figure>
+<p><code>delete</code> 和 <code>truncate</code> 的区别:</p>
+<ul>
+<li><code>delete</code> 可以删除指定行数据；<code>truncate</code> 清空整张表。</li>
+<li><code>delete</code> 删除表中所有数据后，再次插入数据时自增字段的值是删除数据前该字段最大值加 1；<code>truncate</code> 清空表后，再次插入数据时自增字段的值重新从 1 开始。</li>
+</ul>
+<h5 id="更新"><a class="markdownIt-Anchor" href="#更新"></a> 更新</h5>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update table_name set col &#x3D; val where id &#x3D; 1;</span><br></pre></td></tr></table></figure>
+<h5 id="查询"><a class="markdownIt-Anchor" href="#查询"></a> 查询</h5>
+<h6 id="distinct"><a class="markdownIt-Anchor" href="#distinct"></a> <code>distinct</code></h6>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 同时作用于 col1 和 col2</span><br><span class="line">select distinct col1, col2</span><br><span class="line">from table_name;</span><br></pre></td></tr></table></figure>
+<h6 id="limit"><a class="markdownIt-Anchor" href="#limit"></a> <code>limit</code></h6>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 返回前 5 行</span><br><span class="line">select * from table_name limit 5;</span><br><span class="line"></span><br><span class="line"># 返回前 5 行</span><br><span class="line">select * from table_name limit 0, 5;</span><br></pre></td></tr></table></figure>
+<h4 id="聚合函数"><a class="markdownIt-Anchor" href="#聚合函数"></a> 聚合函数</h4>
+<p>所谓聚合，就是将多行汇总成一行；所有的聚合函数均如此——输入多行，输出一行。</p>
+<p>聚合函数具有自动滤空的功能，若某一个值为 <code>null</code>，那么会自动过滤该行。</p>
+<mark class="label primary"> 只有 select 子句和 having 子句、order by 子句中能够使用聚合函数。</mark>
+<h5 id="count"><a class="markdownIt-Anchor" href="#count"></a> <code>count()</code></h5>
+<p>统计行数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from table_name;</span><br></pre></td></tr></table></figure>
+<h5 id="max"><a class="markdownIt-Anchor" href="#max"></a> <code>max()</code></h5>
+<p>返回指定列的最大值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select max(col) from table_name;</span><br></pre></td></tr></table></figure>
+<h6 id="min"><a class="markdownIt-Anchor" href="#min"></a> <code>min()</code></h6>
+<p>返回指定列的最小值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select min(col) from table_name;</span><br></pre></td></tr></table></figure>
+<h6 id="sum"><a class="markdownIt-Anchor" href="#sum"></a> <code>sum()</code></h6>
+<p>计算指定列的数值和，如果指定列类型不是数值类型则计算结果为 0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sum(col) from table_name;</span><br></pre></td></tr></table></figure>
+<h6 id="avg"><a class="markdownIt-Anchor" href="#avg"></a> <code>avg()</code></h6>
+<p>计算指定列的平均值，如果指定列类型不是数值类型则计算结果为 0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select avg(col) from table_name;</span><br></pre></td></tr></table></figure>
+<h4 id="条件查询"><a class="markdownIt-Anchor" href="#条件查询"></a> 条件查询</h4>
+<h5 id="where"><a class="markdownIt-Anchor" href="#where"></a> <code>where</code></h5>
+<p>使用 <code>where</code> 子句过滤数据。</p>
+<p><code>where</code> 子句中常用关系运算符：</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>=</code>、<code>&gt;</code>、<code>&lt;</code></td>
+<td style="text-align:center">等于、大于、小于</td>
+</tr>
+<tr>
+<td><code>!=</code>、<code>&lt;&gt;</code></td>
+<td style="text-align:center">不等于</td>
+</tr>
+<tr>
+<td><code>&gt;=</code>、<code>!&lt;</code></td>
+<td style="text-align:center">大于等于</td>
+</tr>
+<tr>
+<td><code>&lt;=</code>、<code>!&gt;</code></td>
+<td style="text-align:center">小于等于</td>
+</tr>
+</tbody>
+</table>
+<p><code>where</code> 子句中常用关键字：</p>
+<ul>
+<li><code>in</code>：判断某个字段的值是否在指定集合中</li>
+<li><code>between and</code>：判断某个字段的值是否在指定范围中</li>
+<li><code>like</code>：模糊查询</li>
+</ul>
+<div class="note "><ul>
+<li>
+<p><code>%</code>：匹配 0 个或多个任意字符</p>
+</li>
+<li>
+<p><code>_</code> ：匹配 1 个任意字符</p>
+</li>
+<li>
+<p><code>[]</code>：匹配集合内的字符，如 <code>[ab]</code> 表示可以匹配 <code>a</code> 或 <code>b</code>。</p>
+<p>​       如果加上 <code>^</code> 表示否定，不匹配集合内任何字符，如 <code>[^ab]</code> 表示字符不能时 <code>a</code> 和 <code>b</code>。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 查找 name 不以 a 和 b 开头的记录</span><br><span class="line">select * </span><br><span class="line">from table_name</span><br><span class="line">where name like &#39;[^ab]%&#39;</span><br></pre></td></tr></table></figure>
+</div>
+<h5 id="group-by"><a class="markdownIt-Anchor" href="#group-by"></a> <code>group by</code></h5>
+<p>分组规定：</p>
+<ul>
+<li><code>group by</code> 子句出现在 <code>where</code> 子句之后，<code>order by</code> 子句之前；</li>
+<li>除了汇总字段外，<code>select</code> 语句中的每一字段都必须在 <code>group by</code> 子句中给出；</li>
+<li><code>null</code> 的行会单独分为一组；</li>
+<li>大多数 <code>SQL</code> 实现不支持 <code>group by</code> 列具有可变长度的数据类型。</li>
+</ul>
+<p><code>group by</code> 经常和 <code>having</code> 一起使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 查询部门工资总和大于 8000 的部门</span><br><span class="line">select sum(salary),dept_no </span><br><span class="line">from employee </span><br><span class="line">group by dept_no </span><br><span class="line">having sum(salary)&gt;8000;</span><br></pre></td></tr></table></figure>
+<h5 id="order-by"><a class="markdownIt-Anchor" href="#order-by"></a> <code>order by</code></h5>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select * from table_name</span><br><span class="line">order by col1 [asc | desc], col2 [asc | desc];</span><br></pre></td></tr></table></figure>
+<h4 id="表的关联关系"><a class="markdownIt-Anchor" href="#表的关联关系"></a> 表的关联关系</h4>
+<h5 id="多对一"><a class="markdownIt-Anchor" href="#多对一"></a> 多对一</h5>
+<p>如：员工与部门之间的关系，一个部门可以有多个员工；而一个员工只属于某一个部门。</p>
+<p>在多对一的表关系中，应将外键建在多的一方，否则会造成数据的冗余。</p>
+<h5 id="多对多"><a class="markdownIt-Anchor" href="#多对多"></a> 多对多</h5>
+<p>如：学生与老师之间的关系，一个学生可以有多个老师，一个老师也可以有多个学生。</p>
+<p>通常情况下，为了实现这种关系需要定义一张中间表（亦称为连接表），该表会存在两个外键分别参照老师表和学生表。</p>
+<h5 id="一对一"><a class="markdownIt-Anchor" href="#一对一"></a> 一对一</h5>
+<p>一对一的关联关系在数据库中并不常见，因为以这种方式存储的信息通常会放在同一张表中。</p>
+<h4 id="多表连接查询"><a class="markdownIt-Anchor" href="#多表连接查询"></a> 多表连接查询</h4>
+<h5 id="交叉连接"><a class="markdownIt-Anchor" href="#交叉连接"></a> 交叉连接</h5>
+<p>交叉连接返回的结果是被连接的两个表中所有数据行的笛卡儿积。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table1 cross join table2;</span><br></pre></td></tr></table></figure>
+<h5 id="内连接"><a class="markdownIt-Anchor" href="#内连接"></a> 内连接</h5>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">select A.col1, B.vcol1</span><br><span class="line">from tableA as A inner join tableB as B</span><br><span class="line">on A.col &#x3D; B.col;</span><br><span class="line"></span><br><span class="line"># 等价</span><br><span class="line">select A.col1, B.vcol1</span><br><span class="line">from tableA as A, tableB as B</span><br><span class="line">where A.col &#x3D; B.col;</span><br></pre></td></tr></table></figure>
+<h5 id="外连接"><a class="markdownIt-Anchor" href="#外连接"></a> 外连接</h5>
+<p>在使用内连接查询时我们发现：返回的结果只包含符合查询条件和连接条件的数据。但是，有时还需要在返回查询结果中包含左表、右表或两个表中的所有数据，此时就需要使用外连接查询。</p>
+<p>外连接分为左(外)连接、右(外)连接和全外连接。</p>
+<h6 id="左外连接"><a class="markdownIt-Anchor" href="#左外连接"></a> 左外连接</h6>
+<p>左(外)连接：返回包括左表中的所有记录和右表中符合连接条件的记录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table1 left join table2 on table1.col&#x3D;table2.col</span><br></pre></td></tr></table></figure>
+<h6 id="右外连接"><a class="markdownIt-Anchor" href="#右外连接"></a> 右外连接</h6>
+<p>右(外)连接：返回包括右表中的所有记录和左表中符合连接条件的记录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table1 right join table2 on table1.col&#x3D;table2.col</span><br></pre></td></tr></table></figure>
+<h6 id="全外连接"><a class="markdownIt-Anchor" href="#全外连接"></a> 全外连接</h6>
+<p><code>MySQL</code> 不支持。</p>
+<h5 id="自然连接"><a class="markdownIt-Anchor" href="#自然连接"></a> 自然连接</h5>
+<p><strong>自然连接是一种特殊的等值连接</strong>，要求进行连接的两个关系表中必须有相同的属性列（名字相同），无须添加连接条件，<strong>并且在结果中消除重复的属性列。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table1 natural join table2;</span><br></pre></td></tr></table></figure>
+<h4 id="查询语句的执行顺序"><a class="markdownIt-Anchor" href="#查询语句的执行顺序"></a> 查询语句的执行顺序</h4>
+<ol>
+<li><code>from</code> 子句：将表文件加载到内存中</li>
+<li><code>where</code> 子句：根据条件进行过滤，为符合条件的行生成一张临时表</li>
+<li><code>group by</code> 子句：根据字段将临时表进行拆分，为每个字段值再生成一张临时表；此时生成的临时表包含字段 <code>name</code> 和 <code>num</code></li>
+<li><code>having</code> 子句：对第 3 步生成的临时表进行过滤，去掉不符合条件的行</li>
+<li><code>order by</code> 子句：第 4 步生成的临时表进行排序</li>
+<li><code>limit</code> 子句：返回限定行数</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/b32c9fde.html" rel="bookmark">Explain</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/2b2295bb.html" rel="bookmark">InnoDB</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/baf496e5.html" rel="bookmark">MVCC实现原理</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/5ea8028d.html" rel="bookmark">MySQL分库分表</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/8f931180.html" rel="bookmark">MySQL复制</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Time_Wait
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="http://time_wait.gitee.io/archives/bce68613.html" title="MySQL基础">http://time_wait.gitee.io/archives/bce68613.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+              <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+              <a href="/tags/MySQL%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="tag"><i class="fa fa-tag"></i> MySQL数据类型</a>
+              <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" rel="tag"><i class="fa fa-tag"></i> 连接查询</a>
+              <a href="/tags/%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/" rel="tag"><i class="fa fa-tag"></i> 查询语句的执行顺序</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/archives/a4fc2ede.html" rel="prev" title="SpringMVC基础">
+                  <i class="fa fa-chevron-left"></i> SpringMVC基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/archives/baf496e5.html" rel="next" title="MVCC实现原理">
+                  MVCC实现原理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Time_Wait</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:44</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div><div class="footer-custom">
+Website source code <span class="exturl theme-link" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG8tbmV4dC9oZXhvLW5leHQuZ2l0aHViLmlv">here</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+  <script>
+    NProgress.configure({
+      showSpinner: true
+    });
+    NProgress.start();
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') {
+        NProgress.inc(0.8);
+      }
+      if (document.readyState === 'complete') {
+        NProgress.done();
+      }
+    });
+    document.addEventListener('pjax:send', () => {
+      NProgress.start();
+    });
+    document.addEventListener('pjax:success', () => {
+      NProgress.done();
+    });
+  </script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+
+</body>
+</html>
