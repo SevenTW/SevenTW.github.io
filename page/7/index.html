@@ -201,20 +201,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">150</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -557,7 +557,7 @@ if(canvas.getContext){
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/351e2939.html">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/54ce2e51.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/bear.jpeg">
@@ -570,7 +570,7 @@ if(canvas.getContext){
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/351e2939.html" class="post-title-link" itemprop="url">数据库系统原理</a>
+          <a href="/archives/54ce2e51.html" class="post-title-link" itemprop="url">Hexo+Next搭建博客：主题初步美化</a>
         </h2>
 
         <div class="post-meta-container">
@@ -580,27 +580,17 @@ if(canvas.getContext){
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2021-05-23 22:53:15" itemprop="dateCreated datePublished" datetime="2021-05-23T22:53:15+08:00">2021-05-23</time>
+      <time title="Created: 2021-04-05 15:17:51 / Modified: 17:10:19" itemprop="dateCreated datePublished" datetime="2021-04-05T15:17:51+08:00">2021-04-05</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-07 12:58:39" itemprop="dateModified" datetime="2021-06-07T12:58:39+08:00">2021-06-07</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">系统原理</span></a>
+          <a href="/categories/Hexo-NexT/" itemprop="url" rel="index"><span itemprop="name">Hexo&NexT</span></a>
         </span>
     </span>
 
@@ -612,7 +602,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>3.2k</span>
+      <span>9.3k</span>
     </span>
 </div>
 
@@ -623,19 +613,13 @@ if(canvas.getContext){
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="事务"><a class="markdownIt-Anchor" href="#事务"></a> 事务</h4>
-<p>满足 <code>ACID</code> 特性的一组操作。</p>
-<p>在 <code>MySQL</code> 中，<mark class="label primary">事务支持是在存储引擎层实现的</mark>。</p>
-<h5 id="acid"><a class="markdownIt-Anchor" href="#acid"></a> <code>ACID</code></h5>
-<ul>
-<li>原子性（Atomicity）：事务的一组操作要么全部成功，要不全部失败回滚。</li>
-<li>一致性（Consistency）：数据库在事务执行前后都保持一致性状态。</li>
-<li>隔离性（Isolation）：多个事务并发操作同一数据，不能互相干扰。</li>
-<li>持久性（Durability）：一旦事务提交，所做的修改将会永远保存到数据库中。</li>
-</ul>
+          <p>安装并启用 <code>Next</code> 主题后，有必要对其进行进一步的美化。通过阅读 <a target="_blank" rel="noopener" href="https://theme-next.js.org/">NexT 官方文档</a> 以及网上搜罗的一些其他大神的文章，本文总结了一些对 <code>NexT</code> 的初步美化操作步骤。</p>
+<p>新版 <code>NexT</code> 建议复制主题配置文件到站点根目录下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Installed through npm</span></span><br><span class="line">cp node_modules/hexo-theme-next/_config.yml _config.next.yml</span><br><span class="line"></span><br><span class="line"><span class="comment"># Installed through Git</span></span><br><span class="line">cp theme/next/_config.yml _config.next.yml</span><br></pre></td></tr></table></figure>
+<p>之后对主题的修改就在 <code>_config.next.yml</code> 中进行配置。这样做的好处是可以不改动 <code>NexT</code> 包中的内容，如果主题有更新，本地可以更加的平滑的随之升级。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/archives/351e2939.html#more" rel="contents">
+              <a class="btn" href="/archives/54ce2e51.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -668,7 +652,7 @@ if(canvas.getContext){
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/a80d0031.html">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/92090b6.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/bear.jpeg">
@@ -681,7 +665,7 @@ if(canvas.getContext){
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/a80d0031.html" class="post-title-link" itemprop="url">动态规划</a>
+          <a href="/archives/92090b6.html" class="post-title-link" itemprop="url">Hexo+Next搭建博客：基础搭建</a>
         </h2>
 
         <div class="post-meta-container">
@@ -691,27 +675,17 @@ if(canvas.getContext){
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2021-05-23 22:50:00" itemprop="dateCreated datePublished" datetime="2021-05-23T22:50:00+08:00">2021-05-23</time>
+      <time title="Created: 2021-04-05 13:57:31 / Modified: 17:22:51" itemprop="dateCreated datePublished" datetime="2021-04-05T13:57:31+08:00">2021-04-05</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-24 20:40:12" itemprop="dateModified" datetime="2021-05-24T20:40:12+08:00">2021-05-24</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构&算法</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" itemprop="url" rel="index"><span itemprop="name">动态规划</span></a>
+          <a href="/categories/Hexo-NexT/" itemprop="url" rel="index"><span itemprop="name">Hexo&NexT</span></a>
         </span>
     </span>
 
@@ -723,7 +697,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>12k</span>
+      <span>1.6k</span>
     </span>
 </div>
 
@@ -734,12 +708,17 @@ if(canvas.getContext){
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="连续子数组的最大和"><a class="markdownIt-Anchor" href="#连续子数组的最大和"></a> 连续子数组的最大和</h4>
-<p><a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/459bd355da1549fa8a49e350bf3df484?tpId=13&amp;tqId=11183&amp;rp=1&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking&amp;tab=answerKey">JZ30</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">FindGreatestSumOfSubArray</span><span class="params">(<span class="keyword">int</span>[] array)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> maxSum = Integer.MIN_VALUE;</span><br><span class="line">          <span class="comment">// 动态规划实现</span></span><br><span class="line"><span class="comment">//        int[] f = new int[array.length];</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//        for (int i = 0; i &lt; array.length; i++) &#123;</span></span><br><span class="line"><span class="comment">//            if (i == 0 || f[i - 1] &lt; 0) &#123;</span></span><br><span class="line"><span class="comment">//                f[i] = array[i];</span></span><br><span class="line"><span class="comment">//            &#125; else &#123;</span></span><br><span class="line"><span class="comment">//                f[i] = f[i - 1] + array[i];</span></span><br><span class="line"><span class="comment">//            &#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//            maxSum = Math.max(maxSum, f[i]);</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i == <span class="number">0</span> || array[i - <span class="number">1</span>] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            array[i] = array[i];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            array[i] += array[i - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        maxSum = Math.max(maxSum, array[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> maxSum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h3 id="环境"><a class="markdownIt-Anchor" href="#环境"></a> 环境</h3>
+<p>通过 <code>Hexo</code> 搭建博客前，需要在本地安装一些必要的环境。</p>
+<h4 id="nodejs"><a class="markdownIt-Anchor" href="#nodejs"></a> node.js</h4>
+<p>命令行安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install nodejs</span><br></pre></td></tr></table></figure>
+<h4 id="npm"><a class="markdownIt-Anchor" href="#npm"></a> npm</h4>
+<p>命令行安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install npm</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/archives/a80d0031.html#more" rel="contents">
+              <a class="btn" href="/archives/92090b6.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -772,7 +751,7 @@ if(canvas.getContext){
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/e8eb0481.html">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/c9ea8104.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/bear.jpeg">
@@ -785,7 +764,7 @@ if(canvas.getContext){
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/e8eb0481.html" class="post-title-link" itemprop="url">二分查找</a>
+          <a href="/archives/c9ea8104.html" class="post-title-link" itemprop="url">Hexo Tag Plugins 的使用</a>
         </h2>
 
         <div class="post-meta-container">
@@ -796,14 +775,14 @@ if(canvas.getContext){
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-05-23 22:48:50" itemprop="dateCreated datePublished" datetime="2021-05-23T22:48:50+08:00">2021-05-23</time>
+      <time title="Created: 2021-04-04 13:29:07" itemprop="dateCreated datePublished" datetime="2021-04-04T13:29:07+08:00">2021-04-04</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-24 16:09:27" itemprop="dateModified" datetime="2021-05-24T16:09:27+08:00">2021-05-24</time>
+        <time title="Modified: 2021-04-05 15:19:48" itemprop="dateModified" datetime="2021-04-05T15:19:48+08:00">2021-04-05</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -811,11 +790,7 @@ if(canvas.getContext){
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构&算法</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" itemprop="url" rel="index"><span itemprop="name">二分查找</span></a>
+          <a href="/categories/Hexo-NexT/" itemprop="url" rel="index"><span itemprop="name">Hexo&NexT</span></a>
         </span>
     </span>
 
@@ -827,7 +802,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>519</span>
+      <span>6.5k</span>
     </span>
 </div>
 
@@ -838,14 +813,10 @@ if(canvas.getContext){
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="在两个长度相等的排序数组中找到中位数"><a class="markdownIt-Anchor" href="#在两个长度相等的排序数组中找到中位数"></a> 在两个长度相等的排序数组中找到中位数</h4>
-<div class="note "><p>给定两个有序数组arr1和arr2，已知两个数组的长度都为N，求两个数组中所有数的上中位数。</p>
-<p>上中位数：假设递增序列长度为n，若n为奇数，则上中位数为第n/2+1个数；否则为第n/2个数。</p>
-<p>[要求] 时间复杂度为<code>O(logN)</code>，额外空间复杂度为<code>O(1)</code>。</p>
-</div>
+          <p>Tag Plugin 是一种使 Hexo 支持特殊样式内容的方法。例如，我们无法在标准 Markdown 中显示具有自定义尺寸的图像。然后我们可以使用标签插件来解决它。 Hexo 有很多可以帮助用户的标签。 Hexo 还具有主题接口，使主题能够创建自己的标签。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/archives/e8eb0481.html#more" rel="contents">
+              <a class="btn" href="/archives/c9ea8104.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -878,7 +849,7 @@ if(canvas.getContext){
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/91a7e4d1.html">
+    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/4a17b156.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/bear.jpeg">
@@ -891,7 +862,7 @@ if(canvas.getContext){
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/91a7e4d1.html" class="post-title-link" itemprop="url">双指针</a>
+          <a href="/archives/4a17b156.html" class="post-title-link" itemprop="url">Hello World</a>
         </h2>
 
         <div class="post-meta-container">
@@ -902,28 +873,15 @@ if(canvas.getContext){
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-05-23 22:48:27" itemprop="dateCreated datePublished" datetime="2021-05-23T22:48:27+08:00">2021-05-23</time>
+      <time title="Created: 2021-04-03 19:02:10" itemprop="dateCreated datePublished" datetime="2021-04-03T19:02:10+08:00">2021-04-03</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-24 16:05:13" itemprop="dateModified" datetime="2021-05-24T16:05:13+08:00">2021-05-24</time>
+        <time title="Modified: 2021-04-04 01:43:09" itemprop="dateModified" datetime="2021-04-04T01:43:09+08:00">2021-04-04</time>
       </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构&算法</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/%E5%8F%8C%E6%8C%87%E9%92%88/" itemprop="url" rel="index"><span itemprop="name">双指针</span></a>
-        </span>
-    </span>
 
   
       </div>
@@ -933,7 +891,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>432</span>
+      <span>376</span>
     </span>
 </div>
 
@@ -944,636 +902,10 @@ if(canvas.getContext){
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="容器盛水问题"><a class="markdownIt-Anchor" href="#容器盛水问题"></a> 容器盛水问题</h4>
-<div class="note "><p>给定一个整形数组arr，已知其中所有的值都是非负的，将这个数组看作一个容器，请返回容器能装多少水。</p>
-</div>
+          <p>Welcome<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/archives/91a7e4d1.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/de7c53fe.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/bear.jpeg">
-      <meta itemprop="name" content="Time_Wait">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Time_Wait">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/de7c53fe.html" class="post-title-link" itemprop="url">线程池</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-23 16:44:26" itemprop="dateCreated datePublished" datetime="2021-05-23T16:44:26+08:00">2021-05-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-07 17:57:08" itemprop="dateModified" datetime="2021-06-07T17:57:08+08:00">2021-06-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B9%B6%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">并发</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>6.1k</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>线程池继承结构：</p>
-<img src="/archives/de7c53fe/ThreadPoolExecutor%E7%BB%A7%E6%89%BF%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="ThreadPoolExecutor" style="zoom:50%;">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/de7c53fe.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/fe7e69f4.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/bear.jpeg">
-      <meta itemprop="name" content="Time_Wait">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Time_Wait">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/fe7e69f4.html" class="post-title-link" itemprop="url">数学</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-22 18:28:21" itemprop="dateCreated datePublished" datetime="2021-05-22T18:28:21+08:00">2021-05-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-25 22:12:37" itemprop="dateModified" datetime="2021-05-25T22:12:37+08:00">2021-05-25</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构&算法</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">数学</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>1.3k</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="整数中-1-出现的次数"><a class="markdownIt-Anchor" href="#整数中-1-出现的次数"></a> 整数中 1 出现的次数</h4>
-<p><a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/bd7f978302044eee894445e244c7eee6?tpId=13&amp;tqId=11184&amp;rp=1&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking&amp;tab=answerKey">JZ31</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/fe7e69f4.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/7b216a3b.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/bear.jpeg">
-      <meta itemprop="name" content="Time_Wait">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Time_Wait">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/7b216a3b.html" class="post-title-link" itemprop="url">树</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-21 23:03:10" itemprop="dateCreated datePublished" datetime="2021-05-21T23:03:10+08:00">2021-05-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-24 16:06:38" itemprop="dateModified" datetime="2021-05-24T16:06:38+08:00">2021-05-24</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构&算法</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">树</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>6.6k</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="二叉树先序-中序和后序遍历"><a class="markdownIt-Anchor" href="#二叉树先序-中序和后序遍历"></a> 二叉树先序、中序和后序遍历</h4>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[][] threeOrders(TreeNode root) &#123;</span><br><span class="line">    <span class="keyword">int</span>[][] res = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>][getSize(root)];</span><br><span class="line">    order(res, root);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">order</span><span class="params">(<span class="keyword">int</span>[][] res, TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    res[<span class="number">0</span>][i++] = root.val;</span><br><span class="line"></span><br><span class="line">    order(res, root.left);</span><br><span class="line"></span><br><span class="line">    res[<span class="number">1</span>][j++] = root.val;</span><br><span class="line"></span><br><span class="line">    order(res, root.right);</span><br><span class="line"></span><br><span class="line">    res[<span class="number">2</span>][k++] = root.val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSize</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> + getSize(root.left) + getSize(root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/7b216a3b.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/2633a26.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/bear.jpeg">
-      <meta itemprop="name" content="Time_Wait">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Time_Wait">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/2633a26.html" class="post-title-link" itemprop="url">位运算</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-21 23:02:00" itemprop="dateCreated datePublished" datetime="2021-05-21T23:02:00+08:00">2021-05-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-24 16:07:04" itemprop="dateModified" datetime="2021-05-24T16:07:04+08:00">2021-05-24</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构&算法</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97/" itemprop="url" rel="index"><span itemprop="name">位运算</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>3.4k</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="原理"><a class="markdownIt-Anchor" href="#原理"></a> 原理</h4>
-<p>0s 表示一串 0，1s 表示一串 1。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x ^ 0s = x      x &amp; 0s = <span class="number">0</span>      x | 0s = x</span><br><span class="line">x ^ 1s = ~x     x &amp; 1s = x      x | 1s = 1s</span><br><span class="line">x ^ x = <span class="number">0</span>       x &amp; x = x       x | x = x</span><br></pre></td></tr></table></figure>
-<p>利用 x ^ 1s = ~x 的特点，可以将一个数的位级表示翻转；利用 x ^ x = 0 的特点，可以将三个数中重复的两个数去除，只留下另一个数。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>^<span class="number">1</span>^<span class="number">2</span> = <span class="number">2</span></span><br></pre></td></tr></table></figure>
-<p>利用 x &amp; 0s = 0 和 x &amp; 1s = x 的特点，可以实现掩码操作。一个数 num 与 mask：00111100 进行位与操作，只保留 num 中与 mask 的 1 部分相对应的位。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">01011011</span> &amp;</span><br><span class="line"><span class="number">00111100</span></span><br><span class="line">--------</span><br><span class="line"><span class="number">00011000</span></span><br></pre></td></tr></table></figure>
-<p>利用 x | 0s = x 和 x | 1s = 1s 的特点，可以实现设值操作。一个数 num 与 mask：00111100 进行位或操作，将 num 中与 mask 的 1 部分相对应的位都设置为 1。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">01011011</span> |</span><br><span class="line"><span class="number">00111100</span></span><br><span class="line">--------</span><br><span class="line"><span class="number">01111111</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/2633a26.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/fc81fbfd.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/bear.jpeg">
-      <meta itemprop="name" content="Time_Wait">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Time_Wait">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/fc81fbfd.html" class="post-title-link" itemprop="url">字符串</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-21 23:01:39" itemprop="dateCreated datePublished" datetime="2021-05-21T23:01:39+08:00">2021-05-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-24 16:00:47" itemprop="dateModified" datetime="2021-05-24T16:00:47+08:00">2021-05-24</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构&算法</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E4%B8%B2/" itemprop="url" rel="index"><span itemprop="name">字符串</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>1.1k</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="判断字符串是否表示数值"><a class="markdownIt-Anchor" href="#判断字符串是否表示数值"></a> 判断字符串是否表示数值</h4>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/fc81fbfd.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://time_wait.gitee.io/archives/340249a9.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/bear.jpeg">
-      <meta itemprop="name" content="Time_Wait">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Time_Wait">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/archives/340249a9.html" class="post-title-link" itemprop="url">数组</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-21 23:01:29" itemprop="dateCreated datePublished" datetime="2021-05-21T23:01:29+08:00">2021-05-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-24 16:07:37" itemprop="dateModified" datetime="2021-05-24T16:07:37+08:00">2021-05-24</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构&算法</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84/" itemprop="url" rel="index"><span itemprop="name">数组</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>8.3k</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="数组和树"><a class="markdownIt-Anchor" href="#数组和树"></a> 数组和树</h3>
-<h4 id="重建二叉树"><a class="markdownIt-Anchor" href="#重建二叉树"></a> 重建二叉树</h4>
-<div class="note "><p>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。</p>
-<p>假设输入的前序遍历和中序遍历的结果中都不含重复的数字。</p>
-<p>例如输入前序遍历序列 {1,2,4,7,3,5,6,8} 和中序遍历序列 {4,7,2,1,5,3,8,6}，则重建二叉树并返回。</p>
-</div>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/340249a9.html#more" rel="contents">
+              <a class="btn" href="/archives/4a17b156.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1599,7 +931,7 @@ if(canvas.getContext){
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
   </nav>
 
 
@@ -1644,7 +976,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:15</span>
+    <span title="Reading time total">3:31</span>
   </span>
 </div>
 <div class="busuanzi-count">

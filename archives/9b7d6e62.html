@@ -36,9 +36,8 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://time_wait.gitee.io/archives/9b7d6e62/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png">
 <meta property="article:published_time" content="2021-05-25T23:11:52.000Z">
-<meta property="article:modified_time" content="2021-06-02T05:17:43.369Z">
+<meta property="article:modified_time" content="2021-06-27T08:43:39.464Z">
 <meta property="article:author" content="Time_Wait">
-<meta property="article:tag" content="设计模式">
 <meta property="article:tag" content="创建型模式">
 <meta property="article:tag" content="抽象工厂模式">
 <meta property="article:tag" content="Abstract Factory">
@@ -212,20 +211,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">150</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -600,7 +599,7 @@ if(canvas.getContext){
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-02 13:17:43" itemprop="dateModified" datetime="2021-06-02T13:17:43+08:00">2021-06-02</time>
+        <time title="Modified: 2021-06-27 16:43:39" itemprop="dateModified" datetime="2021-06-27T16:43:39+08:00">2021-06-27</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -642,12 +641,12 @@ if(canvas.getContext){
     
     
     <div class="post-body" itemprop="articleBody">
-        <div class="note "><p>提供一个接口，用于创建<strong>相关的对象家族</strong> 。</p>
+        <div class="note info"><p>提供一个接口，用于创建<strong>相关的对象家族</strong> 。</p>
 <p>工厂方法模式只是用于创建一个对象；而抽象工厂模式创建的是对象家族，并且这些对象是相关的，也就是说这些对象必须一起创建出来。</p>
 <p>抽象工厂模式用到了工厂方法模式来创建单一对象，<code>AbstractFactory</code> 中的 <code>createProductA()</code> 和 <code>createProductB()</code> 方法都是让子类来实现，这两个方法单独来看就是在创建一个对象，这符合工厂方法模式的定义。</p>
 </div>
 <span id="more"></span>
-<img data-src="/archives/9b7d6e62/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png" alt="抽象工厂模式" style="zoom:67%;">
+<img data-src="/archives/9b7d6e62/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png" alt style="zoom:67%;">
 <h4 id="简单实现"><a class="markdownIt-Anchor" href="#简单实现"></a> 简单实现</h4>
 <h5 id="abstractproducta"><a class="markdownIt-Anchor" href="#abstractproducta"></a> <code>AbstractProductA</code></h5>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractProductA</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
@@ -677,16 +676,13 @@ if(canvas.getContext){
       <div class="popular-posts-title"><a href="/archives/f1601c3e.html" rel="bookmark">单例模式</a></div>
     </li>
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/fe816c3c.html" rel="bookmark">建造者模式</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/48598499.html" rel="bookmark">工厂方法模式</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/6b3bea20.html" rel="bookmark">简单工厂模式</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/7b510e10.html" rel="bookmark">代理模式</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/f7de8aa8.html" rel="bookmark">外观模式</a></div>
     </li>
   </ul>
 
@@ -710,7 +706,6 @@ if(canvas.getContext){
 </div>
 
           <div class="post-tags">
-              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
               <a href="/tags/%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 创建型模式</a>
               <a href="/tags/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 抽象工厂模式</a>
               <a href="/tags/Abstract-Factory/" rel="tag"><i class="fa fa-tag"></i> Abstract Factory</a>
@@ -781,7 +776,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:15</span>
+    <span title="Reading time total">3:31</span>
   </span>
 </div>
 <div class="busuanzi-count">

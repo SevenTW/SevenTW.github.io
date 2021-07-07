@@ -36,7 +36,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://time_wait.gitee.io/archives/151f44ae/ThreadLocalMap.png">
 <meta property="article:published_time" content="2021-05-29T06:45:53.000Z">
-<meta property="article:modified_time" content="2021-05-29T07:23:39.230Z">
+<meta property="article:modified_time" content="2021-06-25T12:17:45.761Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="并发">
 <meta property="article:tag" content="ThreadLocal">
@@ -194,7 +194,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#threadlocal-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text"> ThreadLocal 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#threadlocal-%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text"> ThreadLocal 使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#threadlocalmap-%E5%92%8C%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-number">3.</span> <span class="nav-text"> ThreadLocalMap 和内存泄漏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#threadlocal-%E5%92%8C-synchronized-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.</span> <span class="nav-text"> ThreadLocal 和 synchronized 的区别</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#threadlocal-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text"> ThreadLocal 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#threadlocal-%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text"> ThreadLocal 使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#threadlocalmap"><span class="nav-number">3.</span> <span class="nav-text"> ThreadLocalMap</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text"> 内存泄漏</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8E-synchronized-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.</span> <span class="nav-text"> 与 synchronized 的区别</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -210,20 +210,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">150</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -590,10 +590,16 @@ if(canvas.getContext){
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-05-29 14:45:53 / Modified: 15:23:39" itemprop="dateCreated datePublished" datetime="2021-05-29T14:45:53+08:00">2021-05-29</time>
+      <time title="Created: 2021-05-29 14:45:53" itemprop="dateCreated datePublished" datetime="2021-05-29T14:45:53+08:00">2021-05-29</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-25 20:17:45" itemprop="dateModified" datetime="2021-06-25T20:17:45+08:00">2021-06-25</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -619,7 +625,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>333</span>
+      <span>3.8k</span>
     </span>
 </div>
 
@@ -633,11 +639,35 @@ if(canvas.getContext){
         <h4 id="threadlocal-概述"><a class="markdownIt-Anchor" href="#threadlocal-概述"></a> <code>ThreadLocal</code> 概述</h4>
 <span id="more"></span>
 <h4 id="threadlocal-使用"><a class="markdownIt-Anchor" href="#threadlocal-使用"></a> <code>ThreadLocal</code> 使用</h4>
-<h4 id="threadlocalmap-和内存泄漏"><a class="markdownIt-Anchor" href="#threadlocalmap-和内存泄漏"></a> <code>ThreadLocalMap</code> 和内存泄漏</h4>
-<img data-src="/archives/151f44ae/ThreadLocalMap.png" alt="ThreadLocalMap" style="zoom:67%;">
+<p><code>SimpleDateFormat</code> 是一个线程不安全的工具类，在多线程环境下，可以通过以下方式保证线程安全。</p>
+<ul>
+<li>为每一个线程创建一个 <code>SimpleDateFormat</code> 对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleDateFormatDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            String date = <span class="keyword">new</span> SimpleDateFormatDemo().date(<span class="number">1</span>);</span><br><span class="line">            System.out.println(date);</span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">        TimeUnit.MILLISECONDS.sleep(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            String date = <span class="keyword">new</span> SimpleDateFormatDemo().date(<span class="number">2</span>);</span><br><span class="line">            System.out.println(date);</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">date</span><span class="params">(<span class="keyword">int</span> seconds)</span> </span>&#123;</span><br><span class="line">        Date date = <span class="keyword">new</span> Date(<span class="number">1000L</span> * seconds);</span><br><span class="line">        SimpleDateFormat dateFormat = <span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;mm:ss&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> dateFormat.format(date);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以正确执行，但是如果线程数很多，为每个线程创建一个 <code>SimpleDateFormat</code> 对象带来的空间开销很大。</p>
+<ul>
+<li>同步使用同一个 <code>SimpleDateFormat</code> 对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SynchronizedSimpleDateFormatDemo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> SimpleDateFormat dateFormat = <span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;mm:ss&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">date</span><span class="params">(<span class="keyword">int</span> seconds)</span> </span>&#123;</span><br><span class="line">        Date date = <span class="keyword">new</span> Date(<span class="number">1000L</span> * seconds);</span><br><span class="line"></span><br><span class="line">        String s;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">synchronized</span> (dateFormat) &#123;</span><br><span class="line">            s = dateFormat.format(date);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">50</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> finalI = i;</span><br><span class="line">            executorService.submit(() -&gt; &#123;</span><br><span class="line">                String date = <span class="keyword">new</span> SynchronizedSimpleDateFormatDemo().date(finalI);</span><br><span class="line">                System.out.println(date);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        executorService.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>SimpleDateFormat</code> 对象前加锁，代码可以正确运行，但是带来系统阻塞和唤醒线程的开销。</p>
+<ul>
+<li>使用 <code>ThreadLocal</code> 为线程池中的每个线程创建一个  <code>SimpleDateFormat</code> 对象</li>
+</ul>
+<p>为了不创建过多的  <code>SimpleDateFormat</code> 对象，同时保证线程安全，可以通过 <code>ThreadLocal</code> 配合线程池使用，为线程池中每个工作线程创建一个 <code>SimpleDateFormat</code> 对象。</p>
+<p>这样即不会创建过多的  <code>SimpleDateFormat</code> 对象，也不会发生线程安全问题。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalSimpleDateFormatDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">date</span><span class="params">(<span class="keyword">int</span> seconds)</span> </span>&#123;</span><br><span class="line">        ThreadLocal&lt;SimpleDateFormat&gt; dateFormatThreadLocal = ThreadLocal.withInitial(() -&gt; <span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;mm:ss&quot;</span>));</span><br><span class="line"></span><br><span class="line">        Date date = <span class="keyword">new</span> Date(<span class="number">1000L</span> * seconds);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dateFormatThreadLocal.get().format(date);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> finalI = i;</span><br><span class="line">            executorService.submit(() -&gt; &#123;</span><br><span class="line">                String date = <span class="keyword">new</span> ThreadLocalSimpleDateFormatDemo().date(finalI);</span><br><span class="line">                System.out.println(date);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        executorService.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="threadlocalmap"><a class="markdownIt-Anchor" href="#threadlocalmap"></a> <code>ThreadLocalMap</code></h4>
+<img data-src="/archives/151f44ae/ThreadLocalMap.png" alt="ThreadLocalMap" style="zoom: 50%;">
 <p>每个 <code>Thread</code> 都有一个 <code>ThreadLocal.ThreadLocalMap</code> 对象。</p>
 <p>当调用一个 <code>ThreadLocal</code> 的 <code>set(T value)</code> 方法时，先得到当前线程的 <code>ThreadLocalMap</code> 对象，然后将 <code>ThreadLocal-&gt;value</code> 键值对插入到该 <code>Map</code> 中。</p>
-<h4 id="threadlocal-和-synchronized-的区别"><a class="markdownIt-Anchor" href="#threadlocal-和-synchronized-的区别"></a> <code>ThreadLocal</code> 和 <code>synchronized</code> 的区别</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalMap</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The entries in this hash map extend WeakReference, using</span></span><br><span class="line"><span class="comment">     * its main ref field as the key (which is always a</span></span><br><span class="line"><span class="comment">     * ThreadLocal object).  Note that null keys (i.e. entry.get()</span></span><br><span class="line"><span class="comment">     * == null) mean that the key is no longer referenced, so the</span></span><br><span class="line"><span class="comment">     * entry can be expunged from table.  Such entries are referred to</span></span><br><span class="line"><span class="comment">     * as &quot;stale entries&quot; in the code that follows.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span> <span class="keyword">extends</span> <span class="title">WeakReference</span>&lt;<span class="title">ThreadLocal</span>&lt;?&gt;&gt; </span>&#123;</span><br><span class="line">        <span class="comment">/** The value associated with this ThreadLocal. */</span></span><br><span class="line">        Object value;</span><br><span class="line"></span><br><span class="line">        Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">            <span class="keyword">super</span>(k);</span><br><span class="line">            value = v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The initial capacity -- MUST be a power of two.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INITIAL_CAPACITY = <span class="number">16</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The table, resized as necessary.</span></span><br><span class="line"><span class="comment">     * table.length MUST always be a power of two.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Entry[] table;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ThreadLocalMap</code> 在发生哈希碰撞时，使用线性探测法解决冲突。</p>
+<h5 id="内存泄漏"><a class="markdownIt-Anchor" href="#内存泄漏"></a> 内存泄漏</h5>
+<p>从源码可以看到 <code>ThreadLocalMap</code> 有一个 <code>Entry[] table</code> 数组，用于存储 <code>(ThreadLocal, v)</code> 键值对，其中对于 <code>v</code> 有一个强引用 <code>value = v</code>。如果线程在使用完  <code>(ThreadLocal, v)</code> 后没有手动进行清理，该键值对会一直存在，在 <code>GC</code> 时得不到清理，从而造成内存泄漏。</p>
+<p>正确的处理是，使用完  <code>(ThreadLocal, v)</code> 后，调用 <code>ThreadLocal</code> 的 <code>remove()</code> 方法手动进行清理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ThreadLocalMap m = getMap(Thread.currentThread());</span><br><span class="line">    <span class="keyword">if</span> (m != <span class="keyword">null</span>)</span><br><span class="line">        m.remove(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从源码中可以看出，<code>remove()</code> 方法会获取当前线程的 <code>ThreadLocalMap</code> 对象，并将当前 <code>(ThreadLocal, v)</code> 从 <code>ThreadLocalMap</code> 中清除。</p>
+<h4 id="与-synchronized-的区别"><a class="markdownIt-Anchor" href="#与-synchronized-的区别"></a> 与 <code>synchronized</code> 的区别</h4>
 <p><code>ThreadLocal</code> 并不是用来解决共享资源问题的。</p>
 <p>虽然 <code>ThreadLocal</code> 确实可以用于解决多线程情况下的线程安全问题，但其资源并不是共享的，而是每个线程独享的。相比于使用锁而言，<code>ThreadLocal</code>把资源变成了各线程独享的资源，因此避免了同步操作。</p>
 
@@ -650,10 +680,10 @@ if(canvas.getContext){
   <div class="popular-posts-header">Related Posts</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/dfdb52be.html" rel="bookmark">AQS</a></div>
+      <div class="popular-posts-title"><a href="/archives/969d9481.html" rel="bookmark">CAS</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/969d9481.html" rel="bookmark">CAS</a></div>
+      <div class="popular-posts-title"><a href="/archives/dfdb52be.html" rel="bookmark">AQS</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/91e798bc.html" rel="bookmark">Java内存模型</a></div>
@@ -699,8 +729,8 @@ if(canvas.getContext){
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/archives/94135b31.html" rel="next" title="线程协作">
-                  线程协作 <i class="fa fa-chevron-right"></i>
+                <a href="/archives/91e798bc.html" rel="next" title="Java内存模型">
+                  Java内存模型 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -755,7 +785,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:15</span>
+    <span title="Reading time total">3:31</span>
   </span>
 </div>
 <div class="busuanzi-count">

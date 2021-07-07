@@ -35,7 +35,7 @@
 <meta property="og:description" content="CAS 概述 CAS 有三个操作数：内存值 V、预期值 A、要写入的值 B。 CAS 的核心是：仅当预期值 A 和当前的内存值 V 相同时，才将内存值修改为 B。比较和更新是一个原子操作。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-28T13:27:41.000Z">
-<meta property="article:modified_time" content="2021-06-01T14:17:43.194Z">
+<meta property="article:modified_time" content="2021-06-26T05:50:04.005Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="并发">
 <meta property="article:tag" content="CAS">
@@ -192,7 +192,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#cas-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text"> CAS 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cas-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text"> CAS 的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#concurrenthashmap"><span class="nav-number">2.1.</span> <span class="nav-text"> ConcurrentHashMap</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E5%AD%90%E7%B1%BB"><span class="nav-number">2.2.</span> <span class="nav-text"> 原子类</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E5%8E%9F%E5%AD%90%E7%B1%BB"><span class="nav-number">2.2.1.</span> <span class="nav-text"> 基本类型原子类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E5%8E%9F%E5%AD%90%E7%B1%BB"><span class="nav-number">2.2.2.</span> <span class="nav-text"> 数组类型原子类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E5%8E%9F%E5%AD%90%E7%B1%BB"><span class="nav-number">2.2.3.</span> <span class="nav-text"> 引用类型原子类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8E%9F%E5%AD%90%E6%9B%B4%E6%96%B0%E5%99%A8"><span class="nav-number">2.2.4.</span> <span class="nav-text"> 原子更新器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8A%A0%E6%B3%95%E5%99%A8"><span class="nav-number">2.2.5.</span> <span class="nav-text"> 加法器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%B4%AF%E5%8A%A0%E5%99%A8"><span class="nav-number">2.2.6.</span> <span class="nav-text"> 累加器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#unsafe"><span class="nav-number">2.2.7.</span> <span class="nav-text"> Unsafe</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cas-%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text"> CAS 的问题</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#cas-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text"> CAS 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cas-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text"> CAS 的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#concurrenthashmap"><span class="nav-number">2.1.</span> <span class="nav-text"> ConcurrentHashMap</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E5%AD%90%E7%B1%BB"><span class="nav-number">2.2.</span> <span class="nav-text"> 原子类</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E5%8E%9F%E5%AD%90%E7%B1%BB"><span class="nav-number">2.2.1.</span> <span class="nav-text"> 基本类型原子类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E5%8E%9F%E5%AD%90%E7%B1%BB"><span class="nav-number">2.2.2.</span> <span class="nav-text"> 数组类型原子类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E5%8E%9F%E5%AD%90%E7%B1%BB"><span class="nav-number">2.2.3.</span> <span class="nav-text"> 引用类型原子类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8E%9F%E5%AD%90%E6%9B%B4%E6%96%B0%E5%99%A8"><span class="nav-number">2.2.4.</span> <span class="nav-text"> 原子更新器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%B4%AF%E5%8A%A0%E5%99%A8"><span class="nav-number">2.2.5.</span> <span class="nav-text"> 累加器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cas-%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text"> CAS 的问题</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -208,20 +208,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">150</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -596,7 +596,7 @@ if(canvas.getContext){
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-01 22:17:43" itemprop="dateModified" datetime="2021-06-01T22:17:43+08:00">2021-06-01</time>
+        <time title="Modified: 2021-06-26 13:50:04" itemprop="dateModified" datetime="2021-06-26T13:50:04+08:00">2021-06-26</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -648,7 +648,6 @@ if(canvas.getContext){
 <li>引用类型原子类 - <code>AtomicReference、AtomicStampedReference、AtomicMarkableReference</code></li>
 <li>原子更新器 - <code>AtomicIntegerFieldUpdater、AtomicLongFieldUpdater、AtomicReferenceFieldUpdater</code></li>
 <li>累加器 - <code>LongAdder、DoubleAdder</code></li>
-<li>积累器 - <code>LongAdder、DoubleAdder</code></li>
 </ul>
 <h6 id="基本类型原子类"><a class="markdownIt-Anchor" href="#基本类型原子类"></a> 基本类型原子类</h6>
 <p>以 <code>AtomicInteger</code> 为例，看一下 <code>CAS</code> 在基本原子类中的实现：</p>
@@ -676,17 +675,13 @@ if(canvas.getContext){
 <p><code>AtomicStampedReference</code> 用于解决 <code>CAS</code> 的 <code>ABA</code> 问题。</p>
 <h6 id="原子更新器"><a class="markdownIt-Anchor" href="#原子更新器"></a> 原子更新器</h6>
 <p>如果之前已经有了一个变量，比如是整型的 <code>int</code>，<code>int</code> 型的一些操作不具备原子性，为了让 <code>int</code> 型变量的操作具备原子性，可以用 <code>Atomic*FieldUpdater</code> 进行升级。</p>
-<h6 id="加法器"><a class="markdownIt-Anchor" href="#加法器"></a> 加法器</h6>
+<h6 id="累加器"><a class="markdownIt-Anchor" href="#累加器"></a> 累加器</h6>
 <p>相对于 <code>AtomicLong</code> 原子类，多个线程操作的是同一原子类对象同一偏移量内的数据；</p>
 <p><code>LongAdder</code> 使用两个变量 <code>base</code> 和 <code>Cell[]</code> ，在并发度不高时，可以直接在 <code>base</code> 上操作，一旦并发度高起来，不同线程操作的是 <code>Cell</code> 中的某一个，这样就不必为了数据的可见性而频繁地刷新缓存。</p>
-<p><strong>AtomicLong 可否被 LongAdder 替代？</strong></p>
+<p><strong><code>AtomicLong</code> 可否被 <code>LongAdder</code> 替代？</strong></p>
 <p><code>LongAdder</code> 只提供了 <code>add、increment</code> 等简单的方法，适合的是统计求和计数的场景，场景比较单一；</p>
 <p>而 <code>AtomicLong</code> 还具有 <code>compareAndSet</code> 等高级方法，可以应对除了加减之外的更复杂的需要 <code>CAS</code> 的场景。</p>
 <p>所以如果只需要用到加和减操作的话，那么可以直接使用更高效的 <code>LongAdder</code>，但如果我们需要用到更高级的 <code>CAS</code> 操作比如 <code>compareAndSet</code>，就需要使用 <code>AtomicLong</code> 来完成。</p>
-<h6 id="累加器"><a class="markdownIt-Anchor" href="#累加器"></a> 累加器</h6>
-<h6 id="unsafe"><a class="markdownIt-Anchor" href="#unsafe"></a> <code>Unsafe</code></h6>
-<p>所有上面这些原子类都是基于 <code>Unsafe</code> 实现的。</p>
-<p><code>Unsafe</code> 类中有很多本地方法。</p>
 <h4 id="cas-的问题"><a class="markdownIt-Anchor" href="#cas-的问题"></a> <code>CAS</code> 的问题</h4>
 <ul>
 <li><code>ABA</code></li>
@@ -808,7 +803,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:15</span>
+    <span title="Reading time total">3:31</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -35,9 +35,9 @@
 <meta property="og:description" content="线程池继承结构：">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://time_wait.gitee.io/archives/de7c53fe/ThreadPoolExecutor%E7%BB%A7%E6%89%BF%E7%BB%93%E6%9E%84%E5%9B%BE.png">
-<meta property="og:image" content="http://time_wait.gitee.io/archives/de7c53fe/%E7%BA%BF%E7%A8%8B%E6%B1%A0.png">
+<meta property="og:image" content="http://time_wait.gitee.io/archives/de7c53fe/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%A4%84%E7%90%86%E4%BB%BB%E5%8A%A1%E7%9A%84%E9%80%BB%E8%BE%91.png">
 <meta property="article:published_time" content="2021-05-23T08:44:26.000Z">
-<meta property="article:modified_time" content="2021-06-07T09:57:08.871Z">
+<meta property="article:modified_time" content="2021-06-25T15:25:07.021Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="并发">
 <meta property="article:tag" content="线程池">
@@ -214,20 +214,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">150</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -602,7 +602,7 @@ if(canvas.getContext){
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-07 17:57:08" itemprop="dateModified" datetime="2021-06-07T17:57:08+08:00">2021-06-07</time>
+        <time title="Modified: 2021-06-25 23:25:07" itemprop="dateModified" datetime="2021-06-25T23:25:07+08:00">2021-06-25</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -629,7 +629,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>6.1k</span>
+      <span>6.3k</span>
     </span>
 </div>
 
@@ -645,7 +645,7 @@ if(canvas.getContext){
 <span id="more"></span>
 <h4 id="线程池状态"><a class="markdownIt-Anchor" href="#线程池状态"></a> 线程池状态</h4>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> AtomicInteger ctl = <span class="keyword">new</span> AtomicInteger(ctlOf(RUNNING, <span class="number">0</span>));</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> COUNT_BITS = Integer.SIZE - <span class="number">3</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CAPACITY   = (<span class="number">1</span> &lt;&lt; COUNT_BITS) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// runState is stored in the high-order bits</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RUNNING    = -<span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHUTDOWN   =  <span class="number">0</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> STOP       =  <span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TIDYING    =  <span class="number">2</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TERMINATED =  <span class="number">3</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Packing and unpacking ctl</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">runStateOf</span><span class="params">(<span class="keyword">int</span> c)</span>     </span>&#123; <span class="keyword">return</span> c &amp; ~CAPACITY; &#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">workerCountOf</span><span class="params">(<span class="keyword">int</span> c)</span>  </span>&#123; <span class="keyword">return</span> c &amp; CAPACITY; &#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">ctlOf</span><span class="params">(<span class="keyword">int</span> rs, <span class="keyword">int</span> wc)</span> </span>&#123; <span class="keyword">return</span> rs | wc; &#125;</span><br></pre></td></tr></table></figure>
-<div class="note "><p>变量 **<code>ctl</code>**记录了“<strong>线程池中的任务数</strong>量”和“<strong>线程池的状态</strong>”两个信息。共32位，其中高  3位表示”线程池状态”，低 29 位表示”线程池中的任务数量”。</p>
+<div class="note info"><p>变量 <code>ctl</code> 高  3 位表示<mark class="label primary">线程池状态</mark>，低 29 位表示 <mark class="label primary">线程池中的任务数量</mark>。</p>
 <ul>
 <li>
 <p><code>RUNNING</code>           对应高 3 位为 111</p>
@@ -661,7 +661,7 @@ if(canvas.getContext){
 </li>
 <li>
 <p><code>TIDYING</code>           对应高 3 位为 010</p>
-<p>当所有的任务已终止，<code>ctl</code> 记录的”任务数量”为 0，线程池会变为 <code>TIDYING</code> 状态，并执行钩子函数<code>terminated()</code>。</p>
+<p>当所有的任务已终止，<code>ctl</code> 记录的任务数量为 0，线程池会变为 <code>TIDYING</code> 状态，并执行钩子函数 <code>terminated()</code>。</p>
 </li>
 <li>
 <p><code>TERMINATED</code>     对应高 3 位为 011</p>
@@ -673,7 +673,7 @@ if(canvas.getContext){
 <h4 id="线程池参数"><a class="markdownIt-Anchor" href="#线程池参数"></a> 线程池参数</h4>
 <p>通过 <code>ThreadPoolExecutor</code> 构造函数创建线程池：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                          TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">                          BlockingQueue&lt;Runnable&gt; workQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                          ThreadFactory threadFactory,</span></span></span><br><span class="line"><span class="function"><span class="params">                          RejectedExecutionHandler handler)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (corePoolSize &lt; <span class="number">0</span> ||</span><br><span class="line">        maximumPoolSize &lt;= <span class="number">0</span> ||</span><br><span class="line">        maximumPoolSize &lt; corePoolSize ||</span><br><span class="line">        keepAliveTime &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">if</span> (workQueue == <span class="keyword">null</span> || threadFactory == <span class="keyword">null</span> || handler == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="keyword">this</span>.acc = System.getSecurityManager() == <span class="keyword">null</span> ?</span><br><span class="line">            <span class="keyword">null</span> :</span><br><span class="line">            AccessController.getContext();</span><br><span class="line">    <span class="keyword">this</span>.corePoolSize = corePoolSize;</span><br><span class="line">    <span class="keyword">this</span>.maximumPoolSize = maximumPoolSize;</span><br><span class="line">    <span class="keyword">this</span>.workQueue = workQueue;</span><br><span class="line">    <span class="keyword">this</span>.keepAliveTime = unit.toNanos(keepAliveTime);</span><br><span class="line">    <span class="keyword">this</span>.threadFactory = threadFactory;</span><br><span class="line">    <span class="keyword">this</span>.handler = handler;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<div class="note "><p>参数含义：</p>
+<div class="note info"><p>参数含义：</p>
 <ul>
 <li>
 <p><code>corePoolSize</code> – 线程池中核心线程的数量。当向线程池提交一个任务后，线程池会创建一个线程来执行任务，等任务执行完后，如果线程数少于 <code>corePoolSize</code>，线程会继续存在，不会销毁。</p>
@@ -682,7 +682,7 @@ if(canvas.getContext){
 <p><code>maximumPoolSize</code> – 线程池中允许的最大线程数。</p>
 </li>
 <li>
-<p><code>keepAliveTime</code> – 当线程数多于 <code>corePoolSize</code> 时，多余的线程继续存活 <code>keepAliveTime</code> 时间，等待新任务的到来，超过这个时间没有新任务处理就销毁多余的线程。</p>
+<p><code>keepAliveTime</code> – 当线程数多于 <code>corePoolSize</code> 时，多余的线程继续存活 <code>keepAliveTime</code> 时间，等待新任务的到来，超过这个时间没有新任务需要处理就销毁多余的线程。</p>
 </li>
 <li>
 <p>unit – <code>keepAliveTime</code> 的单位。</p>
@@ -692,40 +692,40 @@ if(canvas.getContext){
 <p>常用的阻塞队列包括：</p>
 <ul>
 <li><code>ArrayBlockingQueue</code> - 基于数组的有界阻塞队列。</li>
-<li><code>LinkedBlockingQueue</code> - 基于链表的无解阻塞队列，可以设置为有界。</li>
-<li><code>PriorityBlockingQueue</code> - 具有优先级别的阻塞队列</li>
-<li><code>SynchronousQueue</code> -</li>
+<li><code>LinkedBlockingQueue</code> - 基于链表的无界阻塞队列，可以设置为有界。</li>
+<li><code>SynchronousQueue</code> - 不保存任务。</li>
 </ul>
 </li>
 <li>
 <p><code>threadFactory</code> – 创建新线程的工厂。</p>
 </li>
 <li>
-<p><code>handler</code> – 当线程池中线程数达到了边界，且任务阻塞队列已满的情况下，线程池的处理策略。</p>
+<p><code>handler</code> – 当线程池中线程数达到了边界，且任务阻塞队列已满的情况下，线程池对新提交任务的处理策略。</p>
 <p>有四种策略：</p>
 <ul>
 <li><code>AbortPolicy</code> - 直接抛出 <code>RejectedExecutionException</code> 异常，默认策略</li>
-<li><code>CallerRunsPolicy</code> - 用调用者所在的线程来执行任务</li>
+<li><code>CallerRunsPolicy</code> - 用提交任务的线程来执行任务</li>
 <li><code>DiscardOldestPolicy</code> - 丢弃阻塞队列中靠最前的任务，并执行当前任务</li>
 <li><code>DiscardPolicy</code> - 直接丢弃任务</li>
 </ul>
 </li>
 </ul>
 </div>
-<p><img data-src="/archives/de7c53fe/%E7%BA%BF%E7%A8%8B%E6%B1%A0.png" alt="线程池"></p>
+<img data-src="/archives/de7c53fe/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%A4%84%E7%90%86%E4%BB%BB%E5%8A%A1%E7%9A%84%E9%80%BB%E8%BE%91.png" alt="线程池处理任务的逻辑" style="zoom:50%;">
 <h4 id="常见线程池"><a class="markdownIt-Anchor" href="#常见线程池"></a> 常见线程池</h4>
 <h5 id="newfixedthreadpool"><a class="markdownIt-Anchor" href="#newfixedthreadpool"></a> <code>newFixedThreadPool</code></h5>
-<div class="note "><p><code>corePoolSize</code> 和 <code>maximumPoolSize</code> 都设置为 <code>nThreads</code>，意味着当线程池满时且阻塞队列也已经满时，如果继续提交任务，该线程池不会再新建线程来执行任务，而是直接走拒绝策略。</p>
-<p><code>FixedThreadPool</code> 使用的是默认的拒绝策略 <code>AbortPolicy</code>，直接抛出异常。</p>
-<p>使用无界阻塞队列 <code>LinkedBlockingQueue</code>。</p>
-</div>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newFixedThreadPool</span><span class="params">(<span class="keyword">int</span> nThreads)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(nThreads, nThreads,</span><br><span class="line">                                  <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">                                  <span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="newsinglethreadexecutor"><a class="markdownIt-Anchor" href="#newsinglethreadexecutor"></a> <code>newSingleThreadExecutor</code></h5>
-<div class="note "><p>使用无界阻塞队列 <code>LinkedBlockingQueue</code>。</p>
+<div class="note info"><p><code>corePoolSize</code> 和 <code>maximumPoolSize</code> 都设置为 <code>nThreads</code>，意味着当线程池中线程数等于 <code>nThreads</code> 且阻塞队列已满时，如果继续提交任务，该线程池不会再新建线程来执行任务，而是直接走拒绝策略。</p>
+<p><code>FixedThreadPool</code> 使用的是默认的拒绝策略 <code>AbortPolicy</code>，直接抛出异常。</p>
+<p>使用无界阻塞队列 <code>LinkedBlockingQueue</code>，因为线程池中工作线程数有限，为了保证提交到线程池的任务都能得到执行，就需要一个足够大的阻塞队列来保存任务。</p>
 </div>
+<h5 id="newsinglethreadexecutor"><a class="markdownIt-Anchor" href="#newsinglethreadexecutor"></a> <code>newSingleThreadExecutor</code></h5>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newSingleThreadExecutor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> FinalizableDelegatedExecutorService</span><br><span class="line">        (<span class="keyword">new</span> ThreadPoolExecutor(<span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">                                <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">                                <span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info"><p>使用无界阻塞队列 <code>LinkedBlockingQueue</code>，原因同上。</p>
+</div>
 <h5 id="newcachedthreadpool"><a class="markdownIt-Anchor" href="#newcachedthreadpool"></a> <code>newCachedThreadPool</code></h5>
-<div class="note "><ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Creates a thread pool that creates new threads as needed, but will reuse previously constructed threads when they are available.</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">0</span>, Integer.MAX_VALUE,</span><br><span class="line">                                  <span class="number">60L</span>, TimeUnit.SECONDS,</span><br><span class="line">                                  <span class="keyword">new</span> SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info"><ul>
 <li><code>corePoolSize = 0</code></li>
 <li><code>maximumPoolSize = Integer.MAX_VALUE</code></li>
 <li><code>keepAliveTime = 60s</code></li>
@@ -733,17 +733,16 @@ if(canvas.getContext){
 <li><code>threadFactory</code> 是默认值 <code>DefaultThreadFactory</code></li>
 <li><code>handler</code> 是默认值 <code>AbortPolicy</code></li>
 </ul>
-<p>这种线程池没有核心线程，任务阻塞队列也不存储任务，都是来一个任务创建一个线程去执行，或使用还未销毁的空闲线程去执行。所有线程空闲超过 60s 即销毁。</p>
+<p>这种线程池没有核心线程，阻塞队列也不存储任务，来一个任务创建一个线程去执行，或使用还未销毁的空闲线程去执行。所有线程空闲超过 60s 即销毁。</p>
 </div>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Creates a thread pool that creates new threads as needed, but will reuse previously constructed threads when they are available.</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">0</span>, Integer.MAX_VALUE,</span><br><span class="line">                                  <span class="number">60L</span>, TimeUnit.SECONDS,</span><br><span class="line">                                  <span class="keyword">new</span> SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="newscheduledthreadpool"><a class="markdownIt-Anchor" href="#newscheduledthreadpool"></a> <code>newScheduledThreadPool</code></h5>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ScheduledExecutorService <span class="title">newScheduledThreadPool</span><span class="params">(<span class="keyword">int</span> corePoolSize)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ScheduledThreadPoolExecutor(corePoolSize);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ScheduledThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(corePoolSize, Integer.MAX_VALUE, <span class="number">0</span>, NANOSECONDS,</span><br><span class="line">          <span class="keyword">new</span> DelayedWorkQueue());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="forkjoinpool"><a class="markdownIt-Anchor" href="#forkjoinpool"></a> <code>ForkJoinPool</code></h5>
-<div class="note "><p><code>ForkJoinPool</code> 和其他线程池最大的不同是：除了有一个线程共用的任务队列外，每个线程还有自己的后进先出双端队列。</p>
-</div>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ForkJoinDemo</span> <span class="keyword">extends</span> <span class="title">RecursiveTask</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> threshold;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> first;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> last;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ForkJoinDemo</span><span class="params">(<span class="keyword">int</span> threshold, <span class="keyword">int</span> first, <span class="keyword">int</span> last)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.threshold = threshold;</span><br><span class="line">        <span class="keyword">this</span>.first = first;</span><br><span class="line">        <span class="keyword">this</span>.last = last;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Integer <span class="title">compute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (last - first &lt;= threshold) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = first; i &lt;= last; i++) &#123;</span><br><span class="line">                result += i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> middle = first + (last - first) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">            ForkJoinDemo leftTask = <span class="keyword">new</span> ForkJoinDemo(threshold, first, middle);</span><br><span class="line">            leftTask.fork();</span><br><span class="line"></span><br><span class="line">            ForkJoinDemo rightTask = <span class="keyword">new</span> ForkJoinDemo(threshold, middle + <span class="number">1</span>, last);</span><br><span class="line">            rightTask.fork();</span><br><span class="line"></span><br><span class="line">            result = leftTask.join() + rightTask.join();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">        ForkJoinDemo example = <span class="keyword">new</span> ForkJoinDemo(<span class="number">5</span>, <span class="number">1</span>, <span class="number">10000</span>);</span><br><span class="line">        <span class="comment">// ForkJoinPool 是一个特殊的线程池，线程数量取决于 CPU 核数</span></span><br><span class="line">        ForkJoinPool forkJoinPool = <span class="keyword">new</span> ForkJoinPool();</span><br><span class="line">        Future result = forkJoinPool.submit(example);</span><br><span class="line">        System.out.println(result.get());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info"><p><code>ForkJoinPool</code> 和其他线程池最大的不同是：除了有一个线程共用的任务队列外，每个线程还有自己的后进先出双端队列。</p>
+</div>
 <h5 id="workstealingpool"><a class="markdownIt-Anchor" href="#workstealingpool"></a> <code>WorkStealingPool</code></h5>
-<div class="note "><p>基于 <code>ForkJoinPool</code> 实现。</p>
+<div class="note info"><p>基于 <code>ForkJoinPool</code> 实现。</p>
 </div>
 <h4 id="关闭线程池"><a class="markdownIt-Anchor" href="#关闭线程池"></a> 关闭线程池</h4>
 <ul>
@@ -754,17 +753,18 @@ if(canvas.getContext){
 <p>线程池根据不同的业务需求提供了两种方式提交任务：</p>
 <ul>
 <li>
-<p><code>Executor.execute()</code></p>
+<p><code>execute()</code></p>
 <p><code>ThreadPoolExecutor</code> 中的实现：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (command == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Proceed in 3 steps:</span></span><br><span class="line"><span class="comment">     * 1. 线程数少于 corePoolSize，创建新线程执行任务。</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 2. 任务入队，成功之后仍需再次检查线程池状态，</span></span><br><span class="line"><span class="comment">     *    如果线程池已经停止了，任务出队。</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * 3. 如果不能入队，尝试创建一个新线程执行任务。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">int</span> c = ctl.get();</span><br><span class="line">    <span class="comment">// 获取当前线程数并与 corePoolSize 比较</span></span><br><span class="line">    <span class="keyword">if</span> (workerCountOf(c) &lt; corePoolSize) &#123; </span><br><span class="line">        <span class="keyword">if</span> (addWorker(command, <span class="keyword">true</span>)) <span class="comment">// 创建新线程</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        c = ctl.get();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (isRunning(c) &amp;&amp; workQueue.offer(command)) &#123;</span><br><span class="line">        <span class="keyword">int</span> recheck = ctl.get();</span><br><span class="line">        <span class="keyword">if</span> (! isRunning(recheck) &amp;&amp; remove(command))</span><br><span class="line">            reject(command);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (workerCountOf(recheck) == <span class="number">0</span>)</span><br><span class="line">            addWorker(<span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!addWorker(command, <span class="keyword">false</span>))</span><br><span class="line">        reject(command);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p><code>ExecutorService.submit()</code>。</p>
+<p><code>submit()</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">Future&lt;T&gt; <span class="title">submit</span><span class="params">(Callable&lt;T&gt; task)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (task == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    RunnableFuture&lt;T&gt; ftask = newTaskFor(task);</span><br><span class="line">    execute(ftask);</span><br><span class="line">    <span class="keyword">return</span> ftask;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以获取该任务执行的 <code>Future</code>。</p>
 </li>
 </ul>
 <h4 id="合理线程数"><a class="markdownIt-Anchor" href="#合理线程数"></a> 合理线程数</h4>
-<div class="note "><p>任务类型：</p>
+<div class="note info"><p>任务类型：</p>
 <ul>
 <li>
 <p><code>CPU</code> 密集型 - 需要占用大量的 <code>CPU</code> 时间的任务</p>
@@ -775,7 +775,7 @@ if(canvas.getContext){
 <p>对于 <code>IO</code> 密集型任务，建议线程可以适当增多，可以更充分的利用 <code>CPU</code> 的时间。</p>
 </li>
 </ul>
-<p>《Java并发编程实战》的作者 <code>Brain Goetz</code> 推荐的计算方法：</p>
+<p>Java并发编程实战的作者 <code>Brain Goetz</code> 推荐的计算方法：</p>
 <p>线程数 = <code>CPU</code> 核心数 *（1+平均等待时间/平均工作时间）</p>
 <ul>
 <li>平均工作时间长（<code>CPU</code> 密集型），线程数就随之减少；</li>
@@ -794,10 +794,10 @@ if(canvas.getContext){
       <div class="popular-posts-title"><a href="/archives/159c6098.html" rel="bookmark">阻塞队列</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/dfdb52be.html" rel="bookmark">AQS</a></div>
+      <div class="popular-posts-title"><a href="/archives/969d9481.html" rel="bookmark">CAS</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/969d9481.html" rel="bookmark">CAS</a></div>
+      <div class="popular-posts-title"><a href="/archives/dfdb52be.html" rel="bookmark">AQS</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/91e798bc.html" rel="bookmark">Java内存模型</a></div>
@@ -838,13 +838,13 @@ if(canvas.getContext){
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/archives/fe7e69f4.html" rel="prev" title="数学">
-                  <i class="fa fa-chevron-left"></i> 数学
+                <a href="/archives/46bf65ac.html" rel="prev" title="并发基础">
+                  <i class="fa fa-chevron-left"></i> 并发基础
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/archives/91a7e4d1.html" rel="next" title="双指针">
-                  双指针 <i class="fa fa-chevron-right"></i>
+                <a href="/archives/351e2939.html" rel="next" title="数据库系统原理">
+                  数据库系统原理 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -899,7 +899,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:15</span>
+    <span title="Reading time total">3:31</span>
   </span>
 </div>
 <div class="busuanzi-count">

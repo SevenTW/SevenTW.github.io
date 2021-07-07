@@ -35,12 +35,12 @@
 <meta property="og:description" content="MySQL 官方对索引的定义为：索引（Index）是帮助 MySQL 高效获取数据的数据结构。 在 MySQL 中，索引是在存储引擎层实现的，因此不同的存储引擎可能有不一样的索引实现。 实现索引可以有多种方式，常用的有哈希表、B+树。   哈希表 哈希表是一种存储键值对的数据结构，根据 key 可以在 O(1) 时间内找到对应的 value。 哈希表在等值（单个）查询时表现很好，但是因为哈希表不是">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-06-02T08:50:40.000Z">
-<meta property="article:modified_time" content="2021-06-07T10:23:33.573Z">
+<meta property="article:modified_time" content="2021-06-27T02:16:12.118Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="数据库">
-<meta property="article:tag" content="B+树">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="索引">
+<meta property="article:tag" content="B+树">
 <meta property="article:tag" content="最左前缀原则">
 <meta property="article:tag" content="覆盖索引">
 <meta name="twitter:card" content="summary">
@@ -212,20 +212,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">150</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -600,7 +600,7 @@ if(canvas.getContext){
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-07 18:23:33" itemprop="dateModified" datetime="2021-06-07T18:23:33+08:00">2021-06-07</time>
+        <time title="Modified: 2021-06-27 10:16:12" itemprop="dateModified" datetime="2021-06-27T10:16:12+08:00">2021-06-27</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -631,7 +631,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>3.3k</span>
+      <span>3.2k</span>
     </span>
 </div>
 
@@ -671,11 +671,11 @@ if(canvas.getContext){
 <p>主键包含的列不允许重复，不允许为 <code>NULL</code>，一个表只能有一个主键。</p>
 <p>可以通过 <code>alter table table_name add primary key (column);</code> 创建主键索引。</p>
 <h5 id="唯一索引"><a class="markdownIt-Anchor" href="#唯一索引"></a> 唯一索引</h5>
-<p>数据列不允许重复，允许为 <code>NULL</code> 值，一个表允许多个列创建唯一索引。</p>
+<p>数据列不允许重复，允许 <code>NULL</code> 值，一个表允许多个列创建唯一索引。</p>
 <p>可以通过 <code>alter table table_name add unique (column);</code> 创建唯一索引，唯一索引可以包含多列。</p>
 <h5 id="普通索引"><a class="markdownIt-Anchor" href="#普通索引"></a> 普通索引</h5>
 <p>基本的索引类型，没有唯一性的限制，允许为 <code>NULL</code> 值。</p>
-<p>可以通过 <code>alter table table_name add index index_name (column);</code> 创建唯一索引，唯一索引可以包含多列。</p>
+<p>可以通过 <code>alter table table_name add index index_name (column);</code> 创建普通索引，普通索引可以包含多列。</p>
 <h5 id="全文索引"><a class="markdownIt-Anchor" href="#全文索引"></a> 全文索引</h5>
 <p>目前搜索引擎使用的一种关键技术。</p>
 <p>可以通过 <code>alter table table_name add fulltext (column);</code> 创建全文索引。</p>
@@ -721,15 +721,12 @@ if(canvas.getContext){
 <p>假如有这样一条查询语句：<code>select * from T where k between 3 and 5;</code> 并且为 <code>k</code> 建立了索引。</p>
 <p>因为要查全字段，所以在 <code>k</code> 索引树上查完，得到主键值后，要根据主键值回到主键索引树上去查全字段数据，这个过程称为回表。</p>
 <p>而如果查询语句是：<code>select ID from T where k between 3 and 5;</code> <code>ID</code> 是主键。</p>
-<p>此时 <code>k</code> 索引树可以直接提供查询结果，就不需要回表了。在这个查询中，索引 <code>k</code> 已经覆盖了查询请求，称为覆盖索引。</p>
+<p>此时 <code>k</code> 索引树可以直接提供查询结果，就不需要回表了。在这个查询中，索引 <code>k</code> 已经覆盖了查询请求，称为<mark class="label primary">覆盖索引</mark>。</p>
 <p>虽然维护索引需要额外开销，但是基于覆盖索引的特性，有时我们需要为查询频率较高的字段建立联合索引，以期让这个联合索引覆盖查询请求，减少回表的次数，提高查询效率。</p>
 <h4 id="最左前缀原则"><a class="markdownIt-Anchor" href="#最左前缀原则"></a> 最左前缀原则</h4>
 <p><code>mysql</code> 会一直向右匹配直到遇到范围查询（<code>&gt;、&lt;、between、like</code> 等）就停止匹配。</p>
 <p>比如 <code>a = 1 and b = 2 and c &gt; 3 and d = 4</code>， 如果建立的索引是 <code>(a,b,c,d)</code>，<code>d</code> 是用不到索引的；如果建立的索引是 <code>(a,b,d,c)</code>， 则都可以用到。</p>
-<hr>
-<p>版权声明：本文为CSDN博主「ThinkWon」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>
-原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/ThinkWon/article/details/104778621">https://blog.csdn.net/ThinkWon/article/details/104778621</a></p>
-<mark class="label primary">最左前缀可以是组合索引的前 `N` 个字段，也可以是字符串索引的前 `N` 个字符</mark>。
+<mark class="label primary">最左前缀可以是组合索引的前 N 个字段，也可以是字符串索引的前 N 个字符</mark>。
 <p><strong>组合索引如何安排字段顺序</strong></p>
 <ul>
 <li>
@@ -821,9 +818,9 @@ if(canvas.getContext){
 
           <div class="post-tags">
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
-              <a href="/tags/B-%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> B+树</a>
               <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
               <a href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag"><i class="fa fa-tag"></i> 索引</a>
+              <a href="/tags/B-%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> B+树</a>
               <a href="/tags/%E6%9C%80%E5%B7%A6%E5%89%8D%E7%BC%80%E5%8E%9F%E5%88%99/" rel="tag"><i class="fa fa-tag"></i> 最左前缀原则</a>
               <a href="/tags/%E8%A6%86%E7%9B%96%E7%B4%A2%E5%BC%95/" rel="tag"><i class="fa fa-tag"></i> 覆盖索引</a>
           </div>
@@ -832,8 +829,8 @@ if(canvas.getContext){
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/archives/8acb1976.html" rel="prev" title="状态模式">
-                  <i class="fa fa-chevron-left"></i> 状态模式
+                <a href="/archives/f7de8aa8.html" rel="prev" title="外观模式">
+                  <i class="fa fa-chevron-left"></i> 外观模式
                 </a>
             </div>
             <div class="post-nav-item">
@@ -893,7 +890,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:15</span>
+    <span title="Reading time total">3:31</span>
   </span>
 </div>
 <div class="busuanzi-count">

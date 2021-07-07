@@ -39,7 +39,7 @@
 <meta property="og:image" content="http://time_wait.gitee.io/archives/c18409ab/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
 <meta property="og:image" content="http://time_wait.gitee.io/archives/c18409ab/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png">
 <meta property="article:published_time" content="2021-05-26T09:15:04.000Z">
-<meta property="article:modified_time" content="2021-05-26T12:53:26.143Z">
+<meta property="article:modified_time" content="2021-06-26T07:37:07.438Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="网络">
 <meta property="article:tag" content="TCP">
@@ -216,20 +216,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">150</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -596,10 +596,16 @@ if(canvas.getContext){
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-05-26 17:15:04 / Modified: 20:53:26" itemprop="dateCreated datePublished" datetime="2021-05-26T17:15:04+08:00">2021-05-26</time>
+      <time title="Created: 2021-05-26 17:15:04" itemprop="dateCreated datePublished" datetime="2021-05-26T17:15:04+08:00">2021-05-26</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-26 15:37:07" itemprop="dateModified" datetime="2021-06-26T15:37:07+08:00">2021-06-26</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -625,7 +631,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>997</span>
+      <span>941</span>
     </span>
 </div>
 
@@ -651,8 +657,8 @@ if(canvas.getContext){
 <img data-src="/archives/c18409ab/UDP%E9%A6%96%E9%83%A8.png" alt="UDP首部" style="zoom:60%;">
 <h4 id="tcp"><a class="markdownIt-Anchor" href="#tcp"></a> <code>TCP</code></h4>
 <h5 id="tcp-特点"><a class="markdownIt-Anchor" href="#tcp-特点"></a> <code>TCP</code> 特点</h5>
+<p>传输控制协议（<code>Transmission Control Protocol</code>，<code>TCP</code>）的特点：</p>
 <ul>
-<li>传输控制协议（<code>Transmission Control Protocol</code>，<code>TCP</code>）的特点：</li>
 <li>面向连接</li>
 <li>提供可靠交付</li>
 <li>有流量控制和拥塞控制，</li>
@@ -682,8 +688,7 @@ if(canvas.getContext){
 </ul>
 <p>为什么需要三次握手：</p>
 <p>第三次握手是为了过滤掉失效的连接请求。</p>
-<p>如果不进行三次握手，服务器每收到一个连接请求就建立一个连接。但是会有这样的情况，客户端第一发送连接请求，由于网络拥塞，迟迟没有收到服务器的确认报文，在等待一段时间后，重新发起了一个连接请求，并很快收到了应答。此时服务器端建立了两个连接，但是对于客户端来说，服务端为其第一次请求建立的连接是无效的，白白浪费了资源。</p>
-<p>而如果有三次握手，服务端并不是在收到连接请求后就建立一个连接，而是要等客服端对此次连接再进行确认才会真正建立一个连接。向上面所说那种情况，客户端收到第一次连接请求的确认报文后会忽略，不再向服务端发出确认，服务端也就不会建立这个连接。</p>
+<p>如果不进行三次握手，考虑这样的情况，客户端第一次发送连接请求，由于网络拥塞，迟迟没有收到服务器的确认报文，在等待一段时间后，重新发起了一个连接请求，并很快收到了应答，客户端和服务器就通过这个连接进行数据传输。之后服务器收到了客户端发起的第一个连接请求，并为之建立连接，但这个连接是无效的，服务器为这个请求建立连接白白浪费资源。而如果有第三次握手，客户端不会为之前的连接请求发送确认报文，服务器也就不会为客户端之前的连接请求建立连接。</p>
 <h4 id="tcp-四次挥手"><a class="markdownIt-Anchor" href="#tcp-四次挥手"></a> <code>TCP</code> 四次挥手</h4>
 <img data-src="/archives/c18409ab/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="TCP四次挥手" style="zoom:67%;">
 <p>四次挥手过程：</p>
@@ -697,7 +702,7 @@ if(canvas.getContext){
 <p>为什么要有一个 <code>TIME_WAIT</code> 状态：</p>
 <ul>
 <li>如果 <code>B</code> 没有在 <code>2MSL</code> 时间内收到 <code>A</code> 的确认，可以重新向 <code>A</code> 发送释放连接报文。</li>
-<li>等待 <code>2MSL</code> 时间可以让此次连接的所有报文从网络中消失，如果新的请求 <code>IP</code> 和端口如果和此次一样，不会造成旧连接的报文出现在新连接中。</li>
+<li>等待 <code>2MSL</code> 时间可以让此次连接的所有报文从网络中消失，如果新的连接 <code>IP</code> 和端口如果和此次一样，不会造成旧连接的报文出现在新连接中。</li>
 </ul>
 
     </div>
@@ -808,7 +813,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:15</span>
+    <span title="Reading time total">3:31</span>
   </span>
 </div>
 <div class="busuanzi-count">

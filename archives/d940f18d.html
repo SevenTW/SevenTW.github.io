@@ -35,7 +35,7 @@
 <meta property="og:description" content="锁的设计是为了处理并发问题。根据锁的范围（粒度），MySQL 中的锁可以分为三类：  全局锁 表锁 行锁">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-27T09:02:37.000Z">
-<meta property="article:modified_time" content="2021-06-07T06:41:35.996Z">
+<meta property="article:modified_time" content="2021-06-27T02:01:06.986Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="MySQL锁">
@@ -208,20 +208,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">150</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -596,7 +596,7 @@ if(canvas.getContext){
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-07 14:41:35" itemprop="dateModified" datetime="2021-06-07T14:41:35+08:00">2021-06-07</time>
+        <time title="Modified: 2021-06-27 10:01:06" itemprop="dateModified" datetime="2021-06-27T10:01:06+08:00">2021-06-27</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -673,7 +673,7 @@ if(canvas.getContext){
 <li>对表结构做变更时，加 <code>MDL</code> 写锁</li>
 </ul>
 <p><code>MDL</code> 读锁之间不互斥；读锁与写锁，写锁与写锁之间是互斥的。</p>
-<p>如果操作不当，给一个表加一个字可能会导致整个库挂掉。</p>
+<p>如果操作不当，给一个表加一个字段可能会导致整个库挂掉。</p>
 <p>考虑这样一种情况：表 <code>T</code> 是一张热点表，对这个表的查询很频繁。如果在一个线程 <code>A</code> 查询表 <code>T</code> 时，有一个线程 <code>B</code> 想往 <code>T</code> 中加一个字段，此时线程 <code>B</code> 会被阻塞。单单 <code>B</code> 被阻塞也没什么，但是因为 <code>T</code> 是热点表，后面可能持续会有新的线程来查询 <code>T</code>，后续的线程会被 <code>B</code> 阻塞，很快线程会爆满。</p>
 <p>那如何安全地修改表结构呢，比较推荐的是在 <code>alter table</code> 语句中设定等待时间，在这个时间内，拿到 <code>MDL</code> 写锁就可以修改表结构，拿不到就先结束，不要阻塞后面的业务语句。</p>
 <p>具体的使用是：<code>alter table table_name wait_time add col col_name ...;</code></p>
@@ -688,16 +688,16 @@ if(canvas.getContext){
 <p>事务 <code>A</code> 要执行如下更新</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">begin;</span><br><span class="line">update t set k &#x3D; k + 1 where id &#x3D; 1;</span><br><span class="line">update t set k &#x3D; k + 1 where id &#x3D; 2;</span><br></pre></td></tr></table></figure>
 <p>事务 <code>B</code> 要执行如下更新</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">begin;</span><br><span class="line">update t set k &#x3D; k + 1 where id &#x3D; 1;</span><br><span class="line">update t set k &#x3D; k + 1 where id &#x3D; 2;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">begin;</span><br><span class="line">update t set k &#x3D; k + 1 where id &#x3D; 2;</span><br><span class="line">update t set k &#x3D; k + 1 where id &#x3D; 1;</span><br></pre></td></tr></table></figure>
 <p>在 <code>A</code> 持有 <code>id = 1</code> 的行锁并更新时，<code>B</code> 持有 <code>id = 2</code> 的行锁并更新。 <code>A</code> 和 <code>B</code> 一直等待对方持有的行锁， 但 <code>InnoDB</code> 的行锁要等事务结束后才释放，因此 <code>A</code> 和 <code>B</code> 就永远得不到对方持有的行锁，进入死锁状态。</p>
 <p>为了应对出现死锁，有两种策略：</p>
 <ul>
 <li>用 <code>innodb_lock_wait_timeout</code> 来设置超时时间 - 不过这个时间不好把握</li>
 <li><strong>死锁检测</strong> - 将 <code>innodb_deadlock_detect</code> 设置为 <code>on</code>。</li>
 </ul>
-<div class="note "><p>发现死锁后，回滚其中一个事务，让其他事务得以先执行。</p>
-<p>死锁检测可以让事务得以继续执行，但是有时候死锁的代价也是很大的。</p>
-<p>因为死锁是由于多个线程间资源循环依赖，线程和资源形成了一个环，每个线程都在等待下一个线程的资源。在形成这个环之前（死锁发生），每个线程加入都要检查是否会形成死锁，但是直接最后一个线程加入才能检测到发生死锁，如果这个环很大，死锁检测就回占用大量的 <code>CPU</code> 时间，造成 <code>CPU</code> 利用率很高，但是每秒却执行不了几个事务。</p>
+<div class="note info"><p>发现死锁后，回滚其中一个事务，让其他事务得以先执行。</p>
+<p>死锁检测可以让事务得以继续执行，但是有时候死锁的代价很高。</p>
+<p>因为死锁是由于多个线程间资源循环依赖，线程和资源形成了一个环，每个线程都在等待下一个线程的资源。在形成这个环之前（死锁发生），每个线程加入都要检查是否会形成死锁，但是直接最后一个线程加入才能检测到发生死锁，如果这个环很大，死锁检测会占用大量的 <code>CPU</code> 时间，造成 <code>CPU</code> 利用率很高，但是每秒却执行不了几个事务现象。</p>
 <p>解决思路：</p>
 <ul>
 <li>控制并发度 - 如果环不大，死锁检测就不用花那么多时间</li>
@@ -824,7 +824,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:15</span>
+    <span title="Reading time total">3:31</span>
   </span>
 </div>
 <div class="busuanzi-count">

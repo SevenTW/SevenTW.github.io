@@ -36,7 +36,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://time_wait.gitee.io/archives/a88d9ff5/CAP.png">
 <meta property="article:published_time" content="2021-06-10T09:15:16.000Z">
-<meta property="article:modified_time" content="2021-06-10T09:29:21.001Z">
+<meta property="article:modified_time" content="2021-06-27T06:34:09.045Z">
 <meta property="article:author" content="Time_Wait">
 <meta property="article:tag" content="系统设计">
 <meta property="article:tag" content="CAP">
@@ -195,7 +195,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#cap"><span class="nav-number">1.</span> <span class="nav-text"> CAP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#c%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text"> C（一致性）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#a%E5%8F%AF%E7%94%A8%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text"> A（可用性）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#p%E5%88%86%E5%8C%BA%E5%AE%B9%E5%BF%8D%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text"> P（分区容忍性）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cap-%E4%B8%8D%E8%83%BD%E5%90%8C%E6%97%B6%E6%BB%A1%E8%B6%B3"><span class="nav-number">1.4.</span> <span class="nav-text"> CAP 不能同时满足</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#base"><span class="nav-number">2.</span> <span class="nav-text"> BASE</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ba%E5%9F%BA%E6%9C%AC%E5%8F%AF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text"> BA（基本可用）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#s%E8%BD%AF%E7%8A%B6%E6%80%81"><span class="nav-number">2.2.</span> <span class="nav-text"> S（软状态）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#e%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">2.3.</span> <span class="nav-text"> E（最终一致性）</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#cap"><span class="nav-number">1.</span> <span class="nav-text"> CAP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#c%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text"> C（一致性）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#a%E5%8F%AF%E7%94%A8%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text"> A（可用性）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#p%E5%88%86%E5%8C%BA%E5%AE%B9%E5%BF%8D%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text"> P（分区容忍性）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9D%83%E8%A1%A1"><span class="nav-number">1.4.</span> <span class="nav-text"> 权衡</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#base"><span class="nav-number">2.</span> <span class="nav-text"> BASE</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ba%E5%9F%BA%E6%9C%AC%E5%8F%AF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text"> BA（基本可用）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#s%E8%BD%AF%E7%8A%B6%E6%80%81"><span class="nav-number">2.2.</span> <span class="nav-text"> S（软状态）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#e%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">2.3.</span> <span class="nav-text"> E（最终一致性）</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -211,20 +211,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">150</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -591,10 +591,16 @@ if(canvas.getContext){
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-06-10 17:15:16 / Modified: 17:29:21" itemprop="dateCreated datePublished" datetime="2021-06-10T17:15:16+08:00">2021-06-10</time>
+      <time title="Created: 2021-06-10 17:15:16" itemprop="dateCreated datePublished" datetime="2021-06-10T17:15:16+08:00">2021-06-10</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-27 14:34:09" itemprop="dateModified" datetime="2021-06-27T14:34:09+08:00">2021-06-27</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -620,7 +626,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>913</span>
+      <span>906</span>
     </span>
 </div>
 
@@ -644,7 +650,7 @@ if(canvas.getContext){
 <h5 id="p分区容忍性"><a class="markdownIt-Anchor" href="#p分区容忍性"></a> <code>P</code>（分区容忍性）</h5>
 <p>网络分区指分布式系统中的节点被划分为多个区域，每个区域内部可以通信，但是区域之间无法通信。</p>
 <p>在分区容忍性条件下，分布式系统在遇到任何网络分区故障的时候，仍然需要能对外提供一致性和可用性的服务，除非是整个网络环境都发生了故障。</p>
-<h5 id="cap-不能同时满足"><a class="markdownIt-Anchor" href="#cap-不能同时满足"></a> <code>CAP</code> 不能同时满足</h5>
+<h5 id="权衡"><a class="markdownIt-Anchor" href="#权衡"></a> 权衡</h5>
 <p>在分布式系统中，分区容忍性必不可少，因为需要假设网络是不可靠的。因此，<code>CAP</code> 理论实际上要在可用性和一致性之间做权衡。</p>
 <p>可用性和一致性往往是冲突的，很难使它们同时满足。在多个节点之间进行数据同步时，</p>
 <ul>
@@ -670,9 +676,6 @@ if(canvas.getContext){
       
   <div class="popular-posts-header">Related Posts</div>
   <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/4eb3381c.html" rel="bookmark">分布式锁</a></div>
-    </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/c9acdb25.html" rel="bookmark">负载均衡</a></div>
     </li>
@@ -768,7 +771,7 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:15</span>
+    <span title="Reading time total">3:31</span>
   </span>
 </div>
 <div class="busuanzi-count">
